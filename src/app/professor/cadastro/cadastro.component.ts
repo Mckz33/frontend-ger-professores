@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css'],
 })
 export class CadastroComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private location: Location) {}
   ngOnInit(): void {
     this.carregarCursos();
     this.carregarDisciplinas();
   }
+  // Método para voltar
+  voltar() {
+    this.location.back();
+  }
+
   carregarCursos() {
     this.http.get('http://localhost:3000/cursos').subscribe((data: any) => {
       this.cursos = data.map((curso: any) => ({
