@@ -8,6 +8,9 @@ import { Location } from '@angular/common';
 })
 export class CadastroComponent implements OnInit {
   constructor(private http: HttpClient, private location: Location) {}
+  cursos: { value: string; label: string }[] = [];
+  disciplinas: { value: string; label: string }[] = [];
+
   ngOnInit(): void {
     this.carregarCursos();
     this.carregarDisciplinas();
@@ -41,18 +44,6 @@ export class CadastroComponent implements OnInit {
   horarioDisponivel: number = 0;
   errorMessage: string = '';
 
-  cursos: { value: string; label: string }[] = [
-    { value: 'ADS', label: 'Análise e Desenvolvimento de Sistemas' },
-    { value: 'RC', label: 'Redes de Computadores' },
-    { value: 'DG', label: 'Design Gráfico' },
-  ];
-
-  // Declaração das disciplinas
-  disciplinas: { value: string; label: string }[] = [
-    { value: 'prog', label: 'Programação' },
-    { value: 'emp', label: 'Empreendedorismo' },
-    { value: 'usa', label: 'Usabilidade' },
-  ];
   dropdownSettings = {
     singleSelection: false,
     idField: 'value',
@@ -61,24 +52,26 @@ export class CadastroComponent implements OnInit {
     unSelectAllText: 'Desselecionar Todos',
     allowSearchFilter: true,
   };
-  curso: string[] = [];
-  disciplina: string[] = [];
+
   cadastrarProfessor() {
-    // Verifica se todos os campos foram preenchidos
+    // Verifica se todos os campos foram preenchidos corretamente
     if (
       typeof this.nome === 'string' &&
       this.nome.trim() !== '' &&
-      this.cursos.length > 0 &&
-      this.disciplinas.length > 0 &&
       this.tipoContratacao &&
       this.horarioDisponivel !== undefined &&
       !isNaN(Number(this.horarioDisponivel)) &&
-      Number(this.horarioDisponivel) >= 0
+      Number(this.horarioDisponivel) >= 0 &&
+      this.cursos.length > 0 &&
+      this.disciplinas.length > 0 &&
+      this.cursos.every((curso) => curso.value && curso.label) &&
+      this.disciplinas.every(
+        (disciplina) => disciplina.value && disciplina.label
+      )
     ) {
       // Lógica para cadastrar o professor
       console.log('Professor cadastrado com sucesso!');
       this.errorMessage = ''; // Limpa a mensagem de erro, caso exista
-
       alert('Foi cadastrado com sucesso!');
     } else {
       this.errorMessage = 'Por favor, preencha todos os campos corretamente.';
@@ -87,6 +80,12 @@ export class CadastroComponent implements OnInit {
         Number(this.horarioDisponivel) < 0
       ) {
         this.errorMessage += ' O horário disponível não pode ser negativo.';
+      }
+      if (this.cursos.length === 0) {
+        this.errorMessage += ' Selecione pelo menos um curso.';
+      }
+      if (this.disciplinas.length === 0) {
+        this.errorMessage += ' Selecione pelo menos uma disciplina.';
       }
     }
   }
