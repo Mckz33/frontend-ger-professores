@@ -10,7 +10,10 @@ export class CadastroComponent implements OnInit {
   constructor(private http: HttpClient, private location: Location) {}
   cursos: { value: string; label: string }[] = [];
   disciplinas: { value: string; label: string }[] = [];
-
+  cursosArray: { value: string; label: string }[] = [];
+  disciplinasArray: { value: string; label: string }[] = [];
+  cursoSelecionado: boolean = false;
+  disciplinaSelecionada: boolean = false;
   ngOnInit(): void {
     this.carregarCursos();
     this.carregarDisciplinas();
@@ -18,6 +21,30 @@ export class CadastroComponent implements OnInit {
   // Método para voltar
   voltar() {
     this.location.back();
+  } // No início do seu componente
+
+  onCursoSelect(item: any) {
+    console.log('Curso selecionado:', item);
+    this.cursoSelecionado = true;
+    this.cursosArray.push(item); // Certifique-se de adicionar o item ao array
+  }
+
+  onCursoDeSelect(item: any) {
+    console.log('Curso desselecionado:', item);
+    this.cursoSelecionado = this.cursosArray.length > 0;
+    // Remova o item do array, se necessário
+  }
+
+  onDisciplinaSelect(item: any) {
+    console.log('Disciplina selecionada:', item);
+    this.disciplinaSelecionada = true;
+    this.disciplinasArray.push(item); // Certifique-se de adicionar o item ao array
+  }
+
+  onDisciplinaDeSelect(item: any) {
+    console.log('Disciplina desselecionada:', item);
+    this.disciplinaSelecionada = this.disciplinasArray.length > 0;
+    // Remova o item do array, se necessário
   }
 
   carregarCursos() {
@@ -54,6 +81,18 @@ export class CadastroComponent implements OnInit {
   };
 
   cadastrarProfessor() {
+    console.log('Nome:', this.nome);
+    console.log('Tipo de Contratação:', this.tipoContratacao);
+    console.log('Horário Disponível:', this.horarioDisponivel);
+    console.log('Cursos Selecionados:', this.cursoSelecionado);
+    console.log('Disciplinas Selecionadas:', this.disciplinasArray);
+    console.log('cursoSelecionado:', this.cursoSelecionado);
+    console.log('disciplinaSelecionada:', this.disciplinaSelecionada);
+
+    // Atribui a condição diretamente às propriedades
+    this.cursoSelecionado = this.cursosArray.length > 0;
+    this.disciplinaSelecionada = this.disciplinasArray.length > 0;
+
     // Verifica se todos os campos foram preenchidos corretamente
     if (
       typeof this.nome === 'string' &&
@@ -62,12 +101,8 @@ export class CadastroComponent implements OnInit {
       this.horarioDisponivel !== undefined &&
       !isNaN(Number(this.horarioDisponivel)) &&
       Number(this.horarioDisponivel) >= 0 &&
-      this.cursos.length > 0 &&
-      this.disciplinas.length > 0 &&
-      this.cursos.every((curso) => curso.value && curso.label) &&
-      this.disciplinas.every(
-        (disciplina) => disciplina.value && disciplina.label
-      )
+      this.cursoSelecionado &&
+      this.disciplinaSelecionada
     ) {
       // Lógica para cadastrar o professor
       console.log('Professor cadastrado com sucesso!');
@@ -81,12 +116,14 @@ export class CadastroComponent implements OnInit {
       ) {
         this.errorMessage += ' O horário disponível não pode ser negativo.';
       }
-      if (this.cursos.length === 0) {
-        this.errorMessage += ' Selecione pelo menos um curso.';
+      if (!this.cursoSelecionado) {
+        this.errorMessage += ' Selecione pelo menos um curso válido.';
       }
-      if (this.disciplinas.length === 0) {
-        this.errorMessage += ' Selecione pelo menos uma disciplina.';
+      if (!this.disciplinaSelecionada) {
+        this.errorMessage += ' Selecione pelo menos uma disciplina válida.';
       }
+
+      console.log('Erro:', this.errorMessage);
     }
   }
 }

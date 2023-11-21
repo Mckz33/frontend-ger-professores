@@ -22,8 +22,10 @@
       <ng-multiselect-dropdown
         [placeholder]="'Selecione os cursos'"
         [data]="cursos"
-        [(ngModel)]="cursos"
+        [(ngModel)]="cursosArray"
         [settings]="dropdownSettings"
+        (onSelect)="onCursoSelect($event)"
+        (onDeSelect)="onCursoDeSelect($event)"
       >
       </ng-multiselect-dropdown>
     </div>
@@ -33,8 +35,10 @@
       <ng-multiselect-dropdown
         [placeholder]="'Selecione as disciplinas'"
         [data]="disciplinas"
-        [(ngModel)]="disciplinas"
+        [(ngModel)]="disciplinasArray"
         [settings]="dropdownSettings"
+        (onSelect)="onDisciplinaSelect($event)"
+        (onDeSelect)="onDisciplinaDeSelect($event)"
       >
       </ng-multiselect-dropdown>
     </div>
