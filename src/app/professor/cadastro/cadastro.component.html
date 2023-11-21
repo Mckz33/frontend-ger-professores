@@ -1,3 +1,11 @@
+
+<div class="container mt-5">
+  <div class="mb-3">
+    <!-- Botão de Voltar -->
+    <button class="btn btn-primary" (click)="voltar()">Voltar</button>
+  </div>
+  <h2>Cadastro de Professor</h2>
+
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
@@ -48,7 +56,7 @@
 
 <div class="container mt-5" style="background-color: white; border-radius: 5px; border: 1px black; border-style: double;">
   <h2 class="mb-4 pt-3">Cadastro de Professor</h2>
-
+  
   <form (ngSubmit)="cadastrarProfessor()" class="mb-4">
     <div class="mb-3">
       <label for="nome" class="form-label"><b>Nome:</b></label>
@@ -60,9 +68,16 @@
       <ng-multiselect-dropdown
         [placeholder]="'Selecione os cursos'"
         [data]="cursos"
-        [(ngModel)]="cursos"
+        [(ngModel)]="cursosArray"
         [settings]="dropdownSettings"
+<<<<<<< master
+        (onSelect)="onCursoSelect($event)"
+        (onDeSelect)="onCursoDeSelect($event)"
+      >
+      </ng-multiselect-dropdown>
+=======
       ></ng-multiselect-dropdown>
+>>>>>>> Teste
     </div>
 
     <div class="mb-3">
@@ -70,9 +85,14 @@
       <ng-multiselect-dropdown
         [placeholder]="'Selecione as disciplinas'"
         [data]="disciplinas"
-        [(ngModel)]="disciplinas"
+        [(ngModel)]="disciplinasArray"
         [settings]="dropdownSettings"
-      ></ng-multiselect-dropdown>
+
+        (onSelect)="onDisciplinaSelect($event)"
+        (onDeSelect)="onDisciplinaDeSelect($event)"
+      >
+      </ng-multiselect-dropdown>
+
     </div>
 
     <div class="mb-3">

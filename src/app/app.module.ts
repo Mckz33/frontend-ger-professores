@@ -16,7 +16,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HttpClientModule } from '@angular/common/http';
-
+import { ValidacaoCadastroService } from './services/validacao-cadastro.service';
+import { CadastroService } from './services/cadastro.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgMultiSelectDropDownModule.forRoot(),
     HttpClientModule,
   ],
-  providers: [],
+  providers: [ValidacaoCadastroService, CadastroService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

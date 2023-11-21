@@ -1,88 +1,92 @@
+// cadastro.component.ts
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
+import { Location } from '@angular/common';
+import { CadastroService } from 'src/app/services/cadastro.service';
+import { ValidacaoCadastroService } from 'src/app/services/validacao-cadastro.service';
+import { Curso } from 'src/app/models/curso';
+import { Disciplina } from 'src/app/models/disciplina';
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css'],
 })
 export class CadastroComponent implements OnInit {
-  constructor(private http: HttpClient) {}
-  ngOnInit(): void {
-    this.carregarCursos();
-    this.carregarDisciplinas();
-  }
-  carregarCursos() {
-    this.http.get('http://localhost:3000/cursos').subscribe((data: any) => {
-      this.cursos = data.map((curso: any) => ({
-        value: curso.id,
-        label: curso.nome,
-      }));
-    });
-  }
-
-  carregarDisciplinas() {
-    this.http
-      .get('http://localhost:3000/disciplinas')
-      .subscribe((data: any) => {
-        this.disciplinas = data.map((disciplina: any) => ({
-          value: disciplina.id,
-          label: disciplina.nome,
-        }));
-      });
-  }
+  cursos: Curso[] = [];
+  disciplinas: Disciplina[] = [];
+  cursosArray: Curso[] = [];
+  disciplinasArray: Disciplina[] = [];
+  cursoSelecionado: boolean = false;
+  disciplinaSelecionada: boolean = false;
   nome: string = '';
   tipoContratacao: string = '';
   horarioDisponivel: number = 0;
   errorMessage: string = '';
 
-  cursos: { value: string; label: string }[] = [
-    { value: 'ADS', label: 'Análise e Desenvolvimento de Sistemas' },
-    { value: 'RC', label: 'Redes de Computadores' },
-    { value: 'DG', label: 'Design Gráfico' },
-  ];
-
-  // Declaração das disciplinas
-  disciplinas: { value: string; label: string }[] = [
-    { value: 'prog', label: 'Programação' },
-    { value: 'emp', label: 'Empreendedorismo' },
-    { value: 'usa', label: 'Usabilidade' },
-  ];
   dropdownSettings = {
     singleSelection: false,
-    idField: 'value',
-    textField: 'label',
+    idField: 'id',
+    textField: 'nome',
     selectAllText: 'Selecionar Todos',
     unSelectAllText: 'Desselecionar Todos',
     allowSearchFilter: true,
   };
-  curso: string[] = [];
-  disciplina: string[] = [];
-  cadastrarProfessor() {
-    // Verifica se todos os campos foram preenchidos
-    if (
-      typeof this.nome === 'string' &&
-      this.nome.trim() !== '' &&
-      this.cursos.length > 0 &&
-      this.disciplinas.length > 0 &&
-      this.tipoContratacao &&
-      this.horarioDisponivel !== undefined &&
-      !isNaN(Number(this.horarioDisponivel)) &&
-      Number(this.horarioDisponivel) >= 0
-    ) {
-      // Lógica para cadastrar o professor
-      console.log('Professor cadastrado com sucesso!');
-      this.errorMessage = ''; // Limpa a mensagem de erro, caso exista
 
-      alert('Foi cadastrado com sucesso!');
-    } else {
-      this.errorMessage = 'Por favor, preencha todos os campos corretamente.';
-      if (
-        this.horarioDisponivel !== undefined &&
-        Number(this.horarioDisponivel) < 0
-      ) {
-        this.errorMessage += ' O horário disponível não pode ser negativo.';
-      }
-    }
+  constructor(
+    private location: Location,
+    private cadastroService: CadastroService,
+    private validacaoCadastroService: ValidacaoCadastroService
+  ) {}
+
+  ngOnInit(): void {
+    this.carregarCursos();
+    this.carregarDisciplinas();
+  }
+
+  voltar() {
+    this.location.back();
+  }
+
+  onCursoSelect(item: any) {
+    console.log('Curso selecionado:', item);
+    this.cursoSelecionado = true;
+    this.cursosArray.push(item);
+  }
+
+  onCursoDeSelect(item: any) {
+    console.log('Curso desselecionado:', item);
+    this.cursoSelecionado = this.cursosArray.length > 0;
+  }
+
+  onDisciplinaSelect(item: any) {
+    console.log('Disciplina selecionada:', item);
+    this.disciplinaSelecionada = true;
+    this.disciplinasArray.push(item);
+  }
+
+  onDisciplinaDeSelect(item: any) {
+    console.log('Disciplina desselecionada:', item);
+    this.disciplinaSelecionada = this.disciplinasArray.length > 0;
+  }
+
+  carregarCursos() {
+    this.cadastroService.getCursos().subscribe((data: Curso[]) => {
+      this.cursos = data;
+    });
+  }
+
+  carregarDisciplinas() {
+    this.cadastroService.getDisciplinas().subscribe((data: Disciplina[]) => {
+      this.disciplinas = data;
+    });
+  }
+
+  cadastrarProfessor() {
+    this.cadastroService.cadastrarProfessor(
+      this.nome,
+      this.tipoContratacao,
+      this.horarioDisponivel,
+      this.cursosArray,
+      this.disciplinasArray
+    );
   }
 }
