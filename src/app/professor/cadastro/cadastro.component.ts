@@ -2,9 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { CadastroService } from 'src/app/services/cadastro.service';
-import { ValidacaoCadastroService } from 'src/app/services/validacao-cadastro.service';
 import { Curso } from 'src/app/models/curso';
 import { Disciplina } from 'src/app/models/disciplina';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ProfessorService } from 'src/app/services/professor.service';
+
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
@@ -21,6 +23,8 @@ export class CadastroComponent implements OnInit {
   tipoContratacao: string = '';
   horarioDisponivel: number = 0;
   errorMessage: string = '';
+  
+  empForm: FormGroup;
 
   dropdownSettings = {
     singleSelection: false,
@@ -34,8 +38,17 @@ export class CadastroComponent implements OnInit {
   constructor(
     private location: Location,
     private cadastroService: CadastroService,
-    private validacaoCadastroService: ValidacaoCadastroService
-  ) {}
+    private fb: FormBuilder,
+    private _empProfessor: ProfessorService
+  ) {
+    this.empForm = this.fb.group({
+      nome: '',
+      curso: '',
+      disciplina: '',
+      tipoContratacao: '',
+      horarioDisponivel: ''
+    })
+  }
 
   ngOnInit(): void {
     this.carregarCursos();
@@ -80,13 +93,16 @@ export class CadastroComponent implements OnInit {
     });
   }
 
-  cadastrarProfessor() {
-    this.cadastroService.cadastrarProfessor(
-      this.nome,
-      this.tipoContratacao,
-      this.horarioDisponivel,
-      this.cursosArray,
-      this.disciplinasArray
-    );
-  }
+  onFormSubmit() {
+    if(this.empForm.valid) {
+      this._empProfessor.adicionarProfessor(this.empForm.value).subscribe({
+        next: (val: any) => {
+          alert("Professor cadastrado com sucesso!")
+        },
+        error: (err: any) => {
+          console.error(err);
+        }
+      })
+    }
+
 }

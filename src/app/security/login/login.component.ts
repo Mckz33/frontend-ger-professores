@@ -1,33 +1,44 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  public formLogin:FormGroup;
+  formLogin!:FormGroup;
 
-  constructor(private fb:FormBuilder, private toast:ToastrService) {
-    this.formLogin = this.acessoLogin()
+  constructor(private fb:FormBuilder, private _http:HttpClient, private router:Router) {
+
   }
 
   ngOnInit(): void {
-
-  }
-
-  public acessoLogin():FormGroup{
-    return this.fb.group({
-      usuario:["", [Validators.required, Validators.minLength(6)]],
-      senha:["", [Validators.required, Validators.minLength(6)]]
+    this.formLogin = this.fb.group({
+      email:[''],
+      senha:['']
     })
   }
-  
-  public validacaoCaracteres(controlName:string):boolean {
-    return !!(this.formLogin.get(controlName)?.invalid && this.formLogin.get(controlName)?.touched)
+
+  // Método de Login.
+  logIn() {
+    this._http.get<any>("http://localhost:3000/registro").subscribe(res =>{
+      const usuario = res.find((a:any) => {
+        return a.email === this.formLogin.value.email && a.senha === this.formLogin.value.senha
+      })
+      if(usuario) {
+        alert("Logado com Sucesso!");
+        this.formLogin.reset();
+        this.router.navigate(['home'])
+      } else {
+        alert("Login Inválido.")
+      }
+    }, err => {
+      alert("Login e/ou senha não encontrados.")
+    })
   }
 
 }

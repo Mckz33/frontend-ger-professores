@@ -37,7 +37,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" routerLink="/login">
-            <strong class="text-white">Login</strong>
+            <strong class="text-white">Logout</strong>
           </a>
         </li>
       </ul>
@@ -45,75 +45,38 @@
   </div>
 </nav>
 
-<div
-  class="container mt-5"
-  style="
-    background-color: white;
-    border-radius: 5px;
-    border: 1px black;
-    border-style: double;
-  "
->
+<div class="container mt-5" style="background-color: white; border-radius: 5px; border: 1px black; border-style: double;">
   <h2 class="mb-4 pt-3">Cadastro de Professor</h2>
 
-  <form (ngSubmit)="cadastrarProfessor()" class="mb-4">
+  <form [formGroup]="empForm" (ngSubmit)="onFormSubmit()" class="mb-4">
     <div class="mb-3">
       <label for="nome" class="form-label"><b>Nome:</b></label>
-      <input
-        type="text"
-        class="form-control"
-        id="nome"
-        [(ngModel)]="nome"
-        name="nome"
-      />
+      <input type="text" class="form-control" id="nome" [(ngModel)]="nome" name="nome" formControlName="nome"/>
     </div>
 
     <div class="mb-3">
-      <label for="cursos" class="form-label"><b>Curso:</b></label>
-      <ng-multiselect-dropdown
-        [placeholder]="'Selecione os cursos'"
-        [data]="cursos"
-        [(ngModel)]="cursosArray"
-        [settings]="dropdownSettings"
-        (onSelect)="onCursoSelect($event)"
-        (onDeSelect)="onCursoDeSelect($event)"
-      >
-      </ng-multiselect-dropdown>
+      <label for="curso" class="form-label"><b>Curso: </b></label>
+      <input type="text" class="form-control" id="curso" name="curso" formControlName="curso"/>
     </div>
 
     <div class="mb-3">
-      <label for="disciplina" class="form-label"><b>Disciplina:</b></label>
-      <ng-multiselect-dropdown
-        [placeholder]="'Selecione as disciplinas'"
-        [data]="disciplinas"
-        [(ngModel)]="disciplinasArray"
-        [settings]="dropdownSettings"
-        (onSelect)="onDisciplinaSelect($event)"
-        (onDeSelect)="onDisciplinaDeSelect($event)"
-      >
-      </ng-multiselect-dropdown>
+      <label for="disciplina" class="form-label"><b>Disciplina: </b></label>
+      <input type="text" class="form-control" id="disciplina" name="disciplina" formControlName="disciplina"/>
     </div>
 
     <div class="mb-3">
-      <label for="tipoContratacao" class="form-label"
-        ><b>Tipo de Contratação:</b></label
-      >
-      <select
-        class="form-select"
-        id="tipoContratacao"
-        [(ngModel)]="tipoContratacao"
-        name="tipoContratacao"
-      >
-        <option value="tempoParcial">Parcial</option>
-        <option value="tempoHorista">Horista</option>
-        <option value="tempoIntegral">Integral</option>
+      <label for="tipoContratacao" class="form-label"><b>Tipo de Contratação:</b></label>
+      
+      <select formControlName="tipoContratacao" class="form-select" id="tipoContratacao" [(ngModel)]="tipoContratacao" name="tipoContratacao" formControlName="tipoContratacao">
+        
+        <option value="Parcial">Parcial</option>
+        <option value="orista">Horista</option>
+        <option value="Integral">Integral</option>
       </select>
     </div>
 
     <div class="mb-3">
-      <label for="horarioDisponivel" class="form-label"
-        ><b>Horário Disponível:</b></label
-      >
+      <label for="horarioDisponivel" class="form-label"><b>Horário Disponível:</b></label>
       <input
         type="number"
         class="form-control"
@@ -121,6 +84,7 @@
         [(ngModel)]="horarioDisponivel"
         name="horarioDisponivel"
         placeholder="Exemplo: 10"
+        formControlName="horarioDisponivel"
       />
     </div>
 
@@ -128,20 +92,12 @@
       {{ errorMessage }}
     </div>
 
-    <div style="padding: 10px; margin-left: 900px">
+    <div style="margin-left: 1127px;">
       <button type="submit" class="btn btn-success">Cadastrar</button>
-      <button
-        type="button"
-        class="btn btn-primary"
-        style="margin-left: 5px"
-        routerLink="/home"
-      >
-        Voltar
-      </button>
+      <button type="button" class="btn btn-primary" routerLink="/home" style="margin-left: 5px;">Voltar</button>
     </div>
   </form>
 </div>
-
 <!-- Footer -->
 <div class="row fixed-bottom">
   <div class="container-fluid text-center text-light bg-dark p-3">
