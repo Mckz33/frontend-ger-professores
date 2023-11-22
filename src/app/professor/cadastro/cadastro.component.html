@@ -1,11 +1,3 @@
-
-<div class="container mt-5">
-  <div class="mb-3">
-    <!-- Botão de Voltar -->
-    <button class="btn btn-primary" (click)="voltar()">Voltar</button>
-  </div>
-  <h2>Cadastro de Professor</h2>
-
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
@@ -53,14 +45,27 @@
   </div>
 </nav>
 
-
-<div class="container mt-5" style="background-color: white; border-radius: 5px; border: 1px black; border-style: double;">
+<div
+  class="container mt-5"
+  style="
+    background-color: white;
+    border-radius: 5px;
+    border: 1px black;
+    border-style: double;
+  "
+>
   <h2 class="mb-4 pt-3">Cadastro de Professor</h2>
-  
+
   <form (ngSubmit)="cadastrarProfessor()" class="mb-4">
     <div class="mb-3">
       <label for="nome" class="form-label"><b>Nome:</b></label>
-      <input type="text" class="form-control" id="nome" [(ngModel)]="nome" name="nome" />
+      <input
+        type="text"
+        class="form-control"
+        id="nome"
+        [(ngModel)]="nome"
+        name="nome"
+      />
     </div>
 
     <div class="mb-3">
@@ -70,14 +75,10 @@
         [data]="cursos"
         [(ngModel)]="cursosArray"
         [settings]="dropdownSettings"
-<<<<<<< master
         (onSelect)="onCursoSelect($event)"
         (onDeSelect)="onCursoDeSelect($event)"
       >
       </ng-multiselect-dropdown>
-=======
-      ></ng-multiselect-dropdown>
->>>>>>> Teste
     </div>
 
     <div class="mb-3">
@@ -87,27 +88,32 @@
         [data]="disciplinas"
         [(ngModel)]="disciplinasArray"
         [settings]="dropdownSettings"
-
         (onSelect)="onDisciplinaSelect($event)"
         (onDeSelect)="onDisciplinaDeSelect($event)"
       >
       </ng-multiselect-dropdown>
-
     </div>
 
     <div class="mb-3">
-      <label for="tipoContratacao" class="form-label"><b>Tipo de Contratação:</b></label>
-      <select class="form-select" id="tipoContratacao" [(ngModel)]="tipoContratacao" name="tipoContratacao">
-        
+      <label for="tipoContratacao" class="form-label"
+        ><b>Tipo de Contratação:</b></label
+      >
+      <select
+        class="form-select"
+        id="tipoContratacao"
+        [(ngModel)]="tipoContratacao"
+        name="tipoContratacao"
+      >
         <option value="tempoParcial">Parcial</option>
         <option value="tempoHorista">Horista</option>
         <option value="tempoIntegral">Integral</option>
-
       </select>
     </div>
 
     <div class="mb-3">
-      <label for="horarioDisponivel" class="form-label"><b>Horário Disponível:</b></label>
+      <label for="horarioDisponivel" class="form-label"
+        ><b>Horário Disponível:</b></label
+      >
       <input
         type="number"
         class="form-control"
@@ -122,13 +128,19 @@
       {{ errorMessage }}
     </div>
 
-    <div style="margin-left: 1127px;">
+    <div style="padding: 10px; margin-left: 900px">
       <button type="submit" class="btn btn-success">Cadastrar</button>
-      <button type="button" class="btn btn-primary" routerLink="/home" style="margin-left: 5px;">Voltar</button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        style="margin-left: 5px"
+        routerLink="/home"
+      >
+        Voltar
+      </button>
     </div>
   </form>
 </div>
-
 
 <!-- Footer -->
 <div class="row fixed-bottom">
@@ -138,4 +150,3 @@
     </p>
   </div>
 </div>
->
