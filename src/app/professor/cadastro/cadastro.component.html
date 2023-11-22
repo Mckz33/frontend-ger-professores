@@ -1,73 +1,112 @@
-<div class="container mt-5">
-  <h2>Cadastro de Professor</h2>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a
+      class="navbar-brand"
+      routerLink="/home"
+      style="border-right: 1px solid #fff; padding-right: 10px"
+      ><b>Sistema de Cadastro</b></a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse justify-content-between"
+      id="navbarNav"
+    >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="/home"
+            ><b>Início</b></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="professor/cadastro">
+            <strong class="text-white">Cadastro de Professor</strong>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">
+            <strong class="text-white">Logout</strong>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-  <form (ngSubmit)="cadastrarProfessor()">
+
+<div class="container mt-5" style="background-color: white; border-radius: 5px; border: 1px black; border-style: double;">
+  <h2 class="mb-4 pt-3">Cadastro de Professor</h2>
+
+  <form [formGroup]="empForm" (ngSubmit)="onFormSubmit()" class="mb-4">
     <div class="mb-3">
-      <label for="nome" class="form-label">Nome:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="nome"
-        [(ngModel)]="nome"
-        name="nome"
-      />
+      <label for="nome" class="form-label"><b>Nome:</b></label>
+      <input type="text" class="form-control" id="nome" [(ngModel)]="nome" name="nome" formControlName="nome"/>
     </div>
 
     <div class="mb-3">
-      <label for="cursos" class="form-label">Cursos:</label>
-      <ng-multiselect-dropdown
-        [placeholder]="'Selecione os cursos'"
-        [data]="cursos"
-        [(ngModel)]="cursos"
-        [settings]="dropdownSettings"
-      >
-      </ng-multiselect-dropdown>
+      <label for="curso" class="form-label"><b>Curso: </b></label>
+      <input type="text" class="form-control" id="curso" name="curso" formControlName="curso"/>
     </div>
 
     <div class="mb-3">
-      <label for="disciplina" class="form-label">Disciplina:</label>
-      <ng-multiselect-dropdown
-        [placeholder]="'Selecione as disciplinas'"
-        [data]="disciplinas"
-        [(ngModel)]="disciplinas"
-        [settings]="dropdownSettings"
-      >
-      </ng-multiselect-dropdown>
+      <label for="disciplina" class="form-label"><b>Disciplina: </b></label>
+      <input type="text" class="form-control" id="disciplina" name="disciplina" formControlName="disciplina"/>
     </div>
 
     <div class="mb-3">
-      <label for="tipoContratacao" class="form-label"
-        >Tipo de Contratação:</label
-      >
-      <select
-        class="form-control"
-        id="tipoContratacao"
-        [(ngModel)]="tipoContratacao"
-        name="tipoContratacao"
-      >
-        <option value="tempoIntegral">Tempo Integral</option>
-        <option value="meioPeriodo">Meio Período</option>
+      <label for="tipoContratacao" class="form-label"><b>Tipo de Contratação:</b></label>
+      
+      <select formControlName="tipoContratacao" class="form-select" id="tipoContratacao" [(ngModel)]="tipoContratacao" name="tipoContratacao" formControlName="tipoContratacao">
+        
+        <option value="Parcial">Parcial</option>
+        <option value="orista">Horista</option>
+        <option value="Integral">Integral</option>
+
       </select>
     </div>
 
     <div class="mb-3">
-      <label for="horarioDisponivel" class="form-label"
-        >Horário Disponível:</label
-      >
+      <label for="horarioDisponivel" class="form-label"><b>Horário Disponível:</b></label>
       <input
         type="number"
         class="form-control"
         id="horarioDisponivel"
         [(ngModel)]="horarioDisponivel"
         name="horarioDisponivel"
-        placeholder="Ex: 10"
+        placeholder="Exemplo: 10"
+        formControlName="horarioDisponivel"
       />
     </div>
 
-    <div *ngIf="errorMessage" class="alert alert-danger">
+    <div *ngIf="errorMessage" class="alert alert-danger mb-3">
       {{ errorMessage }}
     </div>
 
-    <button type="submit" class="btn btn-primary">Cadastrar</button>
+    <div style="margin-left: 1127px;">
+      <button type="submit" class="btn btn-success">Cadastrar</button>
+      <button type="button" class="btn btn-primary" routerLink="/home" style="margin-left: 5px;">Voltar</button>
+    </div>
   </form>
+</div>
+
+
+<!-- Footer -->
+<div class="row fixed-bottom">
+  <div class="container-fluid text-center text-light bg-dark p-3">
+    <p class="mb-0">
+      © 2023 Todos os direitos reservados - Gerenciamento de Professores
+    </p>
+  </div>
 </div>
