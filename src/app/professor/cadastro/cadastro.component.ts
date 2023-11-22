@@ -6,6 +6,7 @@ import { Curso } from 'src/app/models/curso';
 import { Disciplina } from 'src/app/models/disciplina';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfessorService } from 'src/app/services/professor.service';
+
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
@@ -103,6 +104,5 @@ export class CadastroComponent implements OnInit {
         }
       })
     }
-  }
 
 }
