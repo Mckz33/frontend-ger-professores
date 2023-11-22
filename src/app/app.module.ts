@@ -16,14 +16,21 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HttpClientModule } from '@angular/common/http';
-import { ValidacaoCadastroService } from './services/validacao-cadastro.service';
+
 import { CadastroService } from './services/cadastro.service';
+import { RegistroComponent } from './security/registro/registro.component';
+
+import { MatTableModule } from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+
 @NgModule({
   declarations: [
     AppComponent,
     CadastroComponent,
     LayoutComponent,
     LoginComponent,
+    RegistroComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,8 +46,13 @@ import { CadastroService } from './services/cadastro.service';
     MatInputModule,
     NgMultiSelectDropDownModule.forRoot(),
     HttpClientModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
-  providers: [ValidacaoCadastroService, CadastroService],
+
+  providers: [CadastroService],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}
