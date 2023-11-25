@@ -23,7 +23,7 @@ export class CadastroComponent implements OnInit {
   tipoContratacao: string = '';
   horarioDisponivel: number = 0;
   errorMessage: string = '';
-  
+
   empForm: FormGroup;
 
   dropdownSettings = {
@@ -46,8 +46,8 @@ export class CadastroComponent implements OnInit {
       curso: '',
       disciplina: '',
       tipoContratacao: '',
-      horarioDisponivel: ''
-    })
+      horarioDisponivel: '',
+    });
   }
 
   ngOnInit(): void {
@@ -94,15 +94,15 @@ export class CadastroComponent implements OnInit {
   }
 
   onFormSubmit() {
-    if(this.empForm.valid) {
+    if (this.empForm.valid) {
       this._empProfessor.adicionarProfessor(this.empForm.value).subscribe({
         next: (val: any) => {
-          alert("Professor cadastrado com sucesso!")
+          alert('Professor cadastrado com sucesso!');
         },
         error: (err: any) => {
           console.error(err);
-        }
-      })
+        },
+      });
     }
-
+  }
 }

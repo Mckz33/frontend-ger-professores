@@ -5,18 +5,29 @@ import { LoginComponent } from './security/login/login.component';
 import { CadastroComponent } from './professor/cadastro/cadastro.component';
 import { RegistroComponent } from './security/registro/registro.component';
 const routes: Routes = [
+<<<<<<< HEAD
+  { path: 'login', component: LoginComponent },
+
+  { path: 'home', component: LayoutComponent },
+
+=======
 
   { path: 'login', component: LoginComponent },
 
   { path: 'home', component: LayoutComponent },
 
+>>>>>>> upstream/Teste
   { path: 'professor/cadastro', component: CadastroComponent },
 
   { path: 'registro', component: RegistroComponent },
 
   // Retorna para a tela de Login caso não ache outra página OU url diferente.
+<<<<<<< HEAD
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+=======
   { path: '', redirectTo:'login', pathMatch:'full' },
 
+>>>>>>> upstream/Teste
 ];
 
 @NgModule({
