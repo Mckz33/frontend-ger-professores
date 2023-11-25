@@ -21,9 +21,14 @@ import { CadastroService } from './services/cadastro.service';
 import { RegistroComponent } from './security/registro/registro.component';
 
 import { MatTableModule } from '@angular/material/table';
+<<<<<<< HEAD
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { NavbarComponent } from './components/navbar/navbar.component';
+=======
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+>>>>>>> upstream/Teste
 
 @NgModule({
   declarations: [
@@ -32,7 +37,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     LayoutComponent,
     LoginComponent,
     RegistroComponent,
+<<<<<<< HEAD
     NavbarComponent,
+=======
+>>>>>>> upstream/Teste
   ],
   imports: [
     BrowserModule,
@@ -50,7 +58,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     HttpClientModule,
     MatTableModule,
     MatPaginatorModule,
+<<<<<<< HEAD
     MatSortModule,
+=======
+    MatSortModule
+>>>>>>> upstream/Teste
   ],
 
   providers: [CadastroService],
