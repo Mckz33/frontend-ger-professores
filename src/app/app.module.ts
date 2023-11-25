@@ -21,8 +21,9 @@ import { CadastroService } from './services/cadastro.service';
 import { RegistroComponent } from './security/registro/registro.component';
 
 import { MatTableModule } from '@angular/material/table';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatSortModule} from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {MatSortModule} from '@angular/material/sort';
     LayoutComponent,
     LoginComponent,
     RegistroComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,7 @@ import {MatSortModule} from '@angular/material/sort';
     HttpClientModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
   ],
 
   providers: [CadastroService],
