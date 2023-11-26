@@ -47,13 +47,13 @@ export class ValidacaoCadastroService {
     return this.http.post(BASE_URL + "authenticate", loginRequest)
   }
 
-  hello(): Observable<any> {
-    const headers = this.createAuthorizationHeader();
+  // hello(): Observable<any> {
+  //   const headers = this.createAuthorizationHeader();
     
-    return this.http.get(BASE_URL + 'api/hello', {
-      headers: headers || undefined  // Adicionei esta parte para tratar null
-    });
-  }
+  //   return this.http.get(BASE_URL + 'FALTANDO', {
+  //     headers: headers || undefined 
+  //   });
+  // }
   
 
   private createAuthorizationHeader() {

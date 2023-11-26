@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
         alert(response.jwtToken);
         const jwtToken = response.jwtToken;
         localStorage.setItem('JWT', jwtToken);
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/home');
       }
     })
   }
