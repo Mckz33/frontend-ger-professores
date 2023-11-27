@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CadastroComponent } from './components/professor/cadastro/cadastro.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -37,10 +36,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DisAddEditComponent } from './components/dis-add-edit/dis-add-edit.component';
 import { CursAddEditComponent } from './components/curs-add-edit/curs-add-edit.component';
 import { AdmComponent } from './components/adm/adm.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
-    CadastroComponent,
     LayoutComponent,
     LoginComponent,
     RegistroComponent,
@@ -51,6 +50,7 @@ import { AdmComponent } from './components/adm/adm.component';
     CursAddEditComponent,
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -72,7 +72,6 @@ import { AdmComponent } from './components/adm/adm.component';
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
-    MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
@@ -80,6 +79,6 @@ import { AdmComponent } from './components/adm/adm.component';
 
   providers: [CadastroService],
 
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, AdmComponent],
 })
 export class AppModule {}

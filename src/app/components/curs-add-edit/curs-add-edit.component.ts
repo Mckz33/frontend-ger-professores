@@ -7,7 +7,7 @@ import { CursoService } from 'src/app/services/curso.service';
 @Component({
   selector: 'app-curs-add-edit',
   templateUrl: './curs-add-edit.component.html',
-  styleUrls: ['./curs-add-edit.component.scss'],
+  styleUrls: ['./curs-add-edit.component.css'],
 })
 export class CursAddEditComponent implements OnInit {
   cursoForm: FormGroup;

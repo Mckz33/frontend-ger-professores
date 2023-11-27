@@ -8,11 +8,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CoreService } from '../core/core.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-adm',
   templateUrl: './adm.component.html',
-  styleUrls: ['./adm.component.scss'],
+  styleUrls: ['./adm.component.css'],
 })
 export class AdmComponent implements OnInit {
   displayedColumns: string[] = [
@@ -35,7 +36,8 @@ export class AdmComponent implements OnInit {
   constructor(
     private _dialog: MatDialog,
     private _empService: EmployeeService,
-    private _coreService: CoreService
+    private _coreService: CoreService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {

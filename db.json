@@ -11,16 +11,6 @@
       "id": 2
     },
     {
-      "nome": "Victor",
-      "cpf": "12345678997",
-      "email": "victor@gmail.com",
-      "disc": "Ciência da Computação",
-      "curs": "Programação II",
-      "contratacao": "Integral",
-      "hora": 6,
-      "id": 3
-    },
-    {
       "nome": "Roger",
       "cpf": "12345678996",
       "email": "roger@outlook.com",
@@ -94,6 +84,15 @@
       "carga": 10,
       "curso": "ADS",
       "professor": "Matheus",
+      "id": 1
+    }
+  ],
+  "registro": [
+    {
+      "nome": "Estrucoso",
+      "cpf": "151.000.897-76",
+      "email": "fafadsfsd@gmil.com",
+      "senha": "fadsfsfdsf",
       "id": 1
     }
   ]

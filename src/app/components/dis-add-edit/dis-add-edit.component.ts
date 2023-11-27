@@ -7,7 +7,7 @@ import { DisciplinaService } from 'src/app/services/disciplina.service';
 @Component({
   selector: 'app-dis-add-edit',
   templateUrl: './dis-add-edit.component.html',
-  styleUrls: ['./dis-add-edit.component.scss'],
+  styleUrls: ['./dis-add-edit.component.css'],
 })
 export class DisAddEditComponent implements OnInit {
   disciplinaForm: FormGroup;

@@ -8,10 +8,6 @@
   max-width: 1348px;
 }
 
-mat-form-field {
-  width: 100%;
-}
-
 .action {
   display: flex;
   gap: 5px;
