@@ -20,7 +20,6 @@ import { CadastroService } from './services/cadastro.service';
 import { RegistroComponent } from './security/registro/registro.component';
 
 import { MatTableModule } from '@angular/material/table';
-
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -37,6 +36,7 @@ import { DisAddEditComponent } from './components/dis-add-edit/dis-add-edit.comp
 import { CursAddEditComponent } from './components/curs-add-edit/curs-add-edit.component';
 import { AdmComponent } from './components/adm/adm.component';
 import { RouterModule } from '@angular/router';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +44,7 @@ import { RouterModule } from '@angular/router';
     LoginComponent,
     RegistroComponent,
     NavbarComponent,
+
     AdmComponent,
     EmpAddEditComponent,
     DisAddEditComponent,
