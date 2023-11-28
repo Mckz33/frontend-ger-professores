@@ -1,5 +1,11 @@
 <mat-toolbar color="primary">
   <span>Gerenciamento de Professores</span>
+
+  <span class="example-spacer-button"></span>
+  <button mat-button routerLink="/home">
+    Início
+  </button>
+
   <span class="example-spacer"></span>
   <button mat-raised-button (click)="abrirAddEditProfForm()">
     + Professor
@@ -109,3 +115,13 @@
     ></mat-paginator>
   </div>
 </div>
+
+<!-- Footer -->
+<div class="row fixed-bottom">
+  <div class="container-fluid text-center text-light bg-dark p-3">
+    <p class="mb-0">
+      © 2023 Todos os direitos reservados - Gerenciamento de Professores
+    </p>
+  </div>
+</div>
+

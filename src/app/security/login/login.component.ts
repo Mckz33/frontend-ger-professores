@@ -25,15 +25,19 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  login() {
-    console.log(this.loginForm.value);
-    this.service.login(this.loginForm.value).subscribe((response) => {
-      console.log(response);
-      if (response.jwtToken) {
-        alert(response.jwtToken);
-        const jwtToken = response.jwtToken;
-        localStorage.setItem('JWT', jwtToken);
-        this.router.navigateByUrl('/home');
+  // Método de Login.
+  logIn() {
+    this._http.get<any>("http://localhost:3000/registro").subscribe(res =>{
+      const usuario = res.find((a:any) => {
+        return a.email === this.formLogin.value.email && a.senha === this.formLogin.value.senha
+      })
+      if(usuario) {
+        localStorage.setItem('token', Math.random().toString());
+        alert("Logado com Sucesso!");
+        this.formLogin.reset();
+        this.router.navigate(['home'])
+      } else {
+        alert("Login Inválido.")
       }
     })
   }

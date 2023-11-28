@@ -89,11 +89,18 @@
   ],
   "registro": [
     {
-      "nome": "Estrucoso",
-      "cpf": "151.000.897-76",
-      "email": "fafadsfsd@gmil.com",
-      "senha": "fadsfsfdsf",
+      "nome": "admin",
+      "cpf": "12345678998",
+      "email": "admin@gmail.com",
+      "senha": "123456",
       "id": 1
+    },
+    {
+      "nome": "Matheus",
+      "cpf": "12345678991",
+      "email": "matheus@gmail.com",
+      "senha": "123456",
+      "id": 2
     }
   ]
 }
