@@ -3,6 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from '../core/core.service';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { Curso } from 'src/app/models/curso';
+import { CursoService } from 'src/app/services/curso.service';
+import { DisciplinaService } from 'src/app/services/disciplina.service';
+import { Disciplina } from 'src/app/models/disciplina';
+import { Professor } from 'src/app/models/professor';
+import { ProfessorService } from 'src/app/services/professor.service';
 
 @Component({
   selector: 'app-emp-add-edit',
@@ -12,19 +18,9 @@ import { EmployeeService } from 'src/app/services/employee.service';
 export class EmpAddEditComponent implements OnInit {
   profForm: FormGroup;
 
-  cursos: string[] = [
-    'ADS',
-    'Engenharia de Software',
-    'Ciência da Computação',
-    'Engenharia da Computação',
-  ];
-
-  disciplinas: string[] = [
-    'Lógica de Programação',
-    'Programação I',
-    'Programação II',
-    'Programação Web I',
-  ];
+  curso: Curso[] = [];
+  disciplina: Disciplina[] = [];
+  professor!: Professor[];
 
   tipoDeContratacao: string[] = ['Horista', 'Parcial', 'Integral'];
 
@@ -33,21 +29,41 @@ export class EmpAddEditComponent implements OnInit {
     private _empService: EmployeeService,
     private _dialogRef: MatDialogRef<EmpAddEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _coreService: CoreService
+    private _coreService: CoreService,
+
+    private cursoService: CursoService,
+    private disciplinaService: DisciplinaService,
+    private professorService: ProfessorService
   ) {
     this.profForm = this._fb.group({
       nome: '',
       cpf: '',
       email: '',
-      disc: '',
-      curs: '',
+      curs: [{
+        nome: ''
+      }],
+      disc: [{
+        nome: ''
+      }],
       contratacao: '',
-      hora: '',
+      hora: ''
     });
   }
 
   ngOnInit(): void {
     this.profForm.patchValue(this.data);
+
+    this.professorService.getProfessorList().subscribe(p => {
+      this.professor = p;
+    });
+
+     this.cursoService.getCursoList().subscribe(c => {
+       this.curso = c;
+     });
+
+     this.disciplinaService.getDisciplinaList().subscribe(c => {
+      this.disciplina = c;
+   });
   }
 
   onFormSubmit() {

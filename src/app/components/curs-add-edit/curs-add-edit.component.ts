@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from '../core/core.service';
 import { CursoService } from 'src/app/services/curso.service';
+import { DisciplinaService } from 'src/app/services/disciplina.service';
+import { Disciplina } from 'src/app/models/disciplina';
 
 @Component({
   selector: 'app-curs-add-edit',
@@ -12,6 +14,8 @@ import { CursoService } from 'src/app/services/curso.service';
 export class CursAddEditComponent implements OnInit {
   cursoForm: FormGroup;
 
+  disciplinas: Disciplina[] = [];
+
   trimestres: string[] = ['1', '2', '3', '4'];
 
   constructor(
@@ -19,7 +23,8 @@ export class CursAddEditComponent implements OnInit {
     private _curService: CursoService,
     private _dialogRef: MatDialogRef<CursAddEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private _coreService: CoreService
+    private _coreService: CoreService,
+    private disciplinaService: DisciplinaService
   ) {
     this.cursoForm = this._fb.group({
       nome: '',
@@ -30,7 +35,11 @@ export class CursAddEditComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.disciplinaService.getDisciplinaList().subscribe(c => {
+      this.disciplinas = c;
+    });
+  }
 
   onFormSubmit() {
     if (this.cursoForm.valid) {

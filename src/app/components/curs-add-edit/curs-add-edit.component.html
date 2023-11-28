@@ -52,11 +52,19 @@
           formControlName="coordenador"
         />
       </mat-form-field>
+    </div>
+
+    <div class="row">
       <mat-form-field appearance="outline">
-        <mat-label>Disciplina</mat-label>
-        <input matInput placeholder="Ex. RC" formControlName="disciplinas" />
+        <mat-label>Disciplinas</mat-label>
+        <mat-select formControlName="curs">
+          <mat-option *ngFor="let val of disciplinas" [value]="val"
+            >{{ val.nome }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
+
   </div>
   <div mat-dialog-actions class="action">
     <button mat-raised-button color="primary" type="submit">

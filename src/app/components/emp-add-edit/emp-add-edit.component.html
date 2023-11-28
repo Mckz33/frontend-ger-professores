@@ -31,23 +31,24 @@
       </mat-form-field>
     </div>
 
-    <div class="row">
+  <div class="row">
       <mat-form-field appearance="outline">
         <mat-label>Curso</mat-label>
         <mat-select formControlName="curs">
-          <mat-option *ngFor="let val of cursos" [value]="val"
-            >{{val}}
+          <mat-option *ngFor="let val of curso" [value]="val"
+            >{{val.nome}}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
+    
 
     <div class="row">
       <mat-form-field appearance="outline">
         <mat-label>Disciplina</mat-label>
         <mat-select formControlName="disc">
-          <mat-option *ngFor="let val of disciplinas" [value]="val"
-            >{{val}}
+          <mat-option *ngFor="let val of disciplina" [value]="val"
+            >{{val.nome}}
           </mat-option>
         </mat-select>
       </mat-form-field>

@@ -1,7 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { FormGroup, FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
-import { ValidacaoCadastroService } from 'src/app/services/validacao-cadastro.service';
 
 @Component({
   selector: 'app-login',
@@ -10,18 +10,16 @@ import { ValidacaoCadastroService } from 'src/app/services/validacao-cadastro.se
 })
 export class LoginComponent implements OnInit {
 
-  loginForm!: FormGroup;
+  formLogin!:FormGroup;
 
-  constructor(
-    private service: ValidacaoCadastroService,
-    private fb: FormBuilder,
-    private router: Router
-  ) { }
+  constructor(private fb:FormBuilder, private _http:HttpClient, private router:Router) {
 
-  ngOnInit() {
-    this.loginForm = this.fb.group({
-      email: ['', Validators.required, Validators.email],
-      password: ['', Validators.required],
+  }
+
+  ngOnInit(): void {
+    this.formLogin = this.fb.group({
+      email:[''],
+      senha:['']
     })
   }
 
@@ -39,6 +37,9 @@ export class LoginComponent implements OnInit {
       } else {
         alert("Login Inválido.")
       }
+    }, err => {
+      alert("Login e/ou senha não encontrados.")
     })
   }
+
 }
