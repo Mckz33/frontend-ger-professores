@@ -6,10 +6,8 @@ import { RegistroComponent } from './security/registro/registro.component';
 import { AdmComponent } from './components/adm/adm.component';
 import { authGuard } from './guard/auth.guard';
 
-
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
-
 
   { path: 'home', component: LayoutComponent, canActivate: [authGuard] },
 

@@ -1,28 +1,26 @@
 <mat-toolbar color="primary">
   <span>Gerenciamento de Professores</span>
-
   <span class="example-spacer-button"></span>
   <button mat-button routerLink="/home">
     Início
   </button>
-
   <span class="example-spacer"></span>
   <button mat-raised-button (click)="abrirAddEditProfForm()">
     + Professor
   </button>
+  <button
+  mat-raised-button
+  (click)="abrirAddEditDiscForm()"
+  style="margin-left: 5px"
+>
+  + Disciplina
+</button>
   <button
     mat-raised-button
     (click)="abrirAddEditCursForm()"
     style="margin-left: 5px"
   >
     + Curso
-  </button>
-  <button
-    mat-raised-button
-    (click)="abrirAddEditDiscForm()"
-    style="margin-left: 5px"
-  >
-    + Disciplina
   </button>
 </mat-toolbar>
 
@@ -61,12 +59,12 @@
 
       <ng-container matColumnDef="curso">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Curso</th>
-        <td mat-cell *matCellDef="let row">{{ row.curs }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.curs.nome }}</td>
       </ng-container>
 
       <ng-container matColumnDef="disciplina">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Disciplina</th>
-        <td mat-cell *matCellDef="let row">{{ row.disc }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.disc.nome }}</td>
       </ng-container>
 
       <ng-container matColumnDef="contr">
@@ -124,4 +122,3 @@
     </p>
   </div>
 </div>
-
