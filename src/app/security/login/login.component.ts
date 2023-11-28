@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
         return a.email === this.formLogin.value.email && a.senha === this.formLogin.value.senha
       })
       if(usuario) {
+        localStorage.setItem('token', Math.random().toString());
         alert("Logado com Sucesso!");
         this.formLogin.reset();
         this.router.navigate(['home'])
@@ -42,4 +43,3 @@ export class LoginComponent implements OnInit {
   }
 
 }
-
