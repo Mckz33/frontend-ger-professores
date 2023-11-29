@@ -1,7 +1,69 @@
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
 .example-spacer {
-    flex: 1 1 auto;
-  }
+  flex: 1 1 auto;
+}
 
 .example-spacer-button {
-    margin-left: 25px;
+  margin-left: 25px;
+}
+
+.icone {
+  border: 4px solid black;
+  border-radius: 10px;
+  height: 200px;
+  width: 200px;
+}
+.icone i {
+  font-size: 120px;
+  color: #1a6eff;
+  margin-left: 17px;
+  margin-top: 10px;
+}
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+.card {
+  height: 50px;
+  width: 500px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered-text {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.custom-button-1 {
+  border: 3px solid #000000;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-left: 35px;
+}
+.custom-button-2 {
+  border: 3px solid #000000;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-left: 35px;
+}
+.custom-button-3 {
+  border: 3px solid #000000;
+  border-radius: 5px;
+  margin-top: 12px;
+  margin-left: 8px;
+  font-size: 10px;
+}
+.custom-button-1:hover,
+.custom-button-2:hover,
+.custom-button-3:hover {
+  background-color: rgb(140, 205, 255);
 }
