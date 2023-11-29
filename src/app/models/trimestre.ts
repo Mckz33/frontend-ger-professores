@@ -5,3 +5,4 @@ export interface Trimestre {
   descricao: string;
   curso: Curso;
 }
+
