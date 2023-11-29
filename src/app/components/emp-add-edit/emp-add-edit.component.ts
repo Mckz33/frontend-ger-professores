@@ -7,7 +7,7 @@ import { Curso } from 'src/app/models/curso';
 import { CursoService } from 'src/app/services/curso.service';
 import { DisciplinaService } from 'src/app/services/disciplina.service';
 import { Disciplina } from 'src/app/models/disciplina';
-import { Professor } from 'src/app/models/professor';
+import { Usuario } from 'src/app/models/usuario';
 import { ProfessorService } from 'src/app/services/professor.service';
 
 @Component({
@@ -19,10 +19,10 @@ export class EmpAddEditComponent implements OnInit {
   profForm: FormGroup;
 
   curso: Curso[] = [];
-  disciplina: Disciplina[] = [];
-  professor!: Professor[];
+  disciplinas!: Disciplina[];
+  professor!: Usuario[];
 
-  tipoDeContratacao: string[] = ['Horista', 'Parcial', 'Integral'];
+  contratacao: string[] = ['Horista', 'Parcial', 'Integral'];
 
   constructor(
     private _fb: FormBuilder,
@@ -36,17 +36,11 @@ export class EmpAddEditComponent implements OnInit {
     private professorService: ProfessorService
   ) {
     this.profForm = this._fb.group({
-      nome: '',
+      name: '',
       cpf: '',
       email: '',
-      curs: [{
-        nome: ''
-      }],
-      disc: [{
-        nome: ''
-      }],
+      disciplinas: [],
       contratacao: '',
-      hora: ''
     });
   }
 
@@ -62,7 +56,7 @@ export class EmpAddEditComponent implements OnInit {
      });
 
      this.disciplinaService.getDisciplinaList().subscribe(c => {
-      this.disciplina = c;
+      this.disciplinas = c;
    });
   }
 

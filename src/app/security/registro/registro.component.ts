@@ -11,6 +11,10 @@ import { Router } from '@angular/router';
 export class RegistroComponent implements OnInit {
   registroForm!: FormGroup;
 
+  Contratacao: string[] = ['Horista', 'Parcial', 'Integral'];
+  tipo: string[] = ['Professor', 'Coordenador', 'Administrador'];
+
+
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -22,14 +26,18 @@ export class RegistroComponent implements OnInit {
       nome: [''],
       cpf: [''],
       email: [''],
-      senha: [''],
+      password: [''],
+      professorCarga: null as unknown as number,
+      disciplinas: [''],
+      Contratacao: [''],
+      tipo: [''],
     });
   }
 
   // Método de criação do usuário.
   criarUsuario() {
     this.http
-      .post<any>('http://localhost:3000/registro', this.registroForm.value)
+      .post<any>('http://localhost:3000/usuarios', this.registroForm.value)
       .subscribe(
         (res) => {
           alert('Registro criado com Sucesso!');
