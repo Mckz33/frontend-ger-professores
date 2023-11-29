@@ -22,7 +22,6 @@ import { RegistroComponent } from './security/registro/registro.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,10 +31,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
 import { DisAddEditComponent } from './components/dis-add-edit/dis-add-edit.component';
 import { CursAddEditComponent } from './components/curs-add-edit/curs-add-edit.component';
 import { AdmComponent } from './components/adm/adm.component';
 import { RouterModule } from '@angular/router';
+import { AdmDisciplinaComponent } from './components/adm-disciplina/adm-disciplina.component';
+import { AdmCursoComponent } from './components/adm-curso/adm-curso.component';
 
 @NgModule({
   declarations: [
@@ -43,12 +45,13 @@ import { RouterModule } from '@angular/router';
     HomeComponent,
     LoginComponent,
     RegistroComponent,
-    NavbarComponent,
 
     AdmComponent,
     EmpAddEditComponent,
     DisAddEditComponent,
     CursAddEditComponent,
+    AdmDisciplinaComponent,
+    AdmCursoComponent,
   ],
   imports: [
     RouterModule,
@@ -76,6 +79,7 @@ import { RouterModule } from '@angular/router';
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
+    MatTabsModule,
   ],
 
   providers: [CadastroService],

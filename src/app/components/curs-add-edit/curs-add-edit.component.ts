@@ -5,6 +5,7 @@ import { CoreService } from '../core/core.service';
 import { CursoService } from 'src/app/services/curso.service';
 import { DisciplinaService } from 'src/app/services/disciplina.service';
 import { Disciplina } from 'src/app/models/disciplina';
+import { Usuario } from 'src/app/models/usuario';
 
 @Component({
   selector: 'app-curs-add-edit',
@@ -14,7 +15,8 @@ import { Disciplina } from 'src/app/models/disciplina';
 export class CursAddEditComponent implements OnInit {
   cursoForm: FormGroup;
 
-  disciplinas: Disciplina[] = [];
+  usuario_coordenador!: Usuario;
+  disciplinas!: Disciplina[];
 
   trimestres: string[] = ['1', '2', '3', '4'];
 
@@ -27,11 +29,9 @@ export class CursAddEditComponent implements OnInit {
     private disciplinaService: DisciplinaService
   ) {
     this.cursoForm = this._fb.group({
-      nome: '',
-      sigla: '',
+      curso_nome: '',
       trimestre: '',
-      coordenador: '',
-      disciplinas: '',
+      usuario_coordenador: '',
     });
   }
 

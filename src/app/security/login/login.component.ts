@@ -19,15 +19,15 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.formLogin = this.fb.group({
       email:[''],
-      senha:['']
+      password:['']
     })
   }
 
   // Método de Login.
   logIn() {
-    this._http.get<any>("http://localhost:3000/registro").subscribe(res =>{
+    this._http.get<any>("http://localhost:3000/usuarios").subscribe(res =>{
       const usuario = res.find((a:any) => {
-        return a.email === this.formLogin.value.email && a.senha === this.formLogin.value.senha
+        return a.email === this.formLogin.value.email && a.password === this.formLogin.value.password
       })
       if(usuario) {
         localStorage.setItem('token', Math.random().toString());

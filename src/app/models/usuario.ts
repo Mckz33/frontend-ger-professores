@@ -8,6 +8,6 @@ export interface Usuario {
   email: string;
   professorCarga: number;
   disciplinas: Disciplina[];
-  Contratacao: string;
+  contratacao: string;
   tipo: string;
 }

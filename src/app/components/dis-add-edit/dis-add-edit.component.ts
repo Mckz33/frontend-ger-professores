@@ -14,7 +14,7 @@ import { CursoService } from 'src/app/services/curso.service';
 export class DisAddEditComponent implements OnInit {
   disciplinaForm: FormGroup;
 
-  cursos: Curso[] = [];
+  cursos!: Curso[];
 
   constructor(
     private _fb: FormBuilder,
@@ -25,12 +25,10 @@ export class DisAddEditComponent implements OnInit {
     private cursoService: CursoService
   ) {
     this.disciplinaForm = this._fb.group({
-      nome: '',
-      sigla: '',
-      carga: '',
-      curso: '',
-      professor: '',
-    });
+      disciplina_nome: '',
+      disciplina_carga: '',
+      cursos: []
+        });
   }
 
   ngOnInit(): void {
@@ -72,5 +70,7 @@ export class DisAddEditComponent implements OnInit {
           });
       }
     }
+    console.log(this.disciplinaForm.value);
+
   }
 }

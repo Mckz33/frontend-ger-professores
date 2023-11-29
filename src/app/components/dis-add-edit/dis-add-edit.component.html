@@ -10,23 +10,16 @@
           matInput
           type="text"
           placeholder="Ex. Lógica de Programação"
-          formControlName="nome"
+          formControlName="disciplina_nome"
         />
       </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Sigla da Disciplina</mat-label>
-        <input matInput placeholder="Ex. LP" formControlName="sigla" />
-      </mat-form-field>
-    </div>
-
-    <div class="row">
       <mat-form-field appearance="outline">
         <mat-label>Carga Horária</mat-label>
         <input
           matInput
           type="number"
           placeholder="Ex. 2"
-          formControlName="carga"
+          formControlName="disciplina_carga"
         />
       </mat-form-field>
     </div>
@@ -34,23 +27,11 @@
     <div class="row">
       <mat-form-field appearance="outline">
         <mat-label>Curso</mat-label>
-        <mat-select formControlName="curs">
-          <mat-option *ngFor="let val of cursos" [value]="val"
-            >{{ val.nome }}
+        <mat-select formControlName="cursos">
+          <mat-option *ngFor="let curso of cursos" [value]="curso"
+            >{{ curso.curso_nome }}
           </mat-option>
         </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Professor Responsável</mat-label>
-        <input
-          matInput
-          type="text"
-          placeholder="Ex. Matheus"
-          formControlName="professor"
-        />
       </mat-form-field>
     </div>
   </div>
