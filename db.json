@@ -48,6 +48,42 @@
       },
       "contratacao": "Horista",
       "id": 2
+    },
+    {
+      "name": "Matheus",
+      "cpf": "12345678991",
+      "email": "matheus@gmail.com",
+      "disciplinas": {
+        "disciplina_nome": "Cálculo I",
+        "disciplina_carga": 10,
+        "cursos": {
+          "curso_nome": "Matemática",
+          "trimestre": "4",
+          "usuario_coordenador": "Matheus",
+          "id": 3
+        },
+        "id": 3
+      },
+      "contratacao": "Integral",
+      "id": 3
+    },
+    {
+      "name": "Cleber",
+      "cpf": "09876543211",
+      "email": "claudio@gmail.com",
+      "disciplinas": {
+        "disciplina_nome": "Hotel I",
+        "disciplina_carga": 10,
+        "cursos": {
+          "curso_nome": "Hotelaria",
+          "trimestre": "2",
+          "usuario_coordenador": "Leilla",
+          "id": 2
+        },
+        "id": 2
+      },
+      "contratacao": "Parcial",
+      "id": 4
     }
   ],
   "cursos": [
@@ -62,6 +98,12 @@
       "trimestre": "2",
       "usuario_coordenador": "Leilla",
       "id": 2
+    },
+    {
+      "curso_nome": "Matemática",
+      "trimestre": "4",
+      "usuario_coordenador": "Matheus",
+      "id": 3
     }
   ],
   "disciplinas": [
@@ -86,6 +128,28 @@
         "id": 2
       },
       "id": 2
+    },
+    {
+      "disciplina_nome": "Cálculo I",
+      "disciplina_carga": 10,
+      "cursos": {
+        "curso_nome": "Matemática",
+        "trimestre": "4",
+        "usuario_coordenador": "Matheus",
+        "id": 3
+      },
+      "id": 3
+    },
+    {
+      "disciplina_nome": "Cálculo II",
+      "disciplina_carga": 2,
+      "cursos": {
+        "curso_nome": "Matemática",
+        "trimestre": "4",
+        "usuario_coordenador": "Matheus",
+        "id": 3
+      },
+      "id": 4
     }
   ]
 }

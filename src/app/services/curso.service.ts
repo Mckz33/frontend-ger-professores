@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CursoService {
+  private apiUrl = 'http://localhost:3000/cursos'; // Substitua pela sua URL de API
+
   constructor(private _http: HttpClient) {}
 
   adicionarCurso(data: any): Observable<any> {
@@ -23,4 +25,5 @@ export class CursoService {
   deletarCurso(id: number): Observable<any> {
     return this._http.delete(`http://localhost:3000/cursos/${id}`);
   }
+
 }

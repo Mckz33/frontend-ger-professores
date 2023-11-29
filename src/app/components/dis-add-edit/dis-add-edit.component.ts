@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CoreService } from '../core/core.service';
 import { DisciplinaService } from 'src/app/services/disciplina.service';
@@ -18,16 +18,19 @@ export class DisAddEditComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _disService: DisciplinaService,
     private _dialogRef: MatDialogRef<DisAddEditComponent>,
+
     @Inject(MAT_DIALOG_DATA) public data: any,
+
     private _coreService: CoreService,
-    private cursoService: CursoService
+    private cursoService: CursoService,
+    private _disService: DisciplinaService,
+
   ) {
     this.disciplinaForm = this._fb.group({
-      disciplina_nome: '',
-      disciplina_carga: '',
-      cursos: []
+      disciplina_nome: ['', Validators.required],
+      disciplina_carga: ['', [Validators.required, this.valorNegativo]],
+      cursos: ['', Validators.required],
         });
   }
 
@@ -35,6 +38,16 @@ export class DisAddEditComponent implements OnInit {
     this.cursoService.getCursoList().subscribe(c => {
       this.cursos = c;
     });
+  }
+
+  valorNegativo(control: AbstractControl): { [key: string]: boolean } | null {
+    const carga = control.value;
+
+    if (carga !== null && carga < 0) {
+      return { 'negativeValue': true };
+    }
+
+    return null;
   }
 
   onFormSubmit() {
@@ -68,9 +81,22 @@ export class DisAddEditComponent implements OnInit {
               console.error(err);
             },
           });
+      } 
+    } else {
+        if (this.disciplinaForm.get('disciplina_nome')?.hasError('required')) {
+          this._coreService.openSnackBar('Por favor, preencha da disciplina.');
+        }
+
+        if (this.disciplinaForm.get('disciplina_carga')?.hasError('required')) {
+          this._coreService.openSnackBar('Por favor, preencha a carga horária.');
+        }
+
+        if (this.disciplinaForm.get('cursos')?.hasError('required')) {
+          this._coreService.openSnackBar('Por favor, selecione um curso.');
+      }
+        if (this.disciplinaForm.get('disciplina_carga')?.hasError('negativeValue')) {
+          this._coreService.openSnackBar('A carga horária não pode ser um valor negativo.');
       }
     }
-    console.log(this.disciplinaForm.value);
-
   }
 }
