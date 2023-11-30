@@ -1,7 +1,5 @@
 // validacao-cadastro.service.ts
 import { Injectable } from '@angular/core';
-import { Curso } from '../models/curso';
-import { Disciplina } from '../models/disciplina';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
