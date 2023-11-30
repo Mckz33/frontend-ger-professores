@@ -21,6 +21,17 @@
       "Contratacao": "Horista",
       "tipo": "Professor",
       "id": 2
+    },
+    {
+      "nome": "mckz",
+      "cpf": "12312312312",
+      "email": "mckz@gmail.com",
+      "password": "admin",
+      "professorCarga": null,
+      "disciplinas": "",
+      "Contratacao": "Horista",
+      "tipo": "Professor",
+      "id": 3
     }
   ],
   "professores": [
