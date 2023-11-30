@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', jwtToken);
         this.router.navigate(['home'])
         this.formLogin.reset();
+
       } else {
         alert("Login Inválido.")
       }
