@@ -21,6 +21,17 @@
       "Contratacao": "Horista",
       "tipo": "Professor",
       "id": 2
+    },
+    {
+      "nome": "Professor",
+      "cpf": "09876544321",
+      "email": "professor@gmail.com",
+      "password": "123456",
+      "professorCarga": null,
+      "disciplinas": "",
+      "Contratacao": "Horista",
+      "tipo": "Professor",
+      "id": 3
     }
   ],
   "professores": [

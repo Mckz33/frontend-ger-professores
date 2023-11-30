@@ -32,8 +32,14 @@ export class LoginComponent implements OnInit {
       if(usuario) {
         localStorage.setItem('token', Math.random().toString());
         alert("Logado com Sucesso!");
-        this.formLogin.reset();
-        this.router.navigate(['home'])
+        
+        if (usuario.tipo === 'Administrador') {
+          this.router.navigate(['admin/curso']);
+          this.formLogin.reset();
+        } else {
+          this.router.navigate(['home']);
+        }
+
       } else {
         alert("Login Inválido.")
       }

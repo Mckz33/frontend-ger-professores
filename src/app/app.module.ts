@@ -38,6 +38,7 @@ import { AdmComponent } from './components/tables/adm/adm.component';
 import { RouterModule } from '@angular/router';
 import { AdmDisciplinaComponent } from './components/tables/adm-disciplina/adm-disciplina.component';
 import { AdmCursoComponent } from './components/tables/adm-curso/adm-curso.component';
+import { AdmTrimestreComponent } from './components/tables/adm-trimestre/adm-trimestre.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AdmCursoComponent } from './components/tables/adm-curso/adm-curso.compo
     CursAddEditComponent,
     AdmDisciplinaComponent,
     AdmCursoComponent,
+    AdmTrimestreComponent,
   ],
   imports: [
     RouterModule,
