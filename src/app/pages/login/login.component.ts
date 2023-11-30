@@ -31,13 +31,21 @@ export class LoginComponent implements OnInit {
       })
       if(usuario) {
         localStorage.setItem('token', Math.random().toString());
-        alert("Logado com Sucesso!");
         
         if (usuario.tipo === 'Administrador') {
-          this.router.navigate(['admin/curso']);
-          this.formLogin.reset();
-        } else {
+          alert("Administrador logado com sucesso!");
           this.router.navigate(['home']);
+          this.formLogin.reset();
+        
+        } if (usuario.tipo === 'Coordenador') {
+          alert("Coordenador logado com sucesso!");
+          this.router.navigate(['home']);
+          this.formLogin.reset();
+
+        } else {
+          alert("Professor logado com sucesso!");
+          this.router.navigate(['home/professor']);
+          this.formLogin.reset();
         }
 
       } else {

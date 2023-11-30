@@ -39,6 +39,7 @@ import { RouterModule } from '@angular/router';
 import { AdmDisciplinaComponent } from './components/tables/adm-disciplina/adm-disciplina.component';
 import { AdmCursoComponent } from './components/tables/adm-curso/adm-curso.component';
 import { AdmTrimestreComponent } from './components/tables/adm-trimestre/adm-trimestre.component';
+import { ProfViewComponent } from './pages/prof-view/prof-view.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { AdmTrimestreComponent } from './components/tables/adm-trimestre/adm-tri
     AdmDisciplinaComponent,
     AdmCursoComponent,
     AdmTrimestreComponent,
+    ProfViewComponent,
   ],
   imports: [
     RouterModule,
