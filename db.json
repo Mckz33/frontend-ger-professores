@@ -1,0 +1,201 @@
+{
+  "usuarios": [
+    {
+      "nome": "admin",
+      "cpf": "12345678998",
+      "email": "admin@gmail.com",
+      "password": "123456",
+      "professorCarga": null,
+      "disciplinas": "",
+      "Contratacao": "Integral",
+      "tipo": "Administrador",
+      "id": 1
+    },
+    {
+      "nome": "Victor",
+      "cpf": "12345678990",
+      "email": "victor@gmail.com",
+      "password": "123456",
+      "professorCarga": null,
+      "disciplinas": "",
+      "Contratacao": "Horista",
+      "tipo": "Professor",
+      "id": 2
+    }
+  ],
+  "professores": [
+    {
+      "name": "Reinaldo",
+      "cpf": "123321123",
+      "email": "reinaldo@gmail.com",
+      "disciplinas": {
+        "disciplina_nome": "Lógica de Programação",
+        "disciplina_carga": 360,
+        "cursos": {
+          "curso_nome": "Análise e Desenvolvimento de Sistemas",
+          "trimestre": "1",
+          "usuario_coordenador": "Jhony",
+          "id": 1
+        },
+        "id": 1
+      },
+      "contratacao": "Horista",
+      "id": 1
+    },
+    {
+      "name": "Leilla",
+      "cpf": "12345678990",
+      "email": "leilla@gmail.com",
+      "disciplinas": {
+        "disciplina_nome": "Hotel I",
+        "disciplina_carga": 10,
+        "cursos": {
+          "curso_nome": "Hotelaria",
+          "trimestre": "2",
+          "usuario_coordenador": "Leilla",
+          "id": 2
+        },
+        "id": 2
+      },
+      "contratacao": "Horista",
+      "id": 2
+    },
+    {
+      "name": "Matheus",
+      "cpf": "12345678991",
+      "email": "matheus@gmail.com",
+      "disciplinas": {
+        "disciplina_nome": "Cálculo I",
+        "disciplina_carga": 10,
+        "cursos": {
+          "curso_nome": "Matemática",
+          "trimestre": "4",
+          "usuario_coordenador": "Matheus",
+          "id": 3
+        },
+        "id": 3
+      },
+      "contratacao": "Integral",
+      "id": 3
+    },
+    {
+      "name": "Cleber",
+      "cpf": "09876543211",
+      "email": "claudio@gmail.com",
+      "disciplinas": {
+        "disciplina_nome": "Hotel I",
+        "disciplina_carga": 10,
+        "cursos": {
+          "curso_nome": "Hotelaria",
+          "trimestre": "2",
+          "usuario_coordenador": "Leilla",
+          "id": 2
+        },
+        "id": 2
+      },
+      "contratacao": "Parcial",
+      "id": 4
+    },
+    {
+      "name": "Victor",
+      "cpf": "123123321",
+      "email": "victor@gmail.com",
+      "disciplinas": {
+        "disciplina_nome": "Redes I",
+        "disciplina_carga": 4,
+        "cursos": {
+          "curso_nome": "Redes de Computadores",
+          "trimestre": "4",
+          "usuario_coordenador": "Victor",
+          "id": 4
+        },
+        "id": 5
+      },
+      "contratacao": "Integral",
+      "id": 5
+    }
+  ],
+  "cursos": [
+    {
+      "curso_nome": "Análise e Desenvolvimento de Sistemas",
+      "trimestre": "1",
+      "usuario_coordenador": "Jhony",
+      "id": 1
+    },
+    {
+      "curso_nome": "Hotelaria",
+      "trimestre": "2",
+      "usuario_coordenador": "Leilla",
+      "id": 2
+    },
+    {
+      "curso_nome": "Matemática",
+      "trimestre": "4",
+      "usuario_coordenador": "Matheus",
+      "id": 3
+    },
+    {
+      "curso_nome": "Redes de Computadores",
+      "trimestre": "4",
+      "usuario_coordenador": "Victor",
+      "id": 4
+    }
+  ],
+  "disciplinas": [
+    {
+      "disciplina_nome": "Lógica de Programação",
+      "disciplina_carga": 360,
+      "cursos": {
+        "curso_nome": "Análise e Desenvolvimento de Sistemas",
+        "trimestre": "1",
+        "usuario_coordenador": "Jhony",
+        "id": 1
+      },
+      "id": 1
+    },
+    {
+      "disciplina_nome": "Hotel I",
+      "disciplina_carga": 10,
+      "cursos": {
+        "curso_nome": "Hotelaria",
+        "trimestre": "2",
+        "usuario_coordenador": "Leilla",
+        "id": 2
+      },
+      "id": 2
+    },
+    {
+      "disciplina_nome": "Cálculo I",
+      "disciplina_carga": 10,
+      "cursos": {
+        "curso_nome": "Matemática",
+        "trimestre": "4",
+        "usuario_coordenador": "Matheus",
+        "id": 3
+      },
+      "id": 3
+    },
+    {
+      "disciplina_nome": "Cálculo II",
+      "disciplina_carga": 2,
+      "cursos": {
+        "curso_nome": "Matemática",
+        "trimestre": "4",
+        "usuario_coordenador": "Matheus",
+        "id": 3
+      },
+      "id": 4
+    },
+    {
+      "disciplina_nome": "Redes I",
+      "disciplina_carga": 4,
+      "cursos": {
+        "curso_nome": "Redes de Computadores",
+        "trimestre": "4",
+        "usuario_coordenador": "Victor",
+        "id": 4
+      },
+      "id": 5
+    }
+  ]
+}

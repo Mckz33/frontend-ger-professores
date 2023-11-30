@@ -1,22 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from './pages/layout/layout.component';
-import { LoginComponent } from './security/login/login.component';
-import { CadastroComponent } from './professor/cadastro/cadastro.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegistroComponent } from './pages/registro/registro.component';
+import { AdmComponent } from './components/tables/adm/adm.component';
+import { authGuard } from './Guard/auth.guard';
+import { AdmDisciplinaComponent } from './components/tables/adm-disciplina/adm-disciplina.component';
+import { AdmCursoComponent } from './components/tables/adm-curso/adm-curso.component';
+import { HomeComponent } from './pages/home/home.component';
+
 const routes: Routes = [
-  {
-    path: 'home',
-    component: LayoutComponent,
-  },
+  { path: 'login', component: LoginComponent },
 
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
-  { path: 'professor/cadastro', component: CadastroComponent },
+  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
 
-  // Retorna para a tela Home caso não ache outra página OU url diferente.
-  { path: '**', component: LayoutComponent },
+  { path: 'registro', component: RegistroComponent },
+
+  { path: 'admin/professor', component: AdmComponent, canActivate: [authGuard] },
+  { path: 'admin/disciplina', component: AdmDisciplinaComponent, canActivate: [authGuard] },
+  { path: 'admin/curso', component: AdmCursoComponent, canActivate: [authGuard] },
+
+  // Retorna para a tela de Login caso não ache outra página OU url diferente.
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
 
 @NgModule({
