@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AsyncValidatorFn, AbstractControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CoreService } from '../core/core.service';
+import { CoreService } from '../../core/core.service';
 import { CursoService } from 'src/app/services/curso.service';
 import { DisciplinaService } from 'src/app/services/disciplina.service';
 import { Disciplina } from 'src/app/models/disciplina';
 import { Usuario } from 'src/app/models/usuario';
-
+import { Observable, of, timer } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-curs-add-edit',
   templateUrl: './curs-add-edit.component.html',
@@ -29,9 +30,9 @@ export class CursAddEditComponent implements OnInit {
     private disciplinaService: DisciplinaService
   ) {
     this.cursoForm = this._fb.group({
-      curso_nome: '',
-      trimestre: '',
-      usuario_coordenador: '',
+      curso_nome: ['', [Validators.required]],
+      trimestre: ['', Validators.required],
+      usuario_coordenador: ['', Validators.required],
     });
   }
 
@@ -40,8 +41,8 @@ export class CursAddEditComponent implements OnInit {
       this.disciplinas = c;
     });
   }
-
   onFormSubmit() {
+    
     if (this.cursoForm.valid) {
       if (this.data) {
         this._curService
@@ -66,6 +67,18 @@ export class CursAddEditComponent implements OnInit {
             console.error(err);
           },
         });
+      }
+    } else {
+        if (this.cursoForm.get('curso_nome')?.hasError('required')) {
+          this._coreService.openSnackBar('Por favor, preencha do curso.');
+        }
+
+        if (this.cursoForm.get('trimestre')?.hasError('required')) {
+          this._coreService.openSnackBar('Por favor, selecione o trimestre.');
+        }
+
+        if (this.cursoForm.get('usuario_coordenador')?.hasError('required')) {
+          this._coreService.openSnackBar('Por favor, preencha o nome do coordenador.');
       }
     }
   }
