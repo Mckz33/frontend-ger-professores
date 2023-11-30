@@ -39,10 +39,10 @@ export class LoginComponent implements OnInit {
         
         } if (usuario.tipo === 'Coordenador') {
           alert("Coordenador logado com sucesso!");
-          this.router.navigate(['home']);
+          this.router.navigate(['home/professor']);
           this.formLogin.reset();
 
-        } else {
+        } if (usuario.tipo === 'Professor') {
           alert("Professor logado com sucesso!");
           this.router.navigate(['home/professor']);
           this.formLogin.reset();

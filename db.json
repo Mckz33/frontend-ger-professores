@@ -124,6 +124,24 @@
       },
       "contratacao": "Integral",
       "id": 5
+    },
+    {
+      "name": "Maria",
+      "cpf": "12345678991",
+      "email": "maria@gmail.com",
+      "disciplinas": {
+        "disciplina_nome": "Português Instrumental",
+        "disciplina_carga": 10,
+        "cursos": {
+          "curso_nome": "Letras",
+          "trimestre": "1",
+          "usuario_coordenador": "Maria",
+          "id": 5
+        },
+        "id": 6
+      },
+      "contratacao": "Horista",
+      "id": 6
     }
   ],
   "cursos": [
@@ -150,6 +168,12 @@
       "trimestre": "4",
       "usuario_coordenador": "Victor",
       "id": 4
+    },
+    {
+      "curso_nome": "Letras",
+      "trimestre": "1",
+      "usuario_coordenador": "Maria",
+      "id": 5
     }
   ],
   "disciplinas": [
@@ -207,6 +231,17 @@
         "id": 4
       },
       "id": 5
+    },
+    {
+      "disciplina_nome": "Português Instrumental",
+      "disciplina_carga": 10,
+      "cursos": {
+        "curso_nome": "Letras",
+        "trimestre": "1",
+        "usuario_coordenador": "Maria",
+        "id": 5
+      },
+      "id": 6
     }
   ]
 }
