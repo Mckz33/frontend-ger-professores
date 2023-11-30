@@ -1,27 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EmpAddEditComponent } from '../emp-add-edit/emp-add-edit.component';
-import { DisAddEditComponent } from '../dis-add-edit/dis-add-edit.component';
-import { CursAddEditComponent } from '../curs-add-edit/curs-add-edit.component';
-import { EmployeeService } from 'src/app/services/employee.service';
+import { EmpAddEditComponent } from '../../forms/emp-add-edit/emp-add-edit.component';
+import { DisAddEditComponent } from '../../forms/dis-add-edit/dis-add-edit.component';
+import { CursAddEditComponent } from '../../forms/curs-add-edit/curs-add-edit.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CoreService } from '../core/core.service';
+import { CoreService } from '../../core/core.service';
+import { CursoService } from 'src/app/services/curso.service';
 
 @Component({
-  selector: 'app-adm',
-  templateUrl: './adm.component.html',
-  styleUrls: ['./adm.component.css'],
+  selector: 'app-adm-curso',
+  templateUrl: './adm-curso.component.html',
+  styleUrls: ['./adm-curso.component.css']
 })
-export class AdmComponent implements OnInit {
+export class AdmCursoComponent implements OnInit{
+
   displayedColumns: string[] = [
     'id',
-    'primeiroNome',
-    'CPF',
-    'email',
-    'disciplina',
-    'contr',
+    'curso_nome', 
+    'usuario_coordenador',
     'trimestre',
     'action',
   ];
@@ -33,12 +31,12 @@ export class AdmComponent implements OnInit {
 
   constructor(
     private _dialog: MatDialog,
-    private _empService: EmployeeService,
     private _coreService: CoreService,
+    private _cursoService: CursoService,
       ) {}
 
   ngOnInit(): void {
-    this.getProfessorList();
+    this.getCursoList();
   }
 
   abrirAddEditProfForm() {
@@ -46,7 +44,7 @@ export class AdmComponent implements OnInit {
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getProfessorList();
+          this.getCursoList();
         }
       },
     });
@@ -72,8 +70,8 @@ export class AdmComponent implements OnInit {
     });
   }
 
-  getProfessorList() {
-    this._empService.getProfessorList().subscribe({
+  getCursoList() {
+    this._cursoService.getCursoList().subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.sort = this.sort;
@@ -92,25 +90,25 @@ export class AdmComponent implements OnInit {
     }
   }
 
-  deletarProfessor(id: number) {
-    this._empService.deletarProfessor(id).subscribe({
+  deletarCurso(id: number) {
+    this._cursoService.deletarCurso(id).subscribe({
       next: (res) => {
-        this._coreService.openSnackBar('Professor removido!', 'done');
-        this.getProfessorList();
+        this._coreService.openSnackBar('Curso removido!', 'done');
+        this.getCursoList();
       },
       error: console.log,
     });
   }
 
   abrirEditForm(data: any) {
-    const dialogRef = this._dialog.open(EmpAddEditComponent, {
+    const dialogRef = this._dialog.open(CursAddEditComponent, {
       data,
     });
 
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getProfessorList();
+          this.getCursoList();
         }
       },
     });

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AsyncValidatorFn, AbstractControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CoreService } from '../core/core.service';
+import { CoreService } from '../../core/core.service';
 import { CursoService } from 'src/app/services/curso.service';
 import { DisciplinaService } from 'src/app/services/disciplina.service';
 import { Disciplina } from 'src/app/models/disciplina';

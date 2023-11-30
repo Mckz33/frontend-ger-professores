@@ -10,6 +10,17 @@
       "Contratacao": "Integral",
       "tipo": "Administrador",
       "id": 1
+    },
+    {
+      "nome": "Victor",
+      "cpf": "12345678990",
+      "email": "victor@gmail.com",
+      "password": "123456",
+      "professorCarga": null,
+      "disciplinas": "",
+      "Contratacao": "Horista",
+      "tipo": "Professor",
+      "id": 2
     }
   ],
   "professores": [
@@ -84,6 +95,24 @@
       },
       "contratacao": "Parcial",
       "id": 4
+    },
+    {
+      "name": "Victor",
+      "cpf": "123123321",
+      "email": "victor@gmail.com",
+      "disciplinas": {
+        "disciplina_nome": "Redes I",
+        "disciplina_carga": 4,
+        "cursos": {
+          "curso_nome": "Redes de Computadores",
+          "trimestre": "4",
+          "usuario_coordenador": "Victor",
+          "id": 4
+        },
+        "id": 5
+      },
+      "contratacao": "Integral",
+      "id": 5
     }
   ],
   "cursos": [
@@ -104,6 +133,12 @@
       "trimestre": "4",
       "usuario_coordenador": "Matheus",
       "id": 3
+    },
+    {
+      "curso_nome": "Redes de Computadores",
+      "trimestre": "4",
+      "usuario_coordenador": "Victor",
+      "id": 4
     }
   ],
   "disciplinas": [
@@ -150,6 +185,17 @@
         "id": 3
       },
       "id": 4
+    },
+    {
+      "disciplina_nome": "Redes I",
+      "disciplina_carga": 4,
+      "cursos": {
+        "curso_nome": "Redes de Computadores",
+        "trimestre": "4",
+        "usuario_coordenador": "Victor",
+        "id": 4
+      },
+      "id": 5
     }
   ]
 }
