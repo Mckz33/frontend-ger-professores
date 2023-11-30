@@ -17,9 +17,9 @@ import { CursoService } from 'src/app/services/curso.service';
 export class AdmCursoComponent implements OnInit{
 
   displayedColumns: string[] = [
-    'id',
+    'curso_id',
     'curso_nome', 
-    'usuario_coordenador',
+    'coordenador',
     'trimestre',
     'action',
   ];

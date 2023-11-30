@@ -3,9 +3,9 @@ import { Trimestre } from "./trimestre";
 import { Usuario } from "./usuario";
 
 export interface Curso {
-  id: number;
+  curso_id: number;
   curso_nome: string;
   trimestre: Trimestre;
   coordenador: Usuario;
-  disciplina: Disciplina[] | null;
+  disciplina: Disciplina[];
 }
