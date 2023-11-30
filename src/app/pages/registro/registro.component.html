@@ -1,0 +1,112 @@
+<!-- CADASTRO DE USUÁRIOS -->
+<div
+  class="container mt-5"
+  style="
+    background-color: white;
+    border-radius: 5px;
+    border: 1px black;
+    border-style: double;
+  "
+>
+  <h2 class="mb-4 pt-3">Cadastro de Usuários</h2>
+
+  <form class="mb-4" [formGroup]="registroForm" (ngSubmit)="criarUsuario()">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input
+          matInput
+          type="nome"
+          placeholder="Ex. Matheus"
+          formControlName="nome"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>CPF</mat-label>
+        <input
+          matInput
+          type="cpf"
+          placeholder="Ex. 12345678998"
+          formControlName="cpf"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          placeholder="Ex. matheus@gmail.com"
+          formControlName="email"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Contratação</mat-label>
+        <mat-select formControlName="Contratacao">
+          <mat-option *ngFor="let val of Contratacao" [value]="val"
+            >{{val}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Especialidade</mat-label>
+        <mat-select formControlName="tipo">
+          <mat-option *ngFor="let val of tipo" [value]="val"
+            >{{val}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          type="password"
+          placeholder="Ex. Sua senha"
+          formControlName="password"
+        />
+      </mat-form-field>
+    </div>
+
+    <div>
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!registroForm.valid"
+      >
+        Cadastrar
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        routerLink="/login"
+        style="margin-left: 5px"
+      >
+        Voltar
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Footer -->
+<div class="row fixed-bottom">
+  <div class="container-fluid text-center text-light bg-dark p-3">
+    <p class="mb-0">
+      © 2023 Todos os direitos reservados - Gerenciamento de Professores
+    </p>
+  </div>
+</div>
+>

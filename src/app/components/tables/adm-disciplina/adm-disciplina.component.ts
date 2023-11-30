@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EmpAddEditComponent } from '../emp-add-edit/emp-add-edit.component';
-import { DisAddEditComponent } from '../dis-add-edit/dis-add-edit.component';
-import { CursAddEditComponent } from '../curs-add-edit/curs-add-edit.component';
+import { EmpAddEditComponent } from '../../forms/emp-add-edit/emp-add-edit.component';
+import { DisAddEditComponent } from '../../forms/dis-add-edit/dis-add-edit.component';
+import { CursAddEditComponent } from '../../forms/curs-add-edit/curs-add-edit.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CoreService } from '../core/core.service';
+import { CoreService } from '../../core/core.service';
 import { DisciplinaService } from 'src/app/services/disciplina.service';
 
 @Component({
