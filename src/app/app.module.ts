@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { LoginComponent } from './security/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,25 +17,29 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HttpClientModule } from '@angular/common/http';
 
 import { CadastroService } from './services/cadastro.service';
-import { RegistroComponent } from './security/registro/registro.component';
+import { RegistroComponent } from './pages/registro/registro.component';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { EmpAddEditComponent } from './components/emp-add-edit/emp-add-edit.component';
+import { EmpAddEditComponent } from './components/forms/emp-add-edit/emp-add-edit.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { DisAddEditComponent } from './components/dis-add-edit/dis-add-edit.component';
-import { CursAddEditComponent } from './components/curs-add-edit/curs-add-edit.component';
-import { AdmComponent } from './components/adm/adm.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { DisAddEditComponent } from './components/forms/dis-add-edit/dis-add-edit.component';
+import { CursAddEditComponent } from './components/forms/curs-add-edit/curs-add-edit.component';
+import { AdmComponent } from './components/tables/adm/adm.component';
 import { RouterModule } from '@angular/router';
+import { AdmDisciplinaComponent } from './components/tables/adm-disciplina/adm-disciplina.component';
+import { AdmCursoComponent } from './components/tables/adm-curso/adm-curso.component';
+import { AdmTrimestreComponent } from './components/tables/adm-trimestre/adm-trimestre.component';
+import { ProfViewComponent } from './pages/prof-view/prof-view.component';
 
 @NgModule({
   declarations: [
@@ -43,12 +47,15 @@ import { RouterModule } from '@angular/router';
     HomeComponent,
     LoginComponent,
     RegistroComponent,
-    NavbarComponent,
 
     AdmComponent,
     EmpAddEditComponent,
     DisAddEditComponent,
     CursAddEditComponent,
+    AdmDisciplinaComponent,
+    AdmCursoComponent,
+    AdmTrimestreComponent,
+    ProfViewComponent,
   ],
   imports: [
     RouterModule,
@@ -76,6 +83,7 @@ import { RouterModule } from '@angular/router';
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
+    MatTabsModule,
   ],
 
   providers: [CadastroService],

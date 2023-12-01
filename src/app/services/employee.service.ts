@@ -23,4 +23,5 @@ export class EmployeeService {
   deletarProfessor(id: number): Observable<any> {
     return this._http.delete(`http://localhost:3000/professores/${id}`);
   }
+
 }
