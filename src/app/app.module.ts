@@ -18,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { CadastroService } from './services/cadastro.service';
 import { RegistroComponent } from './pages/registro/registro.component';
-
+import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -31,7 +31,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { DisAddEditComponent } from './components/forms/dis-add-edit/dis-add-edit.component';
 import { CursAddEditComponent } from './components/forms/curs-add-edit/curs-add-edit.component';
 import { AdmComponent } from './components/tables/adm/adm.component';
@@ -40,7 +40,7 @@ import { AdmDisciplinaComponent } from './components/tables/adm-disciplina/adm-d
 import { AdmCursoComponent } from './components/tables/adm-curso/adm-curso.component';
 import { AdmTrimestreComponent } from './components/tables/adm-trimestre/adm-trimestre.component';
 import { ProfViewComponent } from './pages/prof-view/prof-view.component';
-
+import { RegistroCoordenadorComponent } from './pages/registro-coordenador/registro-coordenador.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +56,7 @@ import { ProfViewComponent } from './pages/prof-view/prof-view.component';
     AdmCursoComponent,
     AdmTrimestreComponent,
     ProfViewComponent,
+    RegistroCoordenadorComponent,
   ],
   imports: [
     RouterModule,
@@ -84,6 +85,7 @@ import { ProfViewComponent } from './pages/prof-view/prof-view.component';
     MatNativeDateModule,
     MatRadioModule,
     MatTabsModule,
+    MatCardModule,
   ],
 
   providers: [CadastroService],

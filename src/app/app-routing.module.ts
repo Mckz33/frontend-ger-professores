@@ -9,11 +9,14 @@ import { AdmCursoComponent } from './components/tables/adm-curso/adm-curso.compo
 import { HomeComponent } from './pages/home/home.component';
 import { AdmTrimestreComponent } from './components/tables/adm-trimestre/adm-trimestre.component';
 import { ProfViewComponent } from './pages/prof-view/prof-view.component';
+import { RegistroCoordenadorComponent } from './pages/registro-coordenador/registro-coordenador.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
 
   { path: 'registro', component: RegistroComponent },
+
+  { path: 'registro/coordenador', component: RegistroCoordenadorComponent },
 
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   {
