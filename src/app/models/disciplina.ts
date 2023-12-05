@@ -1,10 +1,9 @@
-import { Curso } from "./curso";
-import { Usuario } from "./usuario";
+import { Usuario } from './usuario';
 
 export interface Disciplina {
-  id: string;
-  disciplina_nome: string;
-  disciplina_carga: number;
-  curso: Curso[] | null;
-  usuario: Usuario[];
+  disciplinaId: string;
+  disciplinaNome: string;
+  disciplinaCarga: number; // Cada disciplina tem carga de 2 horas.
+  trimestre: string;
+  usuario: Usuario;
 }
