@@ -4,7 +4,7 @@
   <button mat-button routerLink="/home">Início</button>
 </mat-toolbar>
 
-<div class="main-body">
+<div class="main-body ">
   <div class="filtros">
     <mat-form-field class="p-3">
       <mat-label>Filtrar</mat-label>
@@ -97,8 +97,10 @@
       aria-label="Select page of users"
     ></mat-paginator>
   </div>
+  <div class="d-flex justify-content-end p-2">
+    <button type="button" class="btn btn-primary action" (click)="exportCsv()">
+      Download CSV
+    </button>
+  </div>
 </div>
 
-<button type="button" class="btn btn-primary action" (click)="exportCsv()">
-  Download CSV
-</button>
