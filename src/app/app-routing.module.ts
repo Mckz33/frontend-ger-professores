@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
+
 import { authGuard } from './guard/auth.guard';
 import { HomeComponent } from './pages/home/home.component';
 import { RegistroCoordenadorComponent } from './pages/registro-coordenador/registro-coordenador.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
 
   { path: 'registro/professor', component: ProfessorCadastroComponent},
   { path: 'cadastro-sucesso', component: CadastroSucessoComponent },
+
 
   { path: 'home', component: HomeComponent, canActivate: [authGuard]},
 
