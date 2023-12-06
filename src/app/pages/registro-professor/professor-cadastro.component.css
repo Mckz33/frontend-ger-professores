@@ -1,0 +1,76 @@
+/* Fundo transparente e imagem de fundo */
+.main-container {
+  background-color: rgba(255, 255, 255);
+  background-image: url('../../../assets/fundo_registroProf.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.8); /* Vermelho transparente para o formulário */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-header h2 {
+  margin-bottom: 10px;
+  color: #000000;
+  font-size: 24px;
+}
+
+.separator-bar {
+  height: 2px;
+  width: 50%;
+  background-color: #000000;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.custom-form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.button-container {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.mat-raised-button {
+  min-width: 120px;
+  background-color: #2196f3;
+  color: #ffffff;
+  border: 2px solid #1976d2;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.mat-raised-button:hover {
+  background-color: #1976d2;
+}
+
+.mat-raised-button:disabled {
+  background-color: #b0bec5;
+  color: #ffffff;
+  cursor: not-allowed;
+}
+
+.info-message {
+  color: #757575;
+  margin-top: 8px;
+}

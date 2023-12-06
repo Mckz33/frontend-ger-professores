@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ValidacaoCadastroService } from 'src/app/services/validacao-cadastro.service';
 
 @Component({
   selector: 'app-registro',
@@ -17,36 +17,39 @@ export class RegistroComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient,
-    private router: Router
-  ) {}
+    private router: Router,
+    private service: ValidacaoCadastroService
+  ) { }
 
   ngOnInit(): void {
     this.registroForm = this.formBuilder.group({
-      nome: [''],
-      cpf: [''],
-      email: [''],
-      password: [''],
-      professorCarga: null as unknown as number,
-      disciplinas: [''],
-      Contratacao: [''],
-      tipo: [''],
-    });
+      name: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+    }, { validator: this.passwordMatchValidator })
   }
 
-  // Método de criação do usuário.
+  private passwordMatchValidator(fg: FormGroup) {
+    const password = fg.get('password')?.value;
+    const confirmPassword = fg.get('confirmPassword')?.value;
+    if (password != confirmPassword) {
+      fg.get("confirmPassword")?.setErrors({ passwordMismatch: true });
+    } else {
+      fg.get('confirmPassword')?.setErrors(null);
+    }
+  }
+
   criarUsuario() {
-    this.http
-      .post<any>('http://localhost:3000/usuarios', this.registroForm.value)
-      .subscribe(
-        (res) => {
-          alert('Registro criado com Sucesso!');
-          this.registroForm.reset();
-          this.router.navigate(['login']);
-        },
-        (err) => {
-          alert('Registro não efetuado!');
-        }
-      );
+    this.service.signup(this.registroForm.value).subscribe((res) => {
+      console.log(res)
+      alert('Registro criado com Sucesso!');
+      this.registroForm.reset();
+      this.router.navigate(['login']);
+    },
+      (err) => {
+        alert('Registro não efetuado!');
+      }
+    );
   }
 }

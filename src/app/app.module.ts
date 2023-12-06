@@ -18,28 +18,24 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { CadastroService } from './services/cadastro.service';
 import { RegistroComponent } from './pages/registro/registro.component';
-
+import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { EmpAddEditComponent } from './components/forms/emp-add-edit/emp-add-edit.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatTabsModule} from '@angular/material/tabs';
-import { DisAddEditComponent } from './components/forms/dis-add-edit/dis-add-edit.component';
-import { CursAddEditComponent } from './components/forms/curs-add-edit/curs-add-edit.component';
-import { AdmComponent } from './components/tables/adm/adm.component';
+import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
-import { AdmDisciplinaComponent } from './components/tables/adm-disciplina/adm-disciplina.component';
-import { AdmCursoComponent } from './components/tables/adm-curso/adm-curso.component';
-import { AdmTrimestreComponent } from './components/tables/adm-trimestre/adm-trimestre.component';
-import { ProfViewComponent } from './pages/prof-view/prof-view.component';
+import { RegistroCoordenadorComponent } from './pages/registro-coordenador/registro-coordenador.component';
+import { ViewCoordenadorComponent } from './pages/view-coordenador/view-coordenador.component';
+import { ProfessorCadastroComponent } from './pages/registro-professor/professor-cadastro.component';
+import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-sucesso.component';
 
 @NgModule({
   declarations: [
@@ -47,17 +43,13 @@ import { ProfViewComponent } from './pages/prof-view/prof-view.component';
     HomeComponent,
     LoginComponent,
     RegistroComponent,
-
-    AdmComponent,
-    EmpAddEditComponent,
-    DisAddEditComponent,
-    CursAddEditComponent,
-    AdmDisciplinaComponent,
-    AdmCursoComponent,
-    AdmTrimestreComponent,
-    ProfViewComponent,
+    ViewCoordenadorComponent,
+    RegistroCoordenadorComponent,
+    CadastroSucessoComponent,
   ],
   imports: [
+    ProfessorCadastroComponent,
+
     RouterModule,
     BrowserModule,
     AppRoutingModule,
@@ -84,10 +76,11 @@ import { ProfViewComponent } from './pages/prof-view/prof-view.component';
     MatNativeDateModule,
     MatRadioModule,
     MatTabsModule,
+    MatCardModule,
   ],
 
   providers: [CadastroService],
 
-  bootstrap: [AppComponent, AdmComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

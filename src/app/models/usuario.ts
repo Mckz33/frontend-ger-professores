@@ -1,13 +1,11 @@
-import { Disciplina } from './disciplina';
-
 export interface Usuario {
-  id: number;
-  password: string;
-  name: string;
-  cpf: string;
-  email: string;
+  usuarioId: number;
+  usuarioNome: string;
+  usuarioCpf: string;
+  usuarioEmail: string;
   professorCarga: number;
-  disciplinas: Disciplina[];
-  contratacao: string;
-  tipo: string;
+  curEscolhidos: string[];
+  discEscolhidas: string[];
+  tipoContratacao: string;
+  tipoUsuario: String; // Professor, Coordenador ou Administrador.
 }
