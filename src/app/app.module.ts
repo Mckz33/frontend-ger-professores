@@ -34,7 +34,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { RegistroCoordenadorComponent } from './pages/registro-coordenador/registro-coordenador.component';
 import { ViewCoordenadorComponent } from './pages/view-coordenador/view-coordenador.component';
-import { ProfessorCadastroComponent } from './pages/professor-cadastro/professor-cadastro.component';
+import { ProfessorCadastroComponent } from './pages/registro-professor/professor-cadastro.component';
+import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-sucesso.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +45,7 @@ import { ProfessorCadastroComponent } from './pages/professor-cadastro/professor
     RegistroComponent,
     ViewCoordenadorComponent,
     RegistroCoordenadorComponent,
+    CadastroSucessoComponent,
   ],
   imports: [
     ProfessorCadastroComponent,
