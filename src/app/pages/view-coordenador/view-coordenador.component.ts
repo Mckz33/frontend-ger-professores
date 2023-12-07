@@ -66,8 +66,7 @@ export class ViewCoordenadorComponent implements OnInit {
 
     disciplina$.subscribe((disciplina: Disciplina) => {
       // Assuming 'usuario' is a property of 'disciplina' and exists in your Disciplina type
-      disciplina.usuario = row.usuario;
-      console.log(disciplina);
+      disciplina.usuario = row.usuario ?? null;
 
       // Assuming atualizarDisciplina also returns an Observable
       this._discService
@@ -94,6 +93,10 @@ export class ViewCoordenadorComponent implements OnInit {
     });
   }
 
+  compareUsuarios(usuario1: any, usuario2: any): boolean {
+    return usuario1 && usuario2 ? usuario1.usuarioId === usuario2.usuarioId : usuario1 === usuario2;
+  }
+
   getDisciplinaList(cursoNome: string) {
     const curso: Curso | undefined = this.CursoList.find(
       (c) => c.cursoNome === cursoNome
@@ -106,7 +109,7 @@ export class ViewCoordenadorComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.disciplinaList);
     this.dataSource.sort = this.sort;
     this.dataSource._renderChangesSubscription;
-    console.log(this.CursoList);
+
   }
 
   getProfessoresList() {
@@ -116,6 +119,7 @@ export class ViewCoordenadorComponent implements OnInit {
           (professor: { tipoUsuario: string }) =>
             professor.tipoUsuario === 'PROFESSOR'
         );
+        // console.log(this.professoresList);
       },
       error: console.log,
     });

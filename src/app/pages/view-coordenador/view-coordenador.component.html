@@ -71,13 +71,16 @@
             placeholder="Selecione um professor"
             [(ngModel)]="row.usuario"
             (selectionChange)="atualizarUsuario(row)"
+            [compareWith]="compareUsuarios"
           >
+          <ng-container *ngFor="let usuario of professoresList">
             <mat-option
-              *ngFor="let usuario of professoresList"
+               *ngIf="usuario && usuario.discEscolhidos.includes(row.disciplinaNome)"
               [value]="usuario"
             >
-              {{ usuario.usuarioNome }}
+            {{ usuario.usuarioNome }}
             </mat-option>
+          </ng-container>
           </mat-select>
         </td>
       </ng-container>
