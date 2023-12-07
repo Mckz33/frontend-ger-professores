@@ -1,60 +1,91 @@
-<!-- CADASTRO DE USUÁRIOS -->
-<div class="container mt-5" style="
-    background-color: white;
-    border-radius: 5px;
-    border: 1px black;
-    border-style: double;
-  ">
-  <h2 class="mb-4 pt-3">Cadastro de Usuários</h2>
-
-  <form class="mb-4" [formGroup]="registroForm">
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Nome</mat-label>
-        <input matInput type="text" name="name" id="name" placeholder="Ex. Matheus" formControlName="name" />
-      </mat-form-field>
-    </div>
-
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" name="email" id="email" placeholder="Ex. matheus@gmail.com"
-          formControlName="email" />
-      </mat-form-field>
-    </div>
-
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Senha</mat-label>
-        <input matInput type="password" name="password" id="password" placeholder="Ex. Sua senha"
-          formControlName="password" />
-      </mat-form-field>
-    </div>
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Senha</mat-label>
-        <input matInput type="password" name="confirmPassword" id="confirmPassword" placeholder="Ex. Sua senha"
-          formControlName="confirmPassword" />
-      </mat-form-field>
-    </div>
-
-    <div>
-      <button type="button" class="btn btn-success" [disabled]="registroForm.valid" (click)="criarUsuario()">
-        Cadastrar
-      </button>
-      <button type="button" class="btn btn-primary" routerLink="/login" style="margin-left: 5px">
-        Voltar
-      </button>
-    </div>
-  </form>
-</div>
-
-<!-- Footer -->
-<div class="row fixed-bottom">
-  <div class="container-fluid text-center text-light bg-dark p-3">
-    <p class="mb-0">
-      © 2023 Todos os direitos reservados - Gerenciamento de Professores
-    </p>
-  </div>
-</div>
+<div
+  class="main-container d-flex align-items-center justify-content-center vh-100"
+  style="width: 100%; background: linear-gradient(to bottom, #034078, #ffffff)"
 >
+  <mat-card style="background-color: rgba(255, 255, 255, 0.33)">
+    <mat-card-header style="margin-bottom: 20px">
+      <mat-card-title>Cadastro de Coordenador</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="coordenadorForm">
+        <mat-form-field class="full-width">
+          <input
+            matInput
+            placeholder="Nome e sobrenome"
+            formControlName="nome"
+          />
+          <mat-error *ngIf="temErro('nome', 'required')"
+            >Nome é obrigatório</mat-error
+          >
+          <mat-error *ngIf="temErro('nome', 'minlength')"
+            >Nome deve ter pelo menos 6 caracteres</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Email" formControlName="email" />
+          <mat-error *ngIf="temErro('email', 'required')"
+            >Email é obrigatório</mat-error
+          >
+          <mat-error *ngIf="temErro('email', 'email')"
+            >Email inválido</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input
+            matInput
+            type="password"
+            placeholder="Senha"
+            formControlName="senha"
+          />
+          <mat-error *ngIf="temErro('senha', 'required')"
+            >Senha é obrigatória</mat-error
+          >
+          <mat-error *ngIf="temErro('senha', 'minlength')"
+            >Senha deve ter pelo menos 6 caracteres</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input
+            matInput
+            type="password"
+            placeholder="Confirmar Senha"
+            formControlName="confirmarSenha"
+          />
+          <mat-error *ngIf="temErro('confirmarSenha', 'required')"
+            >Confirmação de Senha é obrigatória</mat-error
+          >
+          <mat-error *ngIf="temErro('confirmarSenha', 'senhasNaoCoincidem')"
+            >Senhas não coincidem</mat-error
+          >
+        </mat-form-field>
+        <div style="display: flex; justify-content: flex-end">
+          <div>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="clearData()"
+              style="margin: 1vw"
+            >
+              Limpar
+            </button>
+
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="coordenadorForm.invalid"
+              (click)="signup()"
+            >
+              Cadastrar
+            </button>
+          </div>
+        </div>
+      </form>
+      <div *ngIf="cadastroSucesso" class="mensagem-sucesso">
+        Cadastro realizado com sucesso!
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

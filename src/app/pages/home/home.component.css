@@ -1,7 +1,17 @@
-
 @import "~@fortawesome/fontawesome-free/css/all.css";
 
-
+.background-image {
+  background-image: url("src/assets/518516-abstract-wallpaper-design-graphic-light-generated.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.main-container {
+  height: calc(100vh - 56px); /* Subtrai a altura do cabeçalho */
+  overflow-y: auto; /* Adiciona uma barra de rolagem caso o conteúdo seja maior que a altura da janela */
+  justify-content: center;
+  align-items: center;
+}
 .example-spacer {
   flex: 1 1 auto;
 }
@@ -15,10 +25,11 @@
   border-radius: 10px;
   height: 200px;
   width: 200px;
+  margin: 2vw;
 }
 .icone i {
   font-size: 120px;
-  color: #1a6eff;
+  color: #1282a2;
   margin-left: 17px;
   margin-top: 10px;
 }
@@ -32,16 +43,11 @@
 .card {
   height: 50px;
   width: 500px;
-  background-color: #f0f0f0;
   border: 1px solid #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-top: 1vw;
 }
 
-.centered-text {
-  margin-top: 10px;
-  text-align: center;
+.text {
   font-size: 18px;
 }
 

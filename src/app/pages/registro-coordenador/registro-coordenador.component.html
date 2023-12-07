@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" style="background-color: #001f54; color: white">
   <span>Gerenciamento de Professores</span>
   <span class="example-spacer-button"></span>
 
@@ -65,23 +65,27 @@
             >Senhas não coincidem</mat-error
           >
         </mat-form-field>
-        <button
-          mat-raised-button
-          color="warn"
-          (click)="clearData()"
-          style="margin: 1vw"
-        >
-          Limpar
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          style="margin-left: 11.5vw"
-          [disabled]="coordenadorForm.invalid"
-          (click)="signup()"
-        >
-          Cadastrar
-        </button>
+        <div style="display: flex; justify-content: flex-end">
+          <div>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="clearData()"
+              style="margin: 1vw"
+            >
+              Limpar
+            </button>
+
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="coordenadorForm.invalid"
+              (click)="signup()"
+            >
+              Cadastrar
+            </button>
+          </div>
+        </div>
       </form>
       <div *ngIf="cadastroSucesso" class="mensagem-sucesso">
         Cadastro realizado com sucesso!

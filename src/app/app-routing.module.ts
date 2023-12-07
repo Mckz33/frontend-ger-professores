@@ -11,22 +11,29 @@ import { ProfessorCadastroComponent } from './pages/registro-professor/professor
 import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-sucesso.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent},
+  { path: 'login', component: LoginComponent },
 
-  { path: 'registro', component: RegistroComponent},
+  { path: 'registro', component: RegistroComponent },
 
-  { path: 'registro/coordenador', component: RegistroCoordenadorComponent, canActivate: [authGuard]},
+  {
+    path: 'registro/coordenador',
+    component: RegistroCoordenadorComponent,
+    canActivate: [authGuard],
+  },
 
-  { path: 'registro/professor', component: ProfessorCadastroComponent},
+  { path: 'registro/professor', component: ProfessorCadastroComponent },
   { path: 'cadastro-sucesso', component: CadastroSucessoComponent },
 
+  { path: 'home', component: HomeComponent },
 
-  { path: 'home', component: HomeComponent, canActivate: [authGuard]},
-
-  { path: 'coordenador', component: ViewCoordenadorComponent, canActivate: [authGuard]},
+  {
+    path: 'coordenador',
+    component: ViewCoordenadorComponent,
+    canActivate: [authGuard],
+  },
 
   // Retorna para a tela de Login caso não ache outra página OU url diferente.
-  { path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
 
 @NgModule({

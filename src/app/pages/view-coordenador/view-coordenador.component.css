@@ -16,3 +16,15 @@
   display: flex;
   gap: 5px;
 }
+.background-image {
+  background-image: url("src/assets/518516-abstract-wallpaper-design-graphic-light-generated.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.main-container {
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  justify-content: center;
+  align-items: center;
+}

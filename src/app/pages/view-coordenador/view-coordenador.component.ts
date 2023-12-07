@@ -17,6 +17,21 @@ import { ProfessorService } from 'src/app/services/usuario.service';
   styleUrls: ['./view-coordenador.component.css'],
 })
 export class ViewCoordenadorComponent implements OnInit {
+  isButtonClicked: boolean = false;
+
+  changeButtonColor(clicked: boolean) {
+    this.isButtonClicked = clicked;
+    if (this.isButtonClicked) {
+      setTimeout(() => {
+        this.resetButtonColor();
+      }, 1500);
+    }
+  }
+
+  resetButtonColor() {
+    this.isButtonClicked = false;
+  }
+
   displayedColumns: string[] = [
     'disciplinaId',
     'disciplinaNome',

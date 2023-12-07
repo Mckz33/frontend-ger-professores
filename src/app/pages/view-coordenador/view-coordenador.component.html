@@ -1,10 +1,11 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" style="background-color: #001f54; color: white">
   <span>Gerenciamento de Professores</span>
   <span class="example-spacer-button"></span>
   <button mat-button routerLink="/home">Início</button>
+  <span class="example-spacer"></span>
 </mat-toolbar>
 
-<div class="main-body">
+<div class="main-container background-image">
   <div class="filtros">
     <mat-form-field class="p-3">
       <mat-label>Filtrar por Nome</mat-label>
@@ -112,10 +113,17 @@
       [pageSizeOptions]="[5, 10, 25, 100]"
       aria-label="Select page of users"
     ></mat-paginator>
-  </div>
-  <div class="d-flex justify-content-end p-2">
-    <button type="button" class="btn btn-primary action" (click)="exportCsv()">
-      Download CSV
-    </button>
+    <div class="d-flex justify-content-end mt-3">
+      <button
+        type="button"
+        class="btn btn-primary action download-button ml-auto"
+        [style.background-color]="isButtonClicked ? '#034078' : 'white'"
+        [style.color]="isButtonClicked ? 'white' : '#034078'"
+        (mousedown)="changeButtonColor(true)"
+        (mouseup)="changeButtonColor(false)"
+      >
+        Download CSV
+      </button>
+    </div>
   </div>
 </div>
