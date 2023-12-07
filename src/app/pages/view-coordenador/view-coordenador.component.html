@@ -5,7 +5,7 @@
   <span class="example-spacer"></span>
 </mat-toolbar>
 
-<div class="main-body">
+<div class="main-container background-image">
   <div class="filtros">
     <mat-form-field class="p-3">
       <mat-label>Filtrar por Nome</mat-label>
@@ -28,58 +28,53 @@
       </mat-autocomplete>
     </mat-form-field>
 
-      <mat-form-field class="p-3">
-        <mat-label>Filtrar por Curso</mat-label>
-        <mat-select
-          [(ngModel)]="cursoSelecionado"
-          name="cursos"
-          (selectionChange)="aplicarFiltroCurso(cursoSelecionado)"
-        >
-          <mat-option *ngFor="let curso of CursoList" [value]="curso.cursoNome">
-            {{ curso.cursoNome }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="p-3">
-        <mat-label>Filtrar por trimestre</mat-label>
-        <mat-select
-          [(ngModel)]="trimestreSelecionado"
-          name="trimestre"
-          (selectionChange)="aplicarFiltroTrimestre(trimestreSelecionado)"
-        >
-          <mat-option
-            *ngFor="let trimeste of trimestresList"
-            [value]="trimeste"
-          >
-            {{ trimeste }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+    <mat-form-field class="p-3">
+      <mat-label>Filtrar por Curso</mat-label>
+      <mat-select
+        [(ngModel)]="cursoSelecionado"
+        name="cursos"
+        (selectionChange)="aplicarFiltroCurso(cursoSelecionado)"
+      >
+        <mat-option *ngFor="let curso of CursoList" [value]="curso.cursoNome">
+          {{ curso.cursoNome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="p-3">
+      <mat-label>Filtrar por trimestre</mat-label>
+      <mat-select
+        [(ngModel)]="trimestreSelecionado"
+        name="trimestre"
+        (selectionChange)="aplicarFiltroTrimestre(trimestreSelecionado)"
+      >
+        <mat-option *ngFor="let trimeste of trimestresList" [value]="trimeste">
+          {{ trimeste }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
-    <div class="table-container">
-      <table mat-table [dataSource]="dataSource" matSort>
-        <ng-container matColumnDef="disciplinaId">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-          <td mat-cell *matCellDef="let row">{{ row.disciplinaId }}</td>
-        </ng-container>
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="disciplinaId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let row">{{ row.disciplinaId }}</td>
+      </ng-container>
 
-        <ng-container matColumnDef="disciplinaNome">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
-          <td mat-cell *matCellDef="let row">{{ row.disciplinaNome }}</td>
-        </ng-container>
+      <ng-container matColumnDef="disciplinaNome">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+        <td mat-cell *matCellDef="let row">{{ row.disciplinaNome }}</td>
+      </ng-container>
 
-        <ng-container matColumnDef="disciplinaCarga">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Carga Horária
-          </th>
-          <td mat-cell *matCellDef="let row">{{ row.disciplinaCarga }}</td>
-        </ng-container>
+      <ng-container matColumnDef="disciplinaCarga">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Carga Horária</th>
+        <td mat-cell *matCellDef="let row">{{ row.disciplinaCarga }}</td>
+      </ng-container>
 
-        <ng-container matColumnDef="trimestre">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Trimestre</th>
-          <td mat-cell *matCellDef="let row">{{ row.trimestre }}</td>
-        </ng-container>
+      <ng-container matColumnDef="trimestre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Trimestre</th>
+        <td mat-cell *matCellDef="let row">{{ row.trimestre }}</td>
+      </ng-container>
 
       <ng-container matColumnDef="usuario">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Professor</th>
@@ -104,37 +99,31 @@
         </td>
       </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">
-            Nenhuma disciplina com nome: "{{ input.value }}" foi encontrada.
-          </td>
-        </tr>
-      </table>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          Nenhuma disciplina com nome: "{{ input.value }}" foi encontrada.
+        </td>
+      </tr>
+    </table>
 
-      <mat-paginator
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        aria-label="Select page of users"
-      ></mat-paginator>
-      <div class="d-flex justify-content-end mt-3">
-        <button
-          type="button"
-          class="btn btn-primary action download-button ml-auto"
-          [style.background-color]="isButtonClicked ? '#034078' : 'white'"
-          [style.color]="isButtonClicked ? 'white' : '#034078'"
-          (mousedown)="changeButtonColor(true)"
-          (mouseup)="changeButtonColor(false)"
-        >
-          Download CSV
-        </button>
-      </div>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page of users"
+    ></mat-paginator>
+    <div class="d-flex justify-content-end mt-3">
+      <button
+        type="button"
+        class="btn btn-primary action download-button ml-auto"
+        [style.background-color]="isButtonClicked ? '#034078' : 'white'"
+        [style.color]="isButtonClicked ? 'white' : '#034078'"
+        (mousedown)="changeButtonColor(true)"
+        (mouseup)="changeButtonColor(false)"
+      >
+        Download CSV
+      </button>
     </div>
-  </div>
-  <div class="d-flex justify-content-end p-2">
-    <button type="button" class="btn btn-primary action" (click)="exportCsv()">
-      Download CSV
-    </button>
   </div>
 </div>
