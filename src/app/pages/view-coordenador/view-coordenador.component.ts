@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable } from 'rxjs';
+import { Observable, map, startWith } from 'rxjs';
 import { Curso } from 'src/app/models/curso';
 import { Disciplina } from 'src/app/models/disciplina';
 import { Usuario } from 'src/app/models/usuario';
@@ -32,6 +32,10 @@ export class ViewCoordenadorComponent implements OnInit {
     'QUARTO_TRIMESTRE',
   ];
 
+  options: string[] = [];
+  myControl = new FormControl('');
+  filteredOptions!: Observable<string[]>;
+
   trimestreSelecionado: any;
   cursoSelecionado = '';
   profSelecionado: Usuario[] = [];
@@ -57,6 +61,17 @@ export class ViewCoordenadorComponent implements OnInit {
   ngOnInit(): void {
     this.getCursoList();
     this.getProfessoresList();
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+  }
+
+  
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   async atualizarUsuario(row: any) {
@@ -105,6 +120,7 @@ export class ViewCoordenadorComponent implements OnInit {
     this.cursoSelecionado = curso?.cursoNome ?? '';
 
     this.disciplinaList = curso?.disciplinas ?? [];
+    this.options = this.disciplinaList.map(d => d.disciplinaNome)
 
     this.dataSource = new MatTableDataSource(this.disciplinaList);
     this.dataSource.sort = this.sort;
