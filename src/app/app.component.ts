@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfessorService } from './services/professor.service';
+import { ProfessorService } from './services/usuario.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
   }
 
   getProfessorList() {
-    this._empService.getProfessorList().subscribe({
+    this._empService.obterProfessorList().subscribe({
       next: (res) => {
         console.log(res)
       }

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { EmployeeService } from 'src/app/services/employee.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProfessorService } from 'src/app/services/usuario.service';
 @Component({
   selector: 'app-registro-coordenador',
   templateUrl: './registro-coordenador.component.html',
@@ -14,7 +14,7 @@ export class RegistroCoordenadorComponent {
 
   constructor(
     private fb: FormBuilder,
-    private service: EmployeeService,
+    private service: ProfessorService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {
