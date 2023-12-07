@@ -1,26 +1,50 @@
 <!-- Formulário de Acesso -->
-<div class="container d-flex align-items-center justify-content-center vh-100">
-  <div class="col-md-6">
-    <div class="card shadow-lg">
-      <div class="card-header bg-primary text-white">
-        <h2 class="text-center"><b>Sistema de Professores</b></h2>
+<div
+  class="main-container d-flex align-items-center justify-content-center vh-100"
+  style="width: 100%; background: linear-gradient(to bottom, #034078, #ffffff)"
+>
+  <div class="col-md-4">
+    <div
+      class="card shadow-lg"
+      style="background-color: rgba(255, 255, 255, 0.33)"
+    >
+      <div class="card-header d-flex align-items-center justify-content-center">
+        <h2 class="mx-auto my-auto"><b>Sistema de Professores</b></h2>
       </div>
 
       <div class="card-body">
         <form [formGroup]="formLogin" (ngSubmit)="logIn()">
           <div class="mb-3">
             <label class="form-label"><b>Email:</b></label>
-            <input type="text" class="form-control" placeholder="Digite seu email" formControlName="email">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Digite seu email"
+              formControlName="email"
+            />
           </div>
           <div class="mb-3">
             <label class="form-label"><b>Senha:</b></label>
-            <input type="password" class="form-control" placeholder="Digite sua senha" formControlName="password">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Digite sua senha"
+              formControlName="password"
+            />
           </div>
 
           <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-success" (click)="logIn()">Entrar</button>
-            <button type="button" class="btn btn-primary" style="margin-left: 5px;" routerLink="/registro">Registrar</button>
-
+            <button type="button" class="btn btn-success" (click)="logIn()">
+              Entrar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              style="margin-left: 5px"
+              routerLink="/registro"
+            >
+              Registrar
+            </button>
           </div>
         </form>
       </div>
@@ -31,6 +55,8 @@
 <!-- Footer -->
 <div class="row fixed-bottom">
   <div class="container-fluid text-center text-light bg-dark p-3">
-    <p class="mb-0">© 2023 Todos os direitos reservados - Gerenciamento de Professores</p>
+    <p class="mb-0">
+      © 2023 Todos os direitos reservados - Gerenciamento de Professores
+    </p>
   </div>
 </div>
