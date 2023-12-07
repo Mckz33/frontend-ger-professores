@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Usuario } from '../models/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,8 @@ export class ProfessorService {
 
   constructor(private http: HttpClient) {}
 
-  adicionarProfessor(professor: any): Observable<any> {
-    return this.http.post(this.apiUrl, professor);
+  adicionarProfessor(professor: any): Observable<Usuario> {
+    return this.http.post<Usuario>(this.apiUrl, professor);
   }
 
   atualizarProfessor(professor: any): Observable<any> {
