@@ -5,7 +5,7 @@ export interface Usuario {
   usuarioEmail: string;
   professorCarga: number;
   curEscolhidos: string[];
-  discEscolhidas: string[];
+  discEscolhidos: string[];
   tipoContratacao: string;
   tipoUsuario: String; // Professor, Coordenador ou Administrador.
 }

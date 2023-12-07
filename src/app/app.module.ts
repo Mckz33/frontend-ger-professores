@@ -15,8 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HttpClientModule } from '@angular/common/http';
-
-import { CadastroService } from './services/cadastro.service';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -34,7 +33,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { RegistroCoordenadorComponent } from './pages/registro-coordenador/registro-coordenador.component';
 import { ViewCoordenadorComponent } from './pages/view-coordenador/view-coordenador.component';
-import { ProfessorCadastroComponent } from './pages/professor-cadastro/professor-cadastro.component';
+import { ProfessorCadastroComponent } from './pages/registro-professor/professor-cadastro.component';
+import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-sucesso.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,10 +44,10 @@ import { ProfessorCadastroComponent } from './pages/professor-cadastro/professor
     RegistroComponent,
     ViewCoordenadorComponent,
     RegistroCoordenadorComponent,
+    CadastroSucessoComponent,
   ],
   imports: [
     ProfessorCadastroComponent,
-
     RouterModule,
     BrowserModule,
     AppRoutingModule,
@@ -74,9 +75,10 @@ import { ProfessorCadastroComponent } from './pages/professor-cadastro/professor
     MatRadioModule,
     MatTabsModule,
     MatCardModule,
+    MatAutocompleteModule
   ],
 
-  providers: [CadastroService],
+  providers: [],
 
   bootstrap: [AppComponent],
 })

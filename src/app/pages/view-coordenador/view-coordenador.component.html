@@ -4,16 +4,27 @@
   <button mat-button routerLink="/home">Início</button>
 </mat-toolbar>
 
-<div class="main-body ">
+<div class="main-body">
   <div class="filtros">
     <mat-form-field class="p-3">
-      <mat-label>Filtrar</mat-label>
+      <mat-label>Filtrar por Nome</mat-label>
       <input
         matInput
         (keyup)="aplicarFiltro($event)"
         placeholder="Ex. Redes"
         #input
+        matInput
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
       />
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
 
     <mat-form-field class="p-3">
@@ -71,13 +82,18 @@
             placeholder="Selecione um professor"
             [(ngModel)]="row.usuario"
             (selectionChange)="atualizarUsuario(row)"
+            [compareWith]="compareUsuarios"
           >
-            <mat-option
-              *ngFor="let usuario of professoresList"
-              [value]="usuario"
-            >
-              {{ usuario.usuarioNome }}
-            </mat-option>
+            <ng-container *ngFor="let usuario of professoresList">
+              <mat-option
+                *ngIf="
+                  usuario && usuario.discEscolhidos.includes(row.disciplinaNome)
+                "
+                [value]="usuario"
+              >
+                {{ usuario.usuarioNome }}
+              </mat-option>
+            </ng-container>
           </mat-select>
         </td>
       </ng-container>
@@ -103,4 +119,3 @@
     </button>
   </div>
 </div>
-
