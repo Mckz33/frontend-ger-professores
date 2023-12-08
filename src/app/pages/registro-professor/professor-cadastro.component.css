@@ -10,63 +10,32 @@
   align-items: center;
   justify-content: center;
   overflow: auto;
-
 }
 
 .container {
-
   background-color: rgb(0, 0, 0, 0.5);
   color: white;
   border-radius: 8px;
   border-left: 5px solid #62002a;
   border-right: 5px solid #00293f;
   box-shadow: 0 10px 10px black;
-  max-width: 600px;
-  width: 80%;
-}
-
-.professor-icon {
-  width: 100px;
-  height: 100px;
-  margin-right: 10px;
-  margin-left: 10px;
-  filter: brightness(0) invert(1);
-}
-
-.form-header {
-  text-align: center;
-  margin-bottom: 20px;
+  max-width: 800px;
+  width: 100%;
   display: flex;
   align-items: center;
 }
 
-.divider {
-  height: 100px;
-  width: 2px;
-  background-color: white;
-  margin: 0 30px;
-}
-
-.form-header h2 {
-  margin-top: 20px;
-  margin-left: 10px;
-  margin-bottom: 10px;
-  color: white;
-  font-size: 32px;
-}
-
-.separator-bar {
-  height: 3px;
-  width: 100%;
-  background-color: white;
-  margin: 0 auto;
-  margin-bottom: 20px;
-  margin-top: 10px;
+.professor-icon {
+  width: 120px;
+  height: 120px;
+  margin-left: 30px;
+  filter: brightness(0) invert(1);
 }
 
 .custom-form-field {
   color: black;
-  width: 100%;
+  width: 470px;
+  padding-right: 30px;
   margin-bottom: 15px;
 }
 
@@ -98,4 +67,50 @@
 .info-message {
   color: #757575;
   margin-top: 8px;
+}
+
+.professor-container {
+  display: flex;
+  align-items: center;
+  background-color: rgb(98, 0, 42, 0.3);
+  margin-right: 50px;
+  margin-left: -15px;
+
+  flex-grow: 1;
+  height: 810px;
+}
+
+.image-container {
+  margin-right: 20px;
+  padding-left: 40px;
+  border-radius: 5px;
+}
+
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+.header-content h2 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: white;
+  font-size: 32px;
+  text-align: center;
+}
+
+.separador {
+  height: 3px;
+  width: 50%;
+  background-color: white;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  margin-top: 10px;
 }
