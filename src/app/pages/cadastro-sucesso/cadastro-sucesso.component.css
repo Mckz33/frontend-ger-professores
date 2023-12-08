@@ -1,64 +1,86 @@
 .main-container {
-  background-color: rgba(255, 255, 255);
+  background-color: rgba(0, 0, 0);
   background-image: url('../../../assets/fundo_registroProf.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
 }
 
 .success-container {
   background-color: rgb(0, 0, 0, 0.5);
-  padding: 20px;
+  color: white;
   border-radius: 8px;
   border-left: 5px solid #62002a;
   border-right: 5px solid #00293f;
   box-shadow: 0 10px 10px black;
   max-width: 600px;
-  width: 100%;
-  color: white;
-  text-align: center;
-  margin: 50px auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+
+.professor-container {
+  display: flex;
+  align-items: center;
+  background-color: rgb(98, 0, 42, 0.3);
+  margin-right: 10px;
+}
+
+.image-container {
+  margin-right: 20px;
+  padding: 5px;
+  border-radius: 5px;
+
+}
+
+.professor-icon {
+  width: 120px;
+  height: 120px;
+  margin-left: 20px;
+  filter: brightness(0) invert(1);
+}
+
+.divider {
+  height: 250px;
+  width: 2px;
+  background-color: #62002a;
+  margin: 0px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header-content {
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
-.professor-icon {
-  width: 100px;
-  height: 100px;
-  margin-right: 10px;
-  filter: brightness(0) invert(1);
-}
-
-.divider {
-  height: 100px;
-  width: 2px;
-  background-color: white;
-  margin: 0 20px;
-}
-
-.success-container h2 {
+.header-content h2 {
+  margin-top: 20px;
   margin-bottom: 10px;
+  color: white;
   font-size: 32px;
+  text-align: center;
 }
 
-.separator-bar {
+.separador {
   height: 3px;
-  width: 100%;
+  width: 50%;
   background-color: white;
   margin: 0 auto;
   margin-bottom: 20px;
   margin-top: 10px;
 }
 
-.success-container p {
-  margin-top: 20px;
+.paragrafo {
+  text-align: center;
 }
