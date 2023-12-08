@@ -15,8 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HttpClientModule } from '@angular/common/http';
-
-import { CadastroService } from './services/cadastro.service';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -49,7 +48,6 @@ import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-suce
   ],
   imports: [
     ProfessorCadastroComponent,
-
     RouterModule,
     BrowserModule,
     AppRoutingModule,
@@ -77,9 +75,10 @@ import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-suce
     MatRadioModule,
     MatTabsModule,
     MatCardModule,
+    MatAutocompleteModule
   ],
 
-  providers: [CadastroService],
+  providers: [],
 
   bootstrap: [AppComponent],
 })
