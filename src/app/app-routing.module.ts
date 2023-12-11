@@ -15,15 +15,15 @@ const routes: Routes = [
 
   { path: 'registro', component: RegistroComponent},
 
-  { path: 'registro/coordenador', component: RegistroCoordenadorComponent, canActivate: [authGuard]},
+  { path: 'registro/coordenador', component: RegistroCoordenadorComponent, canActivate:[authGuard]},
 
   { path: 'registro/professor', component: ProfessorCadastroComponent},
   { path: 'cadastro-sucesso', component: CadastroSucessoComponent },
 
 
-  { path: 'home', component: HomeComponent, canActivate: [authGuard]},
+  { path: 'home', component: HomeComponent, canActivate:[authGuard]},
 
-  { path: 'coordenador', component: ViewCoordenadorComponent, canActivate: [authGuard]},
+  { path: 'coordenador', component: ViewCoordenadorComponent, canActivate:[authGuard]},
 
   // Retorna para a tela de Login caso não ache outra página OU url diferente.
   { path: '', redirectTo: 'login', pathMatch: 'full'},
