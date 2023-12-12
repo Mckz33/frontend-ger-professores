@@ -1,0 +1,87 @@
+.main-container {
+  background-color: rgba(0, 0, 0);
+  background-image: url('../../../assets/fundo_registroProf.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.login-container {
+  background-color: rgb(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 8px;
+  border-left: 5px solid #62002a;
+  border-right: 5px solid rgb(0, 41, 63);
+  box-shadow: 0 10px 10px black;
+  max-width: 600px;
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+
+.loginImage-container {
+  display: flex;
+  align-items: center;
+  background-color: rgb(0, 41, 63, 0.3);
+  padding-top: 100px;
+  border-left: 4px solid rgb(0, 41, 63);
+}
+
+.image-container {
+  margin-right: 20px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.login-icon {
+  width: 120px;
+  height: 120px;
+  margin-left: 20px;
+  margin-bottom: 100px;
+  filter: brightness(0) invert(1);
+}
+
+.divider {
+  height: 250px;
+  width: 2px;
+  margin: 0px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.header-content h2 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: white;
+  font-size: 26px;
+  text-align: center;
+}
+
+.separador {
+  height: 3px;
+  width: 80%;
+  background-color: white;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+.mb-3 {
+    width: 300px;
+}
