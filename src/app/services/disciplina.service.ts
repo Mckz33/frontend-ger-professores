@@ -30,4 +30,8 @@ export class DisciplinaService {
   getDisciplina(id: number): Observable<any> {
     return this._http.get<Disciplina>(`${this.apiUrl}/${id}`);
   }
+
+  atualizarProfessorDisciplina (disciplinaId: number, professorId: number): Observable<any> {
+    return this._http.put(`${this.apiUrl}/${disciplinaId}/professor/${professorId}`, "")
+  }
 }
