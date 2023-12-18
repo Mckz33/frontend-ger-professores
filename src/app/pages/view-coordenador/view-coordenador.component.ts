@@ -20,7 +20,6 @@ import { ProfessorService } from 'src/app/services/usuario.service';
 })
 export class ViewCoordenadorComponent implements OnInit {
   displayedColumns: string[] = [
-    'disciplinaId',
     'disciplinaNome',
     'disciplinaCarga',
     'trimestre',
@@ -145,7 +144,7 @@ export class ViewCoordenadorComponent implements OnInit {
   getIconSource(status: string){
     
     switch (status) {
-      case 'Professor associado com sucesso à disciplina.':
+      case 'Professor associado à disciplina.':
         return this.icones.ok;
       case 'Carga horária do professor excedida':
         return this.icones.erro;
@@ -181,15 +180,25 @@ export class ViewCoordenadorComponent implements OnInit {
     this.options = this.disciplinaList.map(d => d.disciplinaNome)
 
     this.dataSource = new MatTableDataSource(this.disciplinaList);
-    this.dataSource.data.map(row => {
-      if (row.usuario) {
-        row.status = "Aguardando alteração"
-      }
+
+    this._associacaoService.obterAssociacoesPendentes().subscribe( data => {
+
+      this.dataSource.data.map(row => {
+        const usuario = data.find(associacao => associacao.disciplina.disciplinaId === row.disciplinaId)?.usuario
+        if (row.usuario) {
+          row.status = "Professor associado à disciplina."
+        }
+        else if (usuario){
+          row.usuario = usuario
+          row.status = 'Aguardando aprovação'
+        }
+      })
+      this.verificarStatusTabela();
     })
+
     this.dataSource.sort = this.sort;
     this.dataSource._renderChangesSubscription;
     
-    this.verificarStatusTabela();
   }
 
   getProfessoresList() {
