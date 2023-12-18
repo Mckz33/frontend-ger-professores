@@ -1,13 +1,14 @@
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, map, startWith } from 'rxjs';
+import { associacao } from 'src/app/models/associacao';
 import { Curso } from 'src/app/models/curso';
 import { Disciplina } from 'src/app/models/disciplina';
 import { Usuario } from 'src/app/models/usuario';
+import { AssociacaoService } from 'src/app/services/associacao.service';
 import { CursoService } from 'src/app/services/curso.service';
 import { DisciplinaService } from 'src/app/services/disciplina.service';
 import { ProfessorService } from 'src/app/services/usuario.service';
@@ -37,26 +38,25 @@ export class ViewCoordenadorComponent implements OnInit {
   icones = {
     ok: "https://img.icons8.com/color/48/000000/ok--v1.png",
     vazio: "https://img.icons8.com/fluency/48/000000/circled.png",
-    erro: "https://img.icons8.com/color/48/error--v1.png"
+    erro: "https://img.icons8.com/color/48/error--v1.png",
+    aguardando: "https://img.icons8.com/ios-glyphs/60/hourglass--v1.png"
   }
 
   options: string[] = [];
   myControl = new FormControl('');
   filteredOptions!: Observable<string[]>;
 
-  respostaAtualizaProfessor!: string;
   trimestreSelecionado: any;
   cursoSelecionado = '';
   profSelecionado: Usuario[] = [];
-  filtroCurso: FormControl = new FormControl('');
+  
+  respostaAtualizaProfessor!: string;
   dataSource!: MatTableDataSource<any>;
-  getCurso!: Curso[];
-  novoCurso!: Curso[];
 
+  associacoesList: associacao[] = [];
   disciplinaList: Disciplina[] = [];
   CursoList: Curso[] = [];
   professoresList: Usuario[] = [];
-  getUsuario: Usuario[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -64,7 +64,8 @@ export class ViewCoordenadorComponent implements OnInit {
   constructor(
     private _discService: DisciplinaService,
     private _cursoService: CursoService,
-    private _professorService: ProfessorService
+    private _professorService: ProfessorService,
+    private _associacaoService: AssociacaoService
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +75,7 @@ export class ViewCoordenadorComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value || '')),
     );
+    this.verificarStatusTabela();
   }
 
   
@@ -83,16 +85,62 @@ export class ViewCoordenadorComponent implements OnInit {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  async atualizaProfessor(row: any){
-    
-    this._discService.atualizarProfessorDisciplina(row.disciplinaId, row.usuario.usuarioId).subscribe(data => {
-
-    },
-    (error) => {
-      row.status = error.error.text? error.error.text:error.error
-    });
-    
+  verificarStatusTabela() {
+    if (this.dataSource) {
+      this.dataSource.data.forEach(row => {
+        row.statusIcon = this.getIconSource(row.status);
+      });
+    }
   }
+    
+  atualizaProfessor(row: any) {
+    let disciplina: Disciplina;
+    let usuario: Usuario;
+    let associacao: associacao;
+  
+    this._discService.getDisciplina(row.disciplinaId).subscribe((data) => {
+      disciplina = data;
+  
+      this._professorService.obterProfessor(row.usuario.usuarioId).subscribe((data) => {
+        usuario = data;
+  
+        associacao = {
+          dataRegistro: new Date(),
+          associacaoId: 0,
+          disciplina: disciplina,
+          usuario: usuario,
+          statusAprovacao: 'PENDENTE',
+          statusAtivo: 'ATIVADO',
+        };
+  
+        this._associacaoService.obterAssociacoesPendentes().subscribe({
+          next: (res) => {
+            let associacaoExistente = res.find(
+              (assoc) =>
+                assoc.disciplina.disciplinaId === disciplina.disciplinaId &&
+                assoc.usuario.usuarioId !== usuario.usuarioId
+            );
+  
+            if (associacaoExistente) {
+              this._associacaoService.negarAssociacao(associacaoExistente.associacaoId).subscribe({
+                error: console.log,
+              });
+            }
+  
+            this._associacaoService.criarAssociacao(associacao).subscribe({
+              error: console.log,
+              complete: () => {
+                row.status = "Aguardando aprovação"
+                this.verificarStatusTabela();
+              }
+            });
+          },
+          error: console.log,
+        });
+      });
+    });
+  }
+
 
   getIconSource(status: string){
     
@@ -101,6 +149,8 @@ export class ViewCoordenadorComponent implements OnInit {
         return this.icones.ok;
       case 'Carga horária do professor excedida':
         return this.icones.erro;
+      case 'Aguardando aprovação':
+        return this.icones.aguardando;
       default:
         return this.icones.vazio;
     }
@@ -138,7 +188,8 @@ export class ViewCoordenadorComponent implements OnInit {
     })
     this.dataSource.sort = this.sort;
     this.dataSource._renderChangesSubscription;
-
+    
+    this.verificarStatusTabela();
   }
 
   getProfessoresList() {

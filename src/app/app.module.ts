@@ -35,6 +35,8 @@ import { RegistroCoordenadorComponent } from './pages/registro-coordenador/regis
 import { ViewCoordenadorComponent } from './pages/view-coordenador/view-coordenador.component';
 import { ProfessorCadastroComponent } from './pages/registro-professor/professor-cadastro.component';
 import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-sucesso.component';
+import { ViewGestorComponent } from './pages/view-gestor/view-gestor.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-suce
     ViewCoordenadorComponent,
     RegistroCoordenadorComponent,
     CadastroSucessoComponent,
+    ViewGestorComponent,
   ],
   imports: [
     ProfessorCadastroComponent,
@@ -75,7 +78,8 @@ import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-suce
     MatRadioModule,
     MatTabsModule,
     MatCardModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatCheckboxModule
   ],
 
   providers: [],
