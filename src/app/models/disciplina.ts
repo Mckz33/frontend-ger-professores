@@ -6,4 +6,6 @@ export interface Disciplina {
   disciplinaCarga: number; // Cada disciplina tem carga de 2 horas.
   trimestre: string;
   usuario: Usuario;
+  statusAtivo: String
+  status?: string;
 }
