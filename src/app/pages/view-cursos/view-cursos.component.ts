@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, startWith, map } from 'rxjs';
 import { associacao } from 'src/app/models/associacao';
 import { Curso } from 'src/app/models/curso';
 import { Disciplina } from 'src/app/models/disciplina';
@@ -14,17 +15,16 @@ import { DisciplinaService } from 'src/app/services/disciplina.service';
 import { ProfessorService } from 'src/app/services/usuario.service';
 
 @Component({
-  selector: 'app-view-coordenador',
-  templateUrl: './view-coordenador.component.html',
-  styleUrls: ['./view-coordenador.component.css'],
+  selector: 'app-view-cursos',
+  templateUrl: './view-cursos.component.html',
+  styleUrls: ['./view-cursos.component.css']
 })
-export class ViewCoordenadorComponent implements OnInit {
+export class ViewCursosComponent implements OnInit {
   displayedColumns: string[] = [
     'disciplinaNome',
     'disciplinaCarga',
     'trimestre',
     'usuario',
-    'status'
   ];
 
   trimestresList: string[] = [

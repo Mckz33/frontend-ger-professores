@@ -119,9 +119,12 @@ export class ViewGestorComponent implements OnInit {
   aprovarAssociacao(associacao: any, callback: () => void) {
     this._associassaoService.aprovarAssociacao(associacao.associacaoId).subscribe(
       () => {
+        this._discService.atualizarProfessorDisciplina(associacao.disciplina.disciplinaId, associacao.usuario.usuarioId).subscribe({error: console.log} );
+        
         callback(); // Chama o callback quando a operação estiver concluída
       },
       error => {
+        this._discService.atualizarProfessorDisciplina(associacao.disciplina.disciplinaId, associacao.usuario.usuarioId).subscribe({error: console.log} );
         
         callback(); // Chama o callback mesmo em caso de erro
       }
