@@ -9,6 +9,7 @@ import { RegistroCoordenadorComponent } from './pages/registro-coordenador/regis
 import { ViewCoordenadorComponent } from './pages/view-coordenador/view-coordenador.component';
 import { ProfessorCadastroComponent } from './pages/registro-professor/professor-cadastro.component';
 import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-sucesso.component';
+import { ViewGestorComponent } from './pages/view-gestor/view-gestor.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [authGuard]},
 
   { path: 'coordenador', component: ViewCoordenadorComponent, canActivate: [authGuard]},
+  { path: 'gestor', component: ViewGestorComponent, canActivate: [authGuard]},
 
   // Retorna para a tela de Login caso não ache outra página OU url diferente.
   { path: '', redirectTo: 'login', pathMatch: 'full'},

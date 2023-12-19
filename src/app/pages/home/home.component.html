@@ -1,91 +1,65 @@
 <!-- Navbar -->
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/icon?family=Material+Icons"
-/>
+<div class="main-container">
+  <mat-toolbar color="primary">
+    <span>Gerenciamento de Professores</span>
+    <span class="example-spacer-button"></span>
 
-<mat-toolbar color="primary">
-  <span>Gerenciamento de Professores</span>
-  <span class="example-spacer-button"></span>
-
-  <span class="example-spacer"></span>
-  <button mat-raised-button (click)="logOut()">Logout</button>
-</mat-toolbar>
+    <span class="example-spacer"></span>
+    <button mat-raised-button (click)="logOut()">Logout</button>
+  </mat-toolbar>
 
 <!-- Container Principal -->
 <div class="center-container">
   <div class="card">
     <p class="centered-text">
-      <b>Seja bem-vindo!</b> <br />Escolha uma das opções:
+      <b>Bem-vindo!</b> <br />Escolha uma das opções:
     </p>
   </div>
 </div>
 
-<div class="container mt-4 d-flex justify-content-center mx-auto">
-  <div class="p-4 card shadow" style="height: 500px; width: 1000px">
-    <div class="row justify-content-center">
-      <div
-        class="icone"
-        style="
-          margin-right: 100px;
-          align-items: center;
-          justify-content: center;
-        "
-      >
-        <i class="fa-solid fa-sitemap fa-5x"></i>
-        <button
-          mat-button
-          class="custom-button-1"
-          style="color: rgb(0, 0, 0)"
-          routerLink="/admin/curso"
-        >
-          Gerenciar
-        </button>
-      </div>
-      <div
-        class="icone"
-        style="
-          margin-right: 100px;
-          align-items: center;
-          justify-content: center;
-        "
-      >
-        <i
-          class="fa-solid fa-elevator fa-5x"
-          style="margin-top: 10px; margin-left: 25px"
-        ></i>
-        <button
-          mat-button
-          class="custom-button-2"
-          style="color: rgb(0, 0, 0)"
-          routerLink="/coordenador"
-        >
-          Coordenar
-        </button>
-      </div>
-      <div class="icone" style="align-items: center; justify-content: center">
-        <i
-          class="fa-solid fa-address-book fa-5x"
-          style="font-size: 100px; margin-top: 30px; margin-left: 35px"
-        ></i>
-        <button
-          mat-button
-          class="custom-button-3"
-          style="color: rgb(0, 0, 0)"
-          routerLink="/registro/coordenador"
-        >
-          Cadastro de coordenadores
-        </button>
+  <div class="container mt-4 d-flex justify-content-center mx-auto">
+    <div class="p-4 card shadow" style="height: 500px; width: 1000px">
+      <div class="row justify-content-center">
+        <div
+          class="icone"
+          style="
+            margin-right: 30px;
+            align-items: center;
+            justify-content: center;
+          ">
+          <i
+            class="fa-solid fa-elevator fa-5x"
+            style="margin-top: 10px; margin-left: 25px"
+          ></i>
+          <button
+            mat-button
+            class="custom-button-1"
+            routerLink="/coordenador"
+          >
+            Grade Trimestral
+          </button>
+        </div>
+        <div class="icone" style="align-items: center; justify-content: center">
+          <i
+            class="fa-solid fa-address-book fa-5x"
+            style="font-size: 100px; margin-top: 30px; margin-left: 35px"
+          ></i>
+          <button
+            mat-button
+            class="custom-button-2"
+            routerLink="#"
+          >
+            Coordenadores
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Footer -->
-  <div class="row fixed-bottom">
-    <div class="container-fluid text-center text-light bg-dark p-3">
-      <p class="mb-0">
-        © 2023 Todos os direitos reservados - Gerenciamento de Professores
-      </p>
-    </div>
+<!-- Footer -->
+<div class="row fixed-bottom">
+  <div class="container-fluid text-center text-light p-3">
+    <p class="mb-0">
+      © 2023 Todos os direitos reservados - Gerenciamento de Professores.
+    </p>
   </div>
 </div>

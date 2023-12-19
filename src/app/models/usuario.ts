@@ -8,4 +8,5 @@ export interface Usuario {
   discEscolhidos: string[];
   tipoContratacao: string;
   tipoUsuario: String; // Professor, Coordenador ou Administrador.
+  statusAtivo: String
 }

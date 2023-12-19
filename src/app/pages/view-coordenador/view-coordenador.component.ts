@@ -4,9 +4,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, map, startWith } from 'rxjs';
+import { associacao } from 'src/app/models/associacao';
 import { Curso } from 'src/app/models/curso';
 import { Disciplina } from 'src/app/models/disciplina';
 import { Usuario } from 'src/app/models/usuario';
+import { AssociacaoService } from 'src/app/services/associacao.service';
 import { CursoService } from 'src/app/services/curso.service';
 import { DisciplinaService } from 'src/app/services/disciplina.service';
 import { ProfessorService } from 'src/app/services/usuario.service';
@@ -18,11 +20,11 @@ import { ProfessorService } from 'src/app/services/usuario.service';
 })
 export class ViewCoordenadorComponent implements OnInit {
   displayedColumns: string[] = [
-    'disciplinaId',
     'disciplinaNome',
     'disciplinaCarga',
     'trimestre',
     'usuario',
+    'status'
   ];
 
   trimestresList: string[] = [
@@ -32,6 +34,13 @@ export class ViewCoordenadorComponent implements OnInit {
     'QUARTO_TRIMESTRE',
   ];
 
+  icones = {
+    ok: "https://img.icons8.com/color/48/000000/ok--v1.png",
+    vazio: "https://img.icons8.com/fluency/48/000000/circled.png",
+    erro: "https://img.icons8.com/color/48/error--v1.png",
+    aguardando: "https://img.icons8.com/ios-glyphs/60/hourglass--v1.png"
+  }
+
   options: string[] = [];
   myControl = new FormControl('');
   filteredOptions!: Observable<string[]>;
@@ -39,15 +48,14 @@ export class ViewCoordenadorComponent implements OnInit {
   trimestreSelecionado: any;
   cursoSelecionado = '';
   profSelecionado: Usuario[] = [];
-  filtroCurso: FormControl = new FormControl('');
+  
+  respostaAtualizaProfessor!: string;
   dataSource!: MatTableDataSource<any>;
-  getCurso!: Curso[];
-  novoCurso!: Curso[];
 
+  associacoesList: associacao[] = [];
   disciplinaList: Disciplina[] = [];
   CursoList: Curso[] = [];
   professoresList: Usuario[] = [];
-  getUsuario: Usuario[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -55,7 +63,8 @@ export class ViewCoordenadorComponent implements OnInit {
   constructor(
     private _discService: DisciplinaService,
     private _cursoService: CursoService,
-    private _professorService: ProfessorService
+    private _professorService: ProfessorService,
+    private _associacaoService: AssociacaoService
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +74,7 @@ export class ViewCoordenadorComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value || '')),
     );
+    this.verificarStatusTabela();
   }
 
   
@@ -74,28 +84,75 @@ export class ViewCoordenadorComponent implements OnInit {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  async atualizarUsuario(row: any) {
-    let disciplina$: Observable<Disciplina> = this._discService.getDisciplina(
-      row.disciplinaId
-    );
-
-    disciplina$.subscribe((disciplina: Disciplina) => {
-      // Assuming 'usuario' is a property of 'disciplina' and exists in your Disciplina type
-      disciplina.usuario = row.usuario ?? null;
-
-      // Assuming atualizarDisciplina also returns an Observable
-      this._discService
-        .atualizarDisciplina(row.disciplinaId, disciplina)
-        .subscribe(
-          () => {
-            // Handle successful update if needed
+  verificarStatusTabela() {
+    if (this.dataSource) {
+      this.dataSource.data.forEach(row => {
+        row.statusIcon = this.getIconSource(row.status);
+      });
+    }
+  }
+    
+  atualizaProfessor(row: any) {
+    let disciplina: Disciplina;
+    let usuario: Usuario;
+    let associacao: associacao;
+  
+    this._discService.getDisciplina(row.disciplinaId).subscribe((data) => {
+      disciplina = data;
+  
+      this._professorService.obterProfessor(row.usuario.usuarioId).subscribe((data) => {
+        usuario = data;
+  
+        associacao = {
+          dataRegistro: new Date(),
+          associacaoId: 0,
+          disciplina: disciplina,
+          usuario: usuario,
+          statusAprovacao: 'PENDENTE',
+          statusAtivo: 'ATIVADO',
+        };
+  
+        this._associacaoService.obterAssociacoesPendentes().subscribe({
+          next: (res) => {
+            let associacaoExistente = res.find(
+              (assoc) =>
+                assoc.disciplina.disciplinaId === disciplina.disciplinaId &&
+                assoc.usuario.usuarioId !== usuario.usuarioId
+            );
+  
+            if (associacaoExistente) {
+              this._associacaoService.negarAssociacao(associacaoExistente.associacaoId).subscribe({
+                error: console.log,
+              });
+            }
+  
+            this._associacaoService.criarAssociacao(associacao).subscribe({
+              error: console.log,
+              complete: () => {
+                row.status = "Aguardando aprovação"
+                this.verificarStatusTabela();
+              }
+            });
           },
-          (error) => {
-            // Handle error during update
-            console.error(error);
-          }
-        );
+          error: console.log,
+        });
+      });
     });
+  }
+
+
+  getIconSource(status: string){
+    
+    switch (status) {
+      case 'Professor associado à disciplina.':
+        return this.icones.ok;
+      case 'Carga horária do professor excedida':
+        return this.icones.erro;
+      case 'Aguardando aprovação':
+        return this.icones.aguardando;
+      default:
+        return this.icones.vazio;
+    }
   }
 
   getCursoList() {
@@ -123,9 +180,25 @@ export class ViewCoordenadorComponent implements OnInit {
     this.options = this.disciplinaList.map(d => d.disciplinaNome)
 
     this.dataSource = new MatTableDataSource(this.disciplinaList);
+
+    this._associacaoService.obterAssociacoesPendentes().subscribe( data => {
+
+      this.dataSource.data.map(row => {
+        const usuario = data.find(associacao => associacao.disciplina.disciplinaId === row.disciplinaId)?.usuario
+        if (row.usuario) {
+          row.status = "Professor associado à disciplina."
+        }
+        else if (usuario){
+          row.usuario = usuario
+          row.status = 'Aguardando aprovação'
+        }
+      })
+      this.verificarStatusTabela();
+    })
+
     this.dataSource.sort = this.sort;
     this.dataSource._renderChangesSubscription;
-
+    
   }
 
   getProfessoresList() {
@@ -135,7 +208,6 @@ export class ViewCoordenadorComponent implements OnInit {
           (professor: { tipoUsuario: string }) =>
             professor.tipoUsuario === 'PROFESSOR'
         );
-        // console.log(this.professoresList);
       },
       error: console.log,
     });
@@ -189,7 +261,8 @@ export class ViewCoordenadorComponent implements OnInit {
     // Loop para percorrer cada linha nas linhas filtradas.
     for (let row = 0; row < rows.length; row++) {
       let keys = this.displayedColumns;
-
+      // Retira o status de salvamento do csv
+      keys.pop();
       // Loop para percorrer cada elemento na linha atual.
       keys.forEach((key) => {
         if (key != keys[keys.length - 1]) {
