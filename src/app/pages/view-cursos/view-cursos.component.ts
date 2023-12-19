@@ -1,10 +1,12 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, startWith, map } from 'rxjs';
+import { ModalCadastroCursoComponent } from 'src/app/components/modal-cadastro-curso/modal-cadastro-curso.component';
+import { ModalCadastroDisciplinaComponent } from 'src/app/components/modal-cadastro-disciplina/modal-cadastro-disciplina.component';
 import { associacao } from 'src/app/models/associacao';
 import { Curso } from 'src/app/models/curso';
 import { Disciplina } from 'src/app/models/disciplina';
@@ -25,6 +27,7 @@ export class ViewCursosComponent implements OnInit {
     'disciplinaCarga',
     'trimestre',
     'usuario',
+    'action'
   ];
 
   trimestresList: string[] = [
@@ -47,6 +50,8 @@ export class ViewCursosComponent implements OnInit {
 
   trimestreSelecionado: any;
   cursoSelecionado = '';
+  cursoSelecionadoId!: number;
+
   profSelecionado: Usuario[] = [];
   
   respostaAtualizaProfessor!: string;
@@ -59,15 +64,16 @@ export class ViewCursosComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
+  
   constructor(
     private _discService: DisciplinaService,
     private _cursoService: CursoService,
     private _professorService: ProfessorService,
-    private _associacaoService: AssociacaoService
-  ) {}
-
-  ngOnInit(): void {
+    private _associacaoService: AssociacaoService,
+    private dialog: MatDialog
+    ) {}
+    
+    ngOnInit(): void {
     this.getCursoList();
     this.getProfessoresList();
     this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -76,12 +82,33 @@ export class ViewCursosComponent implements OnInit {
     );
     this.verificarStatusTabela();
   }
-
   
+  editar(){
+  }
+  excluir() {
+  }
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
+    
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+  criarDisciplina(): void {
+    const dialogRef = this.dialog.open(ModalCadastroDisciplinaComponent, {
+      data: { cursoId: this.cursoSelecionadoId } // Pass cursoId to the modal
+    });
+
+    // Subscribe to the afterClosed() method to get data back from the modal if needed
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
+  }
+
+  criarCurso(): void {
+    const dialogRef = this.dialog.open(ModalCadastroCursoComponent, {
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   verificarStatusTabela() {
@@ -176,6 +203,7 @@ export class ViewCursosComponent implements OnInit {
     );
 
     this.cursoSelecionado = curso?.cursoNome ?? '';
+    this.cursoSelecionadoId = curso?.cursoId ?? -1;
 
     this.disciplinaList = curso?.disciplinas ?? [];
     this.options = this.disciplinaList.map(d => d.disciplinaNome)

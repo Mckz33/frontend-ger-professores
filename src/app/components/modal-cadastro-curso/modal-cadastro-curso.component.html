@@ -1,0 +1,15 @@
+<div class="main-container p-4 justify-content-center">
+  <h2 class="mat-display-2">Cadastro de Curso</h2>
+
+  <mat-form-field class="full-width">
+    <mat-label>Nome do Curso</mat-label>
+    <input matInput type="text" [(ngModel)]="data.cursoNome" />
+  </mat-form-field>
+
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="cadastrarCurso()">
+      Cadastrar Curso
+    </button>
+    <button mat-raised-button (click)="onNoClick()">Fechar</button>
+  </div>
+</div>
