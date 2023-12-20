@@ -1,14 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatButtonModule } from '@angular/material/button';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CommonModule } from '@angular/common';
-
 import { ProfessorService } from 'src/app/services/usuario.service';
 import { CursoService } from 'src/app/services/curso.service';
 import { Curso } from 'src/app/models/curso';
@@ -16,25 +7,11 @@ import { Disciplina } from 'src/app/models/disciplina';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-professor-cadastro',
-  templateUrl: './professor-cadastro.component.html',
-  styleUrls: ['./professor-cadastro.component.css'],
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatIconModule,
-    MatDividerModule,
-    MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    MatFormFieldModule,
-    MatSelectModule,
-  ],
+  selector: 'app-dados-perfil',
+  templateUrl: './dados-perfil.component.html',
+  styleUrls: ['./dados-perfil.component.css'],
 })
-export class ProfessorCadastroComponent implements OnInit {
+export class DadosPerfilComponent implements OnInit {
   tipoHorarioContratacao: string[] = ['HORISTA', 'PARCIAL', 'INTEGRAL'];
   cursosDisponiveis: Curso[] = [];
   disciplinasDoCurso: Disciplina[] = [];
@@ -55,22 +32,9 @@ export class ProfessorCadastroComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.obterCursosDisponiveis();
+    
   }
 
-  // Busca dos cursos no banco.
-  obterCursosDisponiveis() {
-    this.cursoService.obterCursos().subscribe(
-      (cursos) => {
-        this.cursosDisponiveis = cursos;
-      },
-      (error) => {
-        console.error('Erro ao obter cursos', error);
-      }
-    );
-  }
-
-  // Seleciona o curso no dropdown/select.
   cursoSelecionado() {
     if (this.curso) {
       this.disciplinasDoCurso = this.curso.disciplinas;
@@ -80,8 +44,6 @@ export class ProfessorCadastroComponent implements OnInit {
     }
   }
 
-  // ==== ANALISAR A LÓGICA DEPOIS COM O PESSOAL ====
-  // Lógica para validação da Carga Semanal baseado na escolha do tipo (Horista, Parcial ou Integral).
   validarCargaSemanal() {
     // Horista.
     if (this.tipoContratacao === 'HORISTA' && this.professorCarga !== null) {

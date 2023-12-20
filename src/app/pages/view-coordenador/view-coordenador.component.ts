@@ -48,7 +48,7 @@ export class ViewCoordenadorComponent implements OnInit {
   trimestreSelecionado: any;
   cursoSelecionado = '';
   profSelecionado: Usuario[] = [];
-  
+
   respostaAtualizaProfessor!: string;
   dataSource!: MatTableDataSource<any>;
 
@@ -65,7 +65,7 @@ export class ViewCoordenadorComponent implements OnInit {
     private _cursoService: CursoService,
     private _professorService: ProfessorService,
     private _associacaoService: AssociacaoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCursoList();
@@ -77,7 +77,7 @@ export class ViewCoordenadorComponent implements OnInit {
     this.verificarStatusTabela();
   }
 
-  
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
@@ -91,18 +91,18 @@ export class ViewCoordenadorComponent implements OnInit {
       });
     }
   }
-    
+
   atualizaProfessor(row: any) {
     let disciplina: Disciplina;
     let usuario: Usuario;
     let associacao: associacao;
-  
+
     this._discService.getDisciplina(row.disciplinaId).subscribe((data) => {
       disciplina = data;
-  
+
       this._professorService.obterProfessor(row.usuario.usuarioId).subscribe((data) => {
         usuario = data;
-  
+
         associacao = {
           dataRegistro: new Date(),
           associacaoId: 0,
@@ -111,7 +111,7 @@ export class ViewCoordenadorComponent implements OnInit {
           statusAprovacao: 'PENDENTE',
           statusAtivo: 'ATIVADO',
         };
-  
+
         this._associacaoService.obterAssociacoesPendentes().subscribe({
           next: (res) => {
             let associacaoExistente = res.find(
@@ -119,13 +119,13 @@ export class ViewCoordenadorComponent implements OnInit {
                 assoc.disciplina.disciplinaId === disciplina.disciplinaId &&
                 assoc.usuario.usuarioId !== usuario.usuarioId
             );
-  
+
             if (associacaoExistente) {
               this._associacaoService.negarAssociacao(associacaoExistente.associacaoId).subscribe({
                 error: console.log,
               });
             }
-  
+
             this._associacaoService.criarAssociacao(associacao).subscribe({
               error: console.log,
               complete: () => {
@@ -141,8 +141,8 @@ export class ViewCoordenadorComponent implements OnInit {
   }
 
 
-  getIconSource(status: string){
-    
+  getIconSource(status: string) {
+
     switch (status) {
       case 'Professor associado à disciplina.':
         return this.icones.ok;
@@ -181,14 +181,14 @@ export class ViewCoordenadorComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource(this.disciplinaList);
 
-    this._associacaoService.obterAssociacoesPendentes().subscribe( data => {
+    this._associacaoService.obterAssociacoesPendentes().subscribe(data => {
 
       this.dataSource.data.map(row => {
         const usuario = data.find(associacao => associacao.disciplina.disciplinaId === row.disciplinaId)?.usuario
         if (row.usuario) {
           row.status = "Professor associado à disciplina."
         }
-        else if (usuario){
+        else if (usuario) {
           row.usuario = usuario
           row.status = 'Aguardando aprovação'
         }
@@ -198,7 +198,7 @@ export class ViewCoordenadorComponent implements OnInit {
 
     this.dataSource.sort = this.sort;
     this.dataSource._renderChangesSubscription;
-    
+
   }
 
   getProfessoresList() {

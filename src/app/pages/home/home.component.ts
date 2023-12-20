@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  constructor(private route: Router) {}
+  constructor(private route: Router) { }
   logOut() {
     const confirmacao = confirm('Deseja sair do sistema?');
     if (confirmacao) {
