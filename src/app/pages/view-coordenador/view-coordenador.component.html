@@ -2,9 +2,10 @@
 <div class="main-container">
   <mat-toolbar color="primary">
     <span>Gerenciamento de Professores</span>
-    <span class="example-spacer-button"></span>
-    <button mat-button routerLink="/home">Início</button>
     <span class="example-spacer"></span>
+    <button mat-button routerLink="/home" class="buttonInicio">Início</button>
+    <span class="example-spacer"></span>
+    <button mat-raised-button (click)="logOut()">Logout</button>
   </mat-toolbar>
 
 <div class="main-body">
@@ -58,10 +59,6 @@
 
   <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="disciplinaId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-        <td mat-cell *matCellDef="let row">{{ row.disciplinaId }}</td>
-      </ng-container>
 
       <ng-container matColumnDef="disciplinaNome">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
@@ -70,7 +67,7 @@
 
       <ng-container matColumnDef="disciplinaCarga">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Carga Horária</th>
-        <td mat-cell *matCellDef="let row">{{ row.disciplinaCarga }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.disciplinaCarga }}h</td>
       </ng-container>
 
       <ng-container matColumnDef="trimestre">
@@ -104,7 +101,7 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
         <td mat-cell *matCellDef="let row">
-          <img [src]="getIconSource(row.status)" style="height: 24px; width: 24px;" title={{row.status}}>
+          <img [src]="row.statusIcon" style="height: 24px; width: 24px;" title={{row.status}}>
         </td>
       </ng-container>
 

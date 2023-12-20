@@ -44,7 +44,7 @@ export class ProfessorCadastroComponent implements OnInit {
   usuarioEmail: string = '';
   professorCarga: number = 40;
   tipoContratacao: string = '';
-  curso: Curso = { cursoId: 0, cursoNome: '', disciplinas: [] };
+  curso: Curso = { cursoId: 0, cursoNome: '', disciplinas: [], statusAtivo: "ATIVADO" };
   disciplinas: Disciplina[] = [];
 
   constructor(
@@ -122,6 +122,7 @@ exibirMensagemErro(mensagem: string) {
       tipoUsuario: 'PROFESSOR',
       curEscolhidos: this.curso?.cursoNome,
       discEscolhidos: this.disciplinas.map((d) => d.disciplinaNome),
+      statusAtivo: "ATIVADO"
     };
 
     // Validar o campo de nome
@@ -215,7 +216,7 @@ exibirMensagemErro(mensagem: string) {
     this.tipoContratacao = '';
     this.usuarioEmail = '';
     this.professorCarga = 40;
-    this.curso = { cursoId: 0, cursoNome: '', disciplinas: [] };
+    this.curso = { cursoId: 0, cursoNome: '', disciplinas: [], statusAtivo: "ATIVADO" };
     this.disciplinas = [];
     this.disciplinasDoCurso = [];
 

@@ -1,11 +1,11 @@
 .main-container {
-  background-image: url("../../../assets/fundo_registroProf.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-  min-height: 100vh;
-}
-
-/* MENU */
+    background-image: url("../../../assets/fundo_registroProf.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  
+ /* MENU */
 mat-toolbar {
   background-color: rgba(0, 0, 0, 0.3);
   color: #dddddd;
@@ -46,31 +46,35 @@ mat-toolbar .example-spacer {
 .buttonInicio {
   margin-right: 950px;
 }
+  
+  .main-body {
+    padding-top: 20px;
+    margin: 0 auto;
+    max-width: 1348px;
+  }
+  
+  .action {
+    display: flex;
+    gap: 5px;
+  }
+  
+  /* BOTÃO CSV */
+  .buttonSalvar {
+    background-color: #fff;
+    color: #000000;
+    margin-left: auto;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .buttonSalvar:hover {
+    background-color: #62002a;
+    color: #dddddd;
+  }
 
-.main-body {
-  padding-top: 20px;
-  margin: 0 auto;
-  max-width: 1348px;
-}
-
-.action {
-  display: flex;
-  gap: 5px;
-}
-
-/* BOTÃO CSV */
-.buttonCSV {
-  background-color: #fff;
-  color: #000000;
-  margin-left: auto;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.buttonCSV:hover {
-  background-color: #62002a;
-  color: #dddddd;
-}
+  h1 {
+    color: white;
+  }
