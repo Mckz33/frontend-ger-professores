@@ -9,6 +9,9 @@
 mat-toolbar {
   background-color: rgba(0, 0, 0, 0.3);
   color: #dddddd;
+  justify-content: space-between; /* Adiciona espaçamento entre os elementos */
+  align-items: center; /* Alinha os itens verticalmente */
+
   padding: 10px 20px;
   box-shadow: 0 2px 5px black;
 }
@@ -22,7 +25,7 @@ mat-toolbar span {
 mat-toolbar button {
   background-color: #fff;
   color: #000000;
-  margin-left: auto;
+  margin-left: 15px;
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
@@ -36,13 +39,13 @@ mat-toolbar button:hover {
 }
 
 mat-toolbar .example-spacer {
-  margin-right: 15px;
+  flex-grow: 1;
+
 }
 
-mat-toolbar .example-spacer-button {
-  margin-left: 15px;
+.buttonInicio {
+  margin-right: 950px;
 }
-
 
 .main-body {
   padding-top: 20px;

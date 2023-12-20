@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Observable, map, startWith } from 'rxjs';
 import { associacao } from 'src/app/models/associacao';
 import { Curso } from 'src/app/models/curso';
@@ -64,7 +65,10 @@ export class ViewCoordenadorComponent implements OnInit {
     private _discService: DisciplinaService,
     private _cursoService: CursoService,
     private _professorService: ProfessorService,
-    private _associacaoService: AssociacaoService
+
+
+    private _associacaoService: AssociacaoService,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
@@ -77,6 +81,13 @@ export class ViewCoordenadorComponent implements OnInit {
     this.verificarStatusTabela();
   }
 
+  logOut() {
+    const confirmacao = confirm('Deseja sair do sistema?');
+    if (confirmacao) {
+      localStorage.removeItem('token');
+      this._router.navigate(['login']);
+    }
+  }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();

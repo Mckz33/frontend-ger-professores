@@ -2,9 +2,10 @@
 <div class="main-container">
   <mat-toolbar color="primary">
     <span>Gerenciamento de Professores</span>
-    <span class="example-spacer-button"></span>
-    <button mat-button routerLink="/home">Início</button>
     <span class="example-spacer"></span>
+    <button mat-button routerLink="/home" class="buttonInicio">Início</button>
+    <span class="example-spacer"></span>
+    <button mat-raised-button (click)="logOut()">Logout</button>
   </mat-toolbar>
 
   <div class="main-body">
