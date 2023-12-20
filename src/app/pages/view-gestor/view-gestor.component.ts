@@ -85,6 +85,14 @@ export class ViewGestorComponent implements OnInit {
     });
   }
 
+  logOut() {
+    const confirmacao = confirm('Deseja sair do sistema?');
+    if (confirmacao) {
+      localStorage.removeItem('token');
+      this._router.navigate(['login']);
+    }
+  }
+
   atualizarCargaHoraria(carga: number, status: boolean){
     status? this.cargaHorariaDisponivel-=carga: this.cargaHorariaDisponivel+=carga
   }
