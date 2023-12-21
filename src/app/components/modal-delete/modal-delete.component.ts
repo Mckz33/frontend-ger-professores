@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CursoService } from 'src/app/services/curso.service';
 import { CoreService } from '../core/core.service';
@@ -10,56 +10,70 @@ import { ProfessorService } from 'src/app/services/usuario.service';
   templateUrl: './modal-delete.component.html',
   styleUrls: ['./modal-delete.component.css']
 })
-export class ModalDeleteComponent {
+export class ModalDeleteComponent implements OnInit{
+  private info: any;
   constructor(
     public dialogRef: MatDialogRef<ModalDeleteComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Data,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private cursoService: CursoService,
     private disciplinaService: DisciplinaService,
     private professorService: ProfessorService,
     private coreService: CoreService,
   ) {}
 
+  ngOnInit(): void {
+    switch (this.data.tipo) {
+      case "curso":
+        this.cursoService.obterCurso(this.data.id).subscribe(data => {
+          this.data.nome = data.cursoNome
+          this.info = data
+        })
+        break;
+      case "disciplina":
+        this.disciplinaService.getDisciplina(this.data.id).subscribe(data => {
+          this.data.nome = data.disciplinaNome
+          this.info = data
+        });
+        
+        break;
+      case "professor":
+        this.professorService.obterProfessor(this.data.id).subscribe(data => {
+          this.data.nome = data.usuarioNome
+          this.info = data
+        });
+        break;
+    
+      default:
+        break;
+    }
+  }
+
+
   onConfirm(): void {
-    if(this.data.tipo == "curso"){
-      this.cursoService.deletarCurso(this.data.id).subscribe({
-        next: (val: any) => {
-          this.coreService.openSnackBar('Curso deletado com sucesso!');
-          this.dialogRef.close(true); // Retorna true ao fechar o modal
-        }
-      })
-    }
-    if(this.data.tipo == "disciplina"){
-      this.disciplinaService.deletarDisciplina(this.data.id).subscribe({
-        next: (val: any) => {
-          this.coreService.openSnackBar('Disciplina deletado com sucesso!');
-          this.dialogRef.close(true); // Retorna true ao fechar o modal
-        }
-      })
-    }
-    if(this.data.tipo == "professor"){
-      this.professorService.deletarProfessor(this.data.id).subscribe({
-        next: (val: any) => {
-          this.coreService.openSnackBar('Professor deletado com sucesso!');
-          this.dialogRef.close(true); // Retorna true ao fechar o modal
-        }
-      })
+
+    this.info.statusAtivo = "DESATIVADO"
+    switch (this.data.tipo) {
+      case "curso":
+        this.cursoService.atualizarCurso(this.info).subscribe(data => {
+        })
+        break;
+      case "disciplina":
+        this.disciplinaService.atualizarDisciplina(this.info.disciplinaId ,this.info).subscribe(data => {
+        });
+        
+        break;
+      case "professor":
+        this.professorService.atualizarProfessor(this.info).subscribe(data => {
+        });
+        break;
+    
+      default:
+        break;
     }
   }
 
   onCancel(): void {
     this.dialogRef.close(false); // Retorna false ao fechar o modal
   }
-}
 
-interface Data {
-  id: number,
-  tipo: tipo,
-  nome: string
-}
-
-enum tipo {
-  curso = "curso",
-  disciplina = "disciplina",
-  professor = "professor"
 }

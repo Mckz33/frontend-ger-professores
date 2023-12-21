@@ -15,12 +15,12 @@ export class DisciplinaService {
     return this._http.post(this.apiUrl, data);
   }
 
-  atualizarDisciplina(id: number, data: Disciplina): Observable<any> {
+  atualizarDisciplina(id: string, data: Disciplina): Observable<any> {
     return this._http.put<Disciplina>(`${this.apiUrl}/${id}`, data);
   }
 
   getDisciplinaList(): Observable<any> {
-    return this._http.get<Disciplina[]>(this.apiUrl);
+    return this._http.get<Disciplina[]>(this.apiUrl+"/disciplinas-ativos");
   }
 
   deletarDisciplina(id: number): Observable<any> {

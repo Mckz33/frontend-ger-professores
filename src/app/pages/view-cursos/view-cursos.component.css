@@ -47,6 +47,10 @@
     background-color: white;
 }
 
+.icone {
+  background-color: white;
+}
+
 /* Styles for the active tab label */
 mat-tab .mat-tab-label.mat-tab-label-active {
     background-color: white;
