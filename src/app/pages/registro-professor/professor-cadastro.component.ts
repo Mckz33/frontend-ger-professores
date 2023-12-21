@@ -52,7 +52,7 @@ export class ProfessorCadastroComponent implements OnInit {
     private professorService: ProfessorService,
     private cursoService: CursoService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.obterCursosDisponiveis();
@@ -102,14 +102,14 @@ export class ProfessorCadastroComponent implements OnInit {
     }
   }
 
-// Função para exibir mensagem de erro usando o MatSnackBar.
-exibirMensagemErro(mensagem: string) {
-  this.snackBar.open(mensagem, 'Fechar', {
-    duration: 5000,
-    verticalPosition: 'top',
-    horizontalPosition: 'center',
-  });
-}
+  // Função para exibir mensagem de erro usando o MatSnackBar.
+  exibirMensagemErro(mensagem: string) {
+    this.snackBar.open(mensagem, 'Fechar', {
+      duration: 5000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
+  }
 
   // Cadastro de Professor.
   cadastrar() {
@@ -188,7 +188,7 @@ exibirMensagemErro(mensagem: string) {
 
         // Rota de acesso a página de cadastro bem-sucedido caso passe pelas validações.
         this.router.navigate(['/cadastro-sucesso']);
-      
+
       },
       (error) => {
         console.error('Erro ao cadastrar professor.', error);

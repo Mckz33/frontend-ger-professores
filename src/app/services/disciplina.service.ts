@@ -7,7 +7,7 @@ import { Disciplina } from '../models/disciplina';
   providedIn: 'root',
 })
 export class DisciplinaService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   private apiUrl = 'http://localhost:8080/api/disciplina';
 
@@ -31,7 +31,7 @@ export class DisciplinaService {
     return this._http.get<Disciplina>(`${this.apiUrl}/${id}`);
   }
 
-  atualizarProfessorDisciplina (disciplinaId: number, professorId: number): Observable<any> {
+  atualizarProfessorDisciplina(disciplinaId: number, professorId: number): Observable<any> {
     return this._http.put(`${this.apiUrl}/${disciplinaId}/professor/${professorId}`, "")
   }
 }

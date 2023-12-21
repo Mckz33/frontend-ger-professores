@@ -4,9 +4,9 @@ export interface Usuario {
   usuarioCpf: string;
   usuarioEmail: string;
   professorCarga: number;
-  curEscolhidos: string[];
+  tipoContratacao: string; // ou Enum correspondente
+  tipoUsuario: string; // ou Enum correspondente
+  curEscolhidos: string;
   discEscolhidos: string[];
-  tipoContratacao: string;
-  tipoUsuario: String; // Professor, Coordenador ou Administrador.
-  statusAtivo: String
+  statusAtivo: string;
 }
