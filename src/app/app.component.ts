@@ -6,10 +6,10 @@ import { ProfessorService } from './services/usuario.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'frontend-ger-professores';
 
-  constructor(private _empService: ProfessorService) {}
+  constructor(private _empService: ProfessorService) { }
 
   ngOnInit(): void {
     this.getProfessorList();
