@@ -29,6 +29,7 @@ const routes: Routes = [
   { path: 'coordenador', component: ViewCoordenadorComponent, canActivate: [authGuard] },
   { path: 'gestor', component: ViewGestorComponent, canActivate: [authGuard] },
 
+
   // Retorna para a tela de Login caso não ache outra página OU url diferente.
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
