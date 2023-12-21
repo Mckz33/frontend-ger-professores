@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { ProfessorService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class DadosPerfilComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar,
     private professorService: ProfessorService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -72,6 +74,10 @@ export class DadosPerfilComponent implements OnInit {
           verticalPosition: 'top',
           horizontalPosition: 'center',
         });
+
+        // Rota de acesso a página de home caso passe pelas validações.
+        this.router.navigate(['/home']);
+
       },
       (error) => {
         console.error('Erro ao atualizar o perfil.', error);
