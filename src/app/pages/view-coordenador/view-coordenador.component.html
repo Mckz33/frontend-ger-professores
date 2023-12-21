@@ -2,9 +2,10 @@
 <div class="main-container">
   <mat-toolbar color="primary">
     <span>Gerenciamento de Professores</span>
-    <span class="example-spacer-button"></span>
-    <button mat-button routerLink="/home">Início</button>
     <span class="example-spacer"></span>
+    <button mat-button routerLink="/home" class="buttonInicio">Início</button>
+    <span class="example-spacer"></span>
+    <button mat-raised-button (click)="logOut()">Logout</button>
   </mat-toolbar>
 
   <div class="main-body">
@@ -29,7 +30,6 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-
       <mat-form-field class="p-3">
         <mat-label>Filtrar por Curso</mat-label>
         <mat-select
@@ -122,7 +122,6 @@
           </td>
         </tr>
       </table>
-
       <mat-paginator
         [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page of users"
@@ -144,3 +143,4 @@
     </div>
   </div>
 </div>
+

@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private service: ValidacaoCadastroService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.formLogin = this.fb.group({

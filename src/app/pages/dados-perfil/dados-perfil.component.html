@@ -1,0 +1,43 @@
+<div class="main-container">
+    <div class="container">
+
+        <div class="professor-container">
+            <div class="image-container">
+                <img src="../../../assets/cadastroProf.png" alt="Ícone de Professor" class="professor-icon">
+            </div>
+        </div>
+
+        <div class="content-container">
+            <div class="header-content">
+                <h2>Meu Perfil</h2>
+            </div>
+
+            <div class="separador"></div>
+
+            <mat-form-field class="custom-form-field">
+                <mat-label>Nome</mat-label>
+                <input matInput [(ngModel)]="usuarioNome" />
+            </mat-form-field>
+
+            <mat-form-field class="custom-form-field">
+                <mat-label>CPF</mat-label>
+                <input matInput [(ngModel)]="usuarioCpf" />
+            </mat-form-field>
+
+            <mat-form-field class="custom-form-field">
+                <mat-label>Email</mat-label>
+                <input matInput [(ngModel)]="usuarioEmail" disabled />
+            </mat-form-field>
+
+            <div class="button-container">
+                <button mat-raised-button color="primary" (click)="cadastrar()">
+                    Cadastrar
+                </button>
+                <button mat-raised-button color="warn" (click)="limparCampos()">
+                    Limpar
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
