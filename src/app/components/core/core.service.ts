@@ -11,6 +11,7 @@ export class CoreService {
     this._snackBar.open(message, action, {
       duration: 2000,
       verticalPosition: 'top',
+      panelClass: ['custom-snackbar'],
     });
   }
 }

@@ -11,6 +11,7 @@ import { ProfessorCadastroComponent } from './pages/registro-professor/professor
 import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-sucesso.component';
 import { ViewGestorComponent } from './pages/view-gestor/view-gestor.component';
 import { ViewCursosComponent } from './pages/view-cursos/view-cursos.component';
+import { ModalCadastroCursoComponent } from './components/modal-cadastro-curso/modal-cadastro-curso.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -20,6 +21,9 @@ const routes: Routes = [
   { path: 'registro/coordenador', component: RegistroCoordenadorComponent, canActivate: [authGuard]},
 
   { path: 'registro/professor', component: ProfessorCadastroComponent},
+  
+  { path: 'registro/curso', component: ModalCadastroCursoComponent},
+
   { path: 'cadastro-sucesso', component: CadastroSucessoComponent },
 
 

@@ -1,61 +1,101 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Disciplina } from 'src/app/models/disciplina';
 import { CursoService } from 'src/app/services/curso.service';
 import { DisciplinaService } from 'src/app/services/disciplina.service';
+import { CoreService } from '../core/core.service';
 
 @Component({
   selector: 'app-modal-cadastro-disciplina',
   templateUrl: './modal-cadastro-disciplina.component.html',
   styleUrls: ['./modal-cadastro-disciplina.component.css']
 })
-export class ModalCadastroDisciplinaComponent {
-  // disciplina: Disciplina;
-  // cursoId: number;
+export class ModalCadastroDisciplinaComponent implements OnInit {
+  disciplinaForm: FormGroup;
+  disciplinasAutocomplete: Set<string> = new Set();
+  cursoId: number;
 
   constructor(
-    public dialogRef: MatDialogRef<ModalCadastroDisciplinaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ModalCadastroDisciplinaComponent,
+    private _fb: FormBuilder,
+    private _dialogRef: MatDialogRef<ModalCadastroDisciplinaComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private disciplinaService: DisciplinaService,
     private cursoService: CursoService,
-    private disciplinaService: DisciplinaService
+    private _coreService: CoreService,
   ) {
-    // Access data like this
-    // this.disciplina = data.disciplina;
-    // this.cursoId = data.cursoId;
+    this.cursoId = this.data.cursoId;
+    this.disciplinaForm = this._fb.group({
+      disciplinaNome: ['', Validators.required],
+      disciplinaCarga: [null, [Validators.required,Validators.min(0)]],
+      trimestre: [null, Validators.required],
+    });
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  ngOnInit(): void {
+    this.disciplinaService.getDisciplinaList().subscribe((disciplinas) => {
+      disciplinas.forEach((disciplina: Disciplina) => {
+        this.disciplinasAutocomplete.add(disciplina.disciplinaNome);
+      });
+    });
   }
 
-  // cadastrarDisciplina(): void {
-  //   if (!this.dadosSaoValidos()) {
-  //     return;
-  //   }
+  onNoClick() {
+    this._dialogRef.close(true);
+  }
 
-  //   // Criar a disciplina
-  //   this.disciplinaService.adicionarDisciplina(this.disciplina).subscribe(
-  //     disciplinaCriada => {
-  //       // Associar a disciplina ao curso
-  //       this.cursoService.associarCursoDisciplina(this.cursoId, disciplinaCriada.disciplinaId).subscribe(
-  //         resultado => {
-  //           alert("Disciplina cadastrada e associada ao curso com sucesso!");
-  //         },
-  //         erro => {
-  //           // Tratar erro, se necessário
-  //         }
-  //       );
-  //     },
-  //     erro => {
-  //       // Tratar erro, se necessário
-  //     }
-  //   );
+  onFormSubmit() {
+    if (this.disciplinaForm.valid) {
+      const cargaHorariaAjustada = this.arredondarParaBaixo(+this.disciplinaForm.value.disciplinaCarga);
 
-  //   this.dialogRef.close();
-  // }
+      const novaDisciplina: Disciplina = {
+        disciplinaId: '0',
+        disciplinaNome: this.disciplinaForm.value.disciplinaNome,
+        disciplinaCarga: +cargaHorariaAjustada,
+        trimestre: this.disciplinaForm.value.trimestre, // Exemplo, ajuste conforme sua lógica
+        statusAtivo: 'ATIVADO'
+      };
 
-  private dadosSaoValidos(): boolean {
-    // Lógica de validação dos dados
-    return true;
+      this.disciplinaService.adicionarDisciplina(novaDisciplina).subscribe({
+        next: (val: any) => {
+          this.cursoService.associarCursoDisciplina(this.cursoId, val.disciplinaId).subscribe({
+            next: (val: any) => {
+              this._coreService.openSnackBar('Curso adicionado com sucesso!');
+              this._dialogRef.close(true);
+            },
+            error: (err: any) => {
+              console.error(err);
+              // Tratar erro, se necessário
+            }
+          })
+        },
+        error: (err: any) => {
+          console.error(err);
+          // Tratar erro, se necessário
+        }
+      });
+    } else {
+      // Tratamento de erros/formulário inválido, se necessário
+    }
+  }
+  
+  filterDisciplinas(value: string): string[] {
+    if (value && value.length >= 3) {
+      const autocomplete = Array.from(this.disciplinasAutocomplete.values());
+      const filterValue = value.toLowerCase();
+      return autocomplete.filter((disciplina) =>
+      disciplina.toLowerCase().includes(filterValue)
+      );
+    }
+      return []
+  }
+
+  displayDisciplina(disciplina: Disciplina): string {
+    return disciplina ? disciplina.disciplinaNome : '';
+  }
+
+  private arredondarParaBaixo(valor: number): number {
+    // Arredondar para baixo para o múltiplo de 2 mais próximo
+    return Math.floor(valor / 2) * 2;
   }
 }

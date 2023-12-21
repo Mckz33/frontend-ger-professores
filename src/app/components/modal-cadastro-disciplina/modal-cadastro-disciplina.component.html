@@ -1,15 +1,53 @@
-<mat-dialog-content class="mat-typography">
+<div class="main-container p-4 justify-content-center">
   <h2 class="mat-display-2">Cadastro de Disciplina</h2>
 
-  
-    <mat-form-field>
-      <mat-label>Nome da Disciplina</mat-label>
-      <input  type="text" [(ngModel)]="data" />
-    </mat-form-field>
-  
-
-  <div class="button-container">
-    <!-- <button mat-raised-button color="primary" (click)="cadastrarDisciplina()">Cadastrar Disciplina</button> -->
-    <button mat-raised-button (click)="onNoClick()">Fechar</button>
-  </div>
-</mat-dialog-content>
+  <form [formGroup]="disciplinaForm" (ngSubmit)="onFormSubmit()">
+    <div class="row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nome da Disciplina</mat-label>
+        <input
+          matInput
+          placeholder="Ex. Matemática"
+          formControlName="disciplinaNome"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayDisciplina">
+          <mat-option *ngFor="let disciplina of filterDisciplinas(disciplinaForm.get('disciplinaNome')?.value)"
+            [value]="disciplina"
+          >
+            {{ disciplina }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Carga Horária</mat-label>
+        <input
+          matInput
+          placeholder="Ex. 2"
+          type="number"
+          formControlName="disciplinaCarga"
+          step="2"
+        />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Trimestre</mat-label>
+        <mat-select formControlName="trimestre">
+          <mat-option value="PRIMEIRO_TRIMESTRE">Primeiro Trimestre</mat-option>
+          <mat-option value="SEGUNDO_TRIMESTRE">Segundo Trimestre</mat-option>
+          <mat-option value="TERCEIRO_TRIMESTRE">Terceiro Trimestre</mat-option>
+          <mat-option value="QUARTO_TRIMESTRE">Quarto Trimestre</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="submit">
+        Cadastrar Disciplina
+      </button>
+      <button mat-raised-button color="warn" (click)="onNoClick()">Fechar</button>
+    </div>
+  </form>
+</div>
