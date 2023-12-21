@@ -26,4 +26,8 @@ export class CursoService {
   deletarCurso(id: number): Observable<Curso> {
     return this.http.delete<Curso>(this.apiUrl + '/' + id);
   }
+  associarCursoDisciplina(cursoId: number, disciplinaId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${cursoId}/adicionarDisciplina/${disciplinaId}`, null);
+  }
+  
 }

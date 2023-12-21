@@ -11,6 +11,8 @@ import { ProfessorCadastroComponent } from './pages/registro-professor/professor
 import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-sucesso.component';
 import { ViewGestorComponent } from './pages/view-gestor/view-gestor.component';
 import { DadosPerfilComponent } from './pages/dados-perfil/dados-perfil.component';
+import { ViewCursosComponent } from './pages/view-cursos/view-cursos.component';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,8 +28,12 @@ const routes: Routes = [
 
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
 
+
   { path: 'coordenador', component: ViewCoordenadorComponent, canActivate: [authGuard] },
   { path: 'gestor', component: ViewGestorComponent, canActivate: [authGuard] },
+
+  { path: 'cursos', component: ViewCursosComponent},
+
 
   // Retorna para a tela de Login caso não ache outra página OU url diferente.
   { path: '', redirectTo: 'login', pathMatch: 'full' },

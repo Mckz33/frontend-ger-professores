@@ -36,8 +36,15 @@ import { ViewCoordenadorComponent } from './pages/view-coordenador/view-coordena
 import { ProfessorCadastroComponent } from './pages/registro-professor/professor-cadastro.component';
 import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-sucesso.component';
 import { ViewGestorComponent } from './pages/view-gestor/view-gestor.component';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DadosPerfilComponent } from './pages/dados-perfil/dados-perfil.component';
+
+import { ViewCursosComponent } from './pages/view-cursos/view-cursos.component';
+import { ModalCadastroCursoComponent } from './components/modal-cadastro-curso/modal-cadastro-curso.component';
+import {CdkAccordionModule} from '@angular/cdk/accordion';
+import { ModalCadastroDisciplinaComponent } from './components/modal-cadastro-disciplina/modal-cadastro-disciplina.component'; 
+
 
 @NgModule({
   declarations: [
@@ -50,6 +57,9 @@ import { DadosPerfilComponent } from './pages/dados-perfil/dados-perfil.componen
     CadastroSucessoComponent,
     ViewGestorComponent,
     DadosPerfilComponent,
+    ViewCursosComponent,
+    ModalCadastroCursoComponent,
+    ModalCadastroDisciplinaComponent,
   ],
   imports: [
     ProfessorCadastroComponent,
@@ -81,7 +91,8 @@ import { DadosPerfilComponent } from './pages/dados-perfil/dados-perfil.componen
     MatTabsModule,
     MatCardModule,
     MatAutocompleteModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    CdkAccordionModule
   ],
 
   providers: [],

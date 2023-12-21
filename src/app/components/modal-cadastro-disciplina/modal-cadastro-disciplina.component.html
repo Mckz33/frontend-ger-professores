@@ -1,0 +1,15 @@
+<mat-dialog-content class="mat-typography">
+  <h2 class="mat-display-2">Cadastro de Disciplina</h2>
+
+  
+    <mat-form-field>
+      <mat-label>Nome da Disciplina</mat-label>
+      <input  type="text" [(ngModel)]="data" />
+    </mat-form-field>
+  
+
+  <div class="button-container">
+    <!-- <button mat-raised-button color="primary" (click)="cadastrarDisciplina()">Cadastrar Disciplina</button> -->
+    <button mat-raised-button (click)="onNoClick()">Fechar</button>
+  </div>
+</mat-dialog-content>
