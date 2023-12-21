@@ -45,7 +45,6 @@ import { ModalCadastroCursoComponent } from './components/modal-cadastro-curso/m
 import {CdkAccordionModule} from '@angular/cdk/accordion';
 import { ModalCadastroDisciplinaComponent } from './components/modal-cadastro-disciplina/modal-cadastro-disciplina.component'; 
 
-
 @NgModule({
   declarations: [
     AppComponent,

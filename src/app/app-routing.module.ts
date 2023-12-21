@@ -13,7 +13,6 @@ import { ViewGestorComponent } from './pages/view-gestor/view-gestor.component';
 import { DadosPerfilComponent } from './pages/dados-perfil/dados-perfil.component';
 import { ViewCursosComponent } from './pages/view-cursos/view-cursos.component';
 
-
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
 
