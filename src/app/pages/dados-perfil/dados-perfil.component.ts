@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { ProfessorService } from 'src/app/services/usuario.service';
+import { CursoService } from 'src/app/services/curso.service';
+import { Curso } from 'src/app/models/curso';
+import { Disciplina } from 'src/app/models/disciplina';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-dados-perfil',
@@ -31,6 +35,7 @@ export class DadosPerfilComponent implements OnInit {
       horizontalPosition: 'center',
     });
   }
+
 
   // Obtendo detalhes do usuário (email).
   obterDetalhesUsuario() {
@@ -64,7 +69,6 @@ export class DadosPerfilComponent implements OnInit {
       this.exibirMensagemErro('Por favor, informe um CPF válido.');
       return;
     }
-
     this.professorService.adicionarProfessor(novoProfessor).subscribe(
       () => {
         this.limparCampos();
@@ -102,7 +106,6 @@ export class DadosPerfilComponent implements OnInit {
   limparCampos() {
     this.usuarioNome = '';
     this.usuarioCpf = '';
-
     this.snackBar.open('Os campos foram limpos.', 'Fechar', {
       duration: 5000,
       verticalPosition: 'top',
