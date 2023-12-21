@@ -68,7 +68,7 @@ export class ViewGestorComponent implements OnInit {
     private _professorService: ProfessorService,
     private _associassaoService: AssociacaoService,
     private _router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCursoList();
@@ -93,18 +93,19 @@ export class ViewGestorComponent implements OnInit {
     }
   }
 
-  atualizarCargaHoraria(carga: number, status: boolean){
-    status? this.cargaHorariaDisponivel-=carga: this.cargaHorariaDisponivel+=carga
+  atualizarCargaHoraria(carga: number, status: boolean) {
+    status ? this.cargaHorariaDisponivel -= carga : this.cargaHorariaDisponivel += carga
+
   }
 
   salvarAssociacoes() {
-    if(this.cargaHorariaDisponivel<0){
+    if (this.cargaHorariaDisponivel < 0) {
       alert(`O professor ${this.profSelecionado} está sobrecarregado.`)
-    }else{
+    } else {
 
       const operacoesPendentes = this.dataSource.data.length;
       let operacoesConcluidas = 0;
-    
+
       const operacaoConcluida = () => {
         operacoesConcluidas++;
         if (operacoesConcluidas === operacoesPendentes) {
@@ -112,7 +113,7 @@ export class ViewGestorComponent implements OnInit {
           this.operacoesConcluidas.next();
         }
       };
-    
+
       this.dataSource.data.forEach(row => {
         if (row.status) {
           this.aprovarAssociacao(row.associacao, operacaoConcluida);
@@ -122,20 +123,20 @@ export class ViewGestorComponent implements OnInit {
       });
     }
   }
-  
-  
+
+
   aprovarAssociacao(associacao: any, callback: () => void) {
     this._associassaoService.aprovarAssociacao(associacao.associacaoId).subscribe(
       () => {
         callback(); // Chama o callback quando a operação estiver concluída
       },
       error => {
-        
+
         callback(); // Chama o callback mesmo em caso de erro
       }
     );
   }
-  
+
   reprovarAssociacao(associacao: any, callback: () => void) {
     this._associassaoService.negarAssociacao(associacao.associacaoId).subscribe(
       () => {
@@ -146,28 +147,28 @@ export class ViewGestorComponent implements OnInit {
       }
     );
   }
-  
-  
-  
+
+
+
 
   getCursoList() {
-    this._cursoService.obterCursos().subscribe((cursoList) => {this.CursoList = cursoList})
+    this._cursoService.obterCursos().subscribe((cursoList) => { this.CursoList = cursoList })
   }
-  
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  async atualizaProfessor(row: any){
-    
+  async atualizaProfessor(row: any) {
+
     this._discService.atualizarProfessorDisciplina(row.disciplinaId, row.usuario.usuarioId).subscribe(data => {
 
     },
-    (error) => {
-    });
-    
+      (error) => {
+      });
+
   }
 
   compareUsuarios(usuario1: any, usuario2: any): boolean {
@@ -194,15 +195,15 @@ export class ViewGestorComponent implements OnInit {
   aplicarFiltroProfessor(usuarioNome: string) {
     // Filtra a lista original de associações
     const associacoesFiltradas = this.associassoesList.filter(associacao => associacao.usuario.usuarioNome === usuarioNome);
-  
+
     // Obtém uma cópia completa da lista original de cursos
     const cursosOriginais = [...this.CursoList];
-  
+
     // Filtra a lista de cursos com base nas associações filtradas
     this.CursoList = cursosOriginais.filter(curso =>
       curso.disciplinas.some(d => associacoesFiltradas.some(a => a.disciplina.disciplinaId === d.disciplinaId))
     );
-  
+
     // Cria a fonte de dados com base nas associações filtradas e nos cursos filtrados
     const infoDataSource = associacoesFiltradas.map((associacao: { disciplina: { disciplinaId: string; }; dataRegistro: Date }) => {
       const curso = this.CursoList.find(curso => curso.disciplinas.some(d => d.disciplinaId === associacao.disciplina.disciplinaId));
@@ -212,13 +213,13 @@ export class ViewGestorComponent implements OnInit {
     infoDataSource.sort((a, b) => {
       const dataRegistroA = a.associacao.dataRegistro.getTime();
       const dataRegistroB = b.associacao.dataRegistro.getTime();
-    
+
       return dataRegistroA - dataRegistroB;
     });
-    
+
     // Atualiza a fonte de dados da tabela
     this.dataSource = new MatTableDataSource(infoDataSource);
-  
+
     // Se não houver associações, redefina a fonte de dados
     if (associacoesFiltradas.length === 0) {
       this.dataSource.data = [];

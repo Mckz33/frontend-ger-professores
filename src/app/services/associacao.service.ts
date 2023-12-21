@@ -10,7 +10,7 @@ export class AssociacaoService {
 
   private apiUrl = 'http://localhost:8080/api/associacoes';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   obterAssociacoesPendentes(): Observable<associacao[]> {
     return this.http.get<associacao[]>(`${this.apiUrl}/pendentes`)

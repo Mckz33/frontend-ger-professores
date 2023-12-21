@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { HttpClientModule } from '@angular/common/http';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -36,7 +36,8 @@ import { ViewCoordenadorComponent } from './pages/view-coordenador/view-coordena
 import { ProfessorCadastroComponent } from './pages/registro-professor/professor-cadastro.component';
 import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-sucesso.component';
 import { ViewGestorComponent } from './pages/view-gestor/view-gestor.component';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DadosPerfilComponent } from './pages/dados-perfil/dados-perfil.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     RegistroCoordenadorComponent,
     CadastroSucessoComponent,
     ViewGestorComponent,
+    DadosPerfilComponent,
   ],
   imports: [
     ProfessorCadastroComponent,
@@ -86,4 +88,4 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
