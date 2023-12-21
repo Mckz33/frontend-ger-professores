@@ -69,6 +69,7 @@ export class ModalEditarDisciplinaComponent implements OnInit {
         next: (val: any) => {
           this._coreService.openSnackBar('Disciplina atualizada com sucesso!');
           this._dialogRef.close(true);
+          location.reload();
         },
         error: (err: any) => {
           console.error(err);

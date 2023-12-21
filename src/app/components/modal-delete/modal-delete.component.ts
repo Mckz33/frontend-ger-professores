@@ -55,15 +55,21 @@ export class ModalDeleteComponent implements OnInit{
     switch (this.data.tipo) {
       case "curso":
         this.cursoService.atualizarCurso(this.info).subscribe(data => {
+          this.dialogRef.close(true);
+          location.reload();
         })
         break;
       case "disciplina":
         this.disciplinaService.atualizarDisciplina(this.info.disciplinaId ,this.info).subscribe(data => {
+          this.dialogRef.close(true);
+          location.reload();
         });
         
         break;
       case "professor":
         this.professorService.atualizarProfessor(this.info).subscribe(data => {
+          this.dialogRef.close(true);
+          location.reload();
         });
         break;
     

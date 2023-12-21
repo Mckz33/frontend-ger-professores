@@ -9,11 +9,11 @@ import { CoreService } from '../core/core.service';
 @Component({
   selector: 'app-modal-cadastro-disciplina',
   templateUrl: './modal-cadastro-disciplina.component.html',
-  styleUrls: ['./modal-cadastro-disciplina.component.css']
+  styleUrls: ['./modal-cadastro-disciplina.component.css'],
 })
 export class ModalCadastroDisciplinaComponent implements OnInit {
   disciplinaForm: FormGroup;
-  disciplinasAutocomplete: Set<string> = new Set();
+  disciplinasAutocomplete: Set<Disciplina> = new Set();
   cursoId: number;
 
   constructor(
@@ -22,20 +22,27 @@ export class ModalCadastroDisciplinaComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private disciplinaService: DisciplinaService,
     private cursoService: CursoService,
-    private _coreService: CoreService,
+    private _coreService: CoreService
   ) {
     this.cursoId = this.data.cursoId;
     this.disciplinaForm = this._fb.group({
       disciplinaNome: ['', Validators.required],
-      disciplinaCarga: [null, [Validators.required,Validators.min(0)]],
+      disciplinaCarga: [null, [Validators.required, Validators.min(0)]],
       trimestre: [null, Validators.required],
     });
   }
 
   ngOnInit(): void {
     this.disciplinaService.getDisciplinaList().subscribe((disciplinas) => {
+      const uniqueDisciplineNames = new Set<string>();
+
       disciplinas.forEach((disciplina: Disciplina) => {
-        this.disciplinasAutocomplete.add(disciplina.disciplinaNome);
+        const { disciplinaNome } = disciplina;
+
+        if (!uniqueDisciplineNames.has(disciplinaNome)) {
+          this.disciplinasAutocomplete.add(disciplina);
+          uniqueDisciplineNames.add(disciplinaNome);
+        }
       });
     });
   }
@@ -46,48 +53,53 @@ export class ModalCadastroDisciplinaComponent implements OnInit {
 
   onFormSubmit() {
     if (this.disciplinaForm.valid) {
-      const cargaHorariaAjustada = this.arredondarParaBaixo(+this.disciplinaForm.value.disciplinaCarga);
+      const cargaHorariaAjustada = this.arredondarParaBaixo(
+        +this.disciplinaForm.value.disciplinaCarga
+      );
 
       const novaDisciplina: Disciplina = {
         disciplinaId: '0',
-        disciplinaNome: this.disciplinaForm.value.disciplinaNome,
+        disciplinaNome: this.disciplinaForm.value.disciplinaNome.disciplinaNome,
         disciplinaCarga: +cargaHorariaAjustada,
         trimestre: this.disciplinaForm.value.trimestre, // Exemplo, ajuste conforme sua lógica
-        statusAtivo: 'ATIVADO'
+        statusAtivo: 'ATIVADO',
       };
 
       this.disciplinaService.adicionarDisciplina(novaDisciplina).subscribe({
         next: (val: any) => {
-          this.cursoService.associarCursoDisciplina(this.cursoId, val.disciplinaId).subscribe({
-            next: (val: any) => {
-              this._coreService.openSnackBar('Curso adicionado com sucesso!');
-              this._dialogRef.close(true);
-            },
-            error: (err: any) => {
-              console.error(err);
-              // Tratar erro, se necessário
-            }
-          })
+          this.cursoService
+            .associarCursoDisciplina(this.cursoId, val.disciplinaId)
+            .subscribe({
+              next: (val: any) => {
+                this._coreService.openSnackBar('Curso adicionado com sucesso!');
+                this._dialogRef.close(true);
+                location.reload();
+              },
+              error: (err: any) => {
+                console.error(err);
+                // Tratar erro, se necessário
+              },
+            });
         },
         error: (err: any) => {
           console.error(err);
           // Tratar erro, se necessário
-        }
+        },
       });
     } else {
       // Tratamento de erros/formulário inválido, se necessário
     }
   }
-  
-  filterDisciplinas(value: string): string[] {
+
+  filterDisciplinas(value: string): Disciplina[] {
     if (value && value.length >= 3) {
       const autocomplete = Array.from(this.disciplinasAutocomplete.values());
       const filterValue = value.toLowerCase();
       return autocomplete.filter((disciplina) =>
-      disciplina.toLowerCase().includes(filterValue)
+        disciplina.disciplinaNome.toLowerCase().includes(filterValue)
       );
     }
-      return []
+    return [];
   }
 
   displayDisciplina(disciplina: Disciplina): string {

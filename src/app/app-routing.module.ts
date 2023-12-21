@@ -23,8 +23,6 @@ const routes: Routes = [
   { path: 'registro/coordenador', component: RegistroCoordenadorComponent, canActivate: [authGuard] },
 
   { path: 'registro/professor', component: ProfessorCadastroComponent},
-  
-  { path: 'registro/curso', component: ModalCadastroCursoComponent},
 
   { path: 'cadastro-sucesso', component: CadastroSucessoComponent },
   { path: 'dados-perfil', component: DadosPerfilComponent },

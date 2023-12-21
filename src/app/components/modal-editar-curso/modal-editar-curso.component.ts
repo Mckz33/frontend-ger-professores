@@ -77,6 +77,7 @@ export class ModalEditarCursoComponent implements OnInit {
         next: (val: any) => {
           this._coreService.openSnackBar('Curso atualizado com sucesso!');
           this._dialogRef.close(true);
+          location.reload();
         },
         error: (err: any) => {
           console.error(err);

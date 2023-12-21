@@ -32,11 +32,6 @@ export class ModalCadastroCursoComponent implements OnInit {
     this.cursoService.obterCursos().subscribe((c) => {
       this.cursosAutocomplete = c;
     });
-    this.filteredOptions = this.cursoForm.valueChanges.pipe(
-      filter((value) => value?.length > 3),
-      debounceTime(500),
-      switchMap(value => this.filterCursos(value))
-    );
   }
   
   onNoClick() {
@@ -56,7 +51,6 @@ export class ModalCadastroCursoComponent implements OnInit {
       );
     }
     return []
-
   }
 
   onFormSubmit() {
@@ -72,6 +66,7 @@ export class ModalCadastroCursoComponent implements OnInit {
         next: (val: any) => {
           this._coreService.openSnackBar('Curso adicionado com sucesso!');
           this._dialogRef.close(true);
+          location.reload();
         },
         error: (err: any) => {
           console.error(err);

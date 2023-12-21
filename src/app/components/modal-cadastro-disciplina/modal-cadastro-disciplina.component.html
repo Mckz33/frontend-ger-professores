@@ -15,7 +15,7 @@
           <mat-option *ngFor="let disciplina of filterDisciplinas(disciplinaForm.get('disciplinaNome')?.value)"
             [value]="disciplina"
           >
-            {{ disciplina }}
+            {{ disciplina.disciplinaNome }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
