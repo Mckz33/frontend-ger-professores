@@ -1,0 +1,31 @@
+<div class="main-container p-4 justify-content-center">
+  <h2 class="mat-display-2">Cadastro de Curso</h2>
+
+  <form [formGroup]="cursoForm" (ngSubmit)="onFormSubmit()">
+    <div class="row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nome do Curso</mat-label>
+        <input
+          matInput
+          placeholder="Ex. Engenharia"
+          formControlName="cursoNome"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCurso">
+          <mat-option *ngFor="let curso of filterCursos(cursoForm.get('cursoNome')?.value)"
+            [value]="curso"
+          >
+            {{ curso.cursoNome }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="submit">
+        Cadastrar Curso
+      </button>
+      <button mat-raised-button color="warn" (click)="onNoClick()">Fechar</button>
+    </div>
+  </form>
+
+</div>
