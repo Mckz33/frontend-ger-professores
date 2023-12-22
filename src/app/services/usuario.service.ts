@@ -43,4 +43,9 @@ export class ProfessorService {
   obterProfessorList(): Observable<any> {
     return this.http.get(this.apiUrl+"/usuarios-ativos");
   }
+
+  obterUsuarioPorEmail(email: string): Observable<any> {
+    return this.http.get(this.apiUrl+"/por-email/"+email)
+  }
+
 }
