@@ -14,7 +14,7 @@ import { ModalCadastroDisciplinaComponent } from '../modal-cadastro-disciplina/m
 })
 export class ModalEditarDisciplinaComponent implements OnInit {
   disciplinaForm: FormGroup;
-  disciplinasAutocomplete: Set<string> = new Set();
+  disciplinasAutocomplete: Set<Disciplina> = new Set();
   cursoId: number;
 
   constructor(
@@ -35,8 +35,15 @@ export class ModalEditarDisciplinaComponent implements OnInit {
 
   ngOnInit(): void {
     this.disciplinaService.getDisciplinaList().subscribe((disciplinas) => {
+      const uniqueDisciplineNames = new Set<string>();
+
       disciplinas.forEach((disciplina: Disciplina) => {
-        this.disciplinasAutocomplete.add(disciplina.disciplinaNome);
+        const { disciplinaNome } = disciplina;
+
+        if (!uniqueDisciplineNames.has(disciplinaNome)) {
+          this.disciplinasAutocomplete.add(disciplina);
+          uniqueDisciplineNames.add(disciplinaNome);
+        }
       });
     });
 
@@ -81,12 +88,12 @@ export class ModalEditarDisciplinaComponent implements OnInit {
     }
   }
   
-  filterDisciplinas(value: string): string[] {
+  filterDisciplinas(value: string): Disciplina[] {
     if (value && value.length >= 3) {
       const autocomplete = Array.from(this.disciplinasAutocomplete.values());
       const filterValue = value.toLowerCase();
       return autocomplete.filter((disciplina) =>
-      disciplina.toLowerCase().includes(filterValue)
+      disciplina.disciplinaNome.toLowerCase().includes(filterValue)
       );
     }
       return []

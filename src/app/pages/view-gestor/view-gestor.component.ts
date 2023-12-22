@@ -182,9 +182,26 @@ export class ViewGestorComponent implements OnInit {
   getAssociacoePendentes() {
     this._associassaoService.obterAssociacoesPendentes().subscribe(associassoes => {
       this.associassoesList = associassoes
-      this.associassoesList.map(associassoes => this.professoresSet.add(associassoes.usuario))
+      this.associassoesList.forEach((associassoes) => {
+        const { usuario } = associassoes;
+      
+        // Check if the user name is not already in the set
+        if (!this.isUsuarioNomeInSet(usuario.usuarioNome)) {
+          this.professoresSet.add(usuario);
+        }
+      });
+      
 
     })
+  }
+
+  private isUsuarioNomeInSet(usuarioNome: string): boolean {
+    for (const professor of this.professoresSet) {
+      if (professor.usuarioNome === usuarioNome) {
+        return true;
+      }
+    }
+    return false;
   }
 
   aplicarFiltro(event: Event) {
@@ -197,6 +214,8 @@ export class ViewGestorComponent implements OnInit {
   }
 
   aplicarFiltroProfessor(usuarioNome: string) {
+
+    this.profSelecionado = usuarioNome;
     // Filtra a lista original de associações
     const associacoesFiltradas = this.associassoesList.filter(associacao => associacao.usuario.usuarioNome === usuarioNome);
 
@@ -209,17 +228,17 @@ export class ViewGestorComponent implements OnInit {
     );
 
     // Cria a fonte de dados com base nas associações filtradas e nos cursos filtrados
-    const infoDataSource = associacoesFiltradas.map((associacao: { disciplina: { disciplinaId: string; }; dataRegistro: Date }) => {
-      const curso = this.CursoList.find(curso => curso.disciplinas.some(d => d.disciplinaId === associacao.disciplina.disciplinaId));
+    const infoDataSource = associacoesFiltradas.map((associacao: associacao) => {
+      const curso = this.CursoList.find(curso => curso.disciplinas.find(d => d.disciplinaId === associacao.disciplina.disciplinaId));
       return { cursoNome: curso?.cursoNome, associacao };
     });
+  
+    // infoDataSource.sort((a, b) => {
+    //   const dataRegistroA = a.associacao.dataRegistro.getTime();
+    //   const dataRegistroB = b.associacao.dataRegistro.getTime();
 
-    infoDataSource.sort((a, b) => {
-      const dataRegistroA = a.associacao.dataRegistro.getTime();
-      const dataRegistroB = b.associacao.dataRegistro.getTime();
-
-      return dataRegistroA - dataRegistroB;
-    });
+    //   return dataRegistroA - dataRegistroB;
+    // });
 
     // Atualiza a fonte de dados da tabela
     this.dataSource = new MatTableDataSource(infoDataSource);
@@ -233,6 +252,7 @@ export class ViewGestorComponent implements OnInit {
     }
 
     this.cargaHorariaDisponivel = associacoesFiltradas[0].usuario.professorCarga
+    this.dataSource._renderChangesSubscription;
   }
 
   aplicarFiltroTrimestre(trimeste: string) {
