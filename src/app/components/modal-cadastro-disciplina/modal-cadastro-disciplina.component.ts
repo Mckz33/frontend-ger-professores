@@ -59,7 +59,7 @@ export class ModalCadastroDisciplinaComponent implements OnInit {
 
       const novaDisciplina: Disciplina = {
         disciplinaId: '0',
-        disciplinaNome: this.disciplinaForm.value.disciplinaNome.disciplinaNome,
+        disciplinaNome: this.disciplinaForm.value.disciplinaNome,
         disciplinaCarga: +cargaHorariaAjustada,
         trimestre: this.disciplinaForm.value.trimestre, // Exemplo, ajuste conforme sua lógica
         statusAtivo: 'ATIVADO',
