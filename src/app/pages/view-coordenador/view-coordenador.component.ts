@@ -188,7 +188,7 @@ export class ViewCoordenadorComponent implements OnInit {
 
     this.cursoSelecionado = curso?.cursoNome ?? '';
 
-    this.disciplinaList = curso?.disciplinas ?? [];
+    this.disciplinaList = curso?.disciplinas.filter(disciplina => disciplina.statusAtivo == "ATIVADO") ?? [];
     this.options = this.disciplinaList.map(d => d.disciplinaNome)
 
     this.dataSource = new MatTableDataSource(this.disciplinaList);

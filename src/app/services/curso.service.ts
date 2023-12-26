@@ -12,9 +12,9 @@ export class CursoService {
   constructor(private http: HttpClient) { }
 
   obterCursos(): Observable<Curso[]> {
-    return this.http.get<Curso[]>(this.apiUrl);
+    return this.http.get<Curso[]>(this.apiUrl+"/cursos-ativos");
   }
-  obterCurso(id: number): Observable<Curso> {
+  obterCurso(id: string): Observable<Curso> {
     return this.http.get<Curso>(this.apiUrl + '/' + id);
   }
   adicionarCurso(curso: Curso): Observable<Curso> {

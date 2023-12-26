@@ -12,11 +12,6 @@
     <div class="filtros">
       <mat-form-field class="p-3">
         <mat-label>Filtrar por Nome</mat-label>
-        <input matInput (keyup)="aplicarFiltro($event)" placeholder="Ex. Redes" #input matInput
-          [formControl]="myControl" [matAutocomplete]="auto" />
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-
         <input
           matInput
           (keyup)="aplicarFiltro($event)"
@@ -31,10 +26,10 @@
             *ngFor="let option of filteredOptions | async"
             [value]="option"
           >
-
             {{ option }}
           </mat-option>
         </mat-autocomplete>
+      </mat-form-field>
       <mat-form-field class="p-3">
         <mat-label>Filtrar por Curso</mat-label>
         <mat-select
@@ -62,6 +57,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+    </div>
 
     <div class="table-container">
       <table mat-table [dataSource]="dataSource" matSort>
@@ -136,6 +132,7 @@
         Download CSV
       </button>
     </div>
+  </div>
 
   <!-- Footer -->
   <div class="row fixed-bottom">
@@ -145,4 +142,5 @@
       </p>
     </div>
   </div>
+</div>
 

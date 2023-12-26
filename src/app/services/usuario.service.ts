@@ -28,8 +28,8 @@ export class ProfessorService {
     return throwError(error);
   }
 
-  atualizarProfessor(professor: any): Observable<any> {
-    return this.http.put(this.apiUrl, professor);
+  atualizarProfessor(professor: Usuario): Observable<any> {
+    return this.http.put(this.apiUrl + '/' + professor.usuarioId, professor);
   }
 
   deletarProfessor(id: number): Observable<any> {
@@ -41,6 +41,11 @@ export class ProfessorService {
   }
 
   obterProfessorList(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.http.get(this.apiUrl+"/usuarios-ativos");
   }
+
+  obterUsuarioPorEmail(email: string): Observable<any> {
+    return this.http.get(this.apiUrl+"/por-email/"+email)
+  }
+
 }
