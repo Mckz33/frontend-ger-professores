@@ -1,0 +1,30 @@
+.main-container {
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  
+  .main-body {
+    padding-top: 20px;
+    margin: 0 auto;
+    max-width: 1348px;
+  }
+  
+  .action {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .text-right {
+    text-align: right !important;
+  }
+  
+  h1 {
+    color: white;
+  }
+  
+  .button-container {
+    width: 100;
+    display: flex;
+    justify-content: space-between;
+  }
+

@@ -73,7 +73,7 @@ export class ProfessorCadastroComponent implements OnInit {
   // Seleciona o curso no dropdown/select.
   cursoSelecionado() {
     if (this.curso) {
-      this.disciplinasDoCurso = this.curso.disciplinas;
+      this.disciplinasDoCurso = this.curso.disciplinas.filter(d => d.statusAtivo === "ATIVADO");
     } else {
       this.disciplinasDoCurso = [];
       this.disciplinas = [];

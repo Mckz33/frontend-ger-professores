@@ -42,6 +42,20 @@
   mat-toolbar .example-spacer-button {
     margin-left: 15px;
   }
+
+  mat-tab .mat-tab-label {
+    background-color: white;
+}
+
+.icone {
+  background-color: white;
+}
+
+/* Styles for the active tab label */
+mat-tab .mat-tab-label.mat-tab-label-active {
+    background-color: white;
+}
+
   
   
   .main-body {
