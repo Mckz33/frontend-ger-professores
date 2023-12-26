@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, catchError, map, of, startWith } from 'rxjs';
 import { associacao } from 'src/app/models/associacao';
 import { Curso } from 'src/app/models/curso';
 import { Disciplina } from 'src/app/models/disciplina';
@@ -60,13 +60,12 @@ export class ViewCoordenadorComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  msg!: string;
 
   constructor(
     private _discService: DisciplinaService,
     private _cursoService: CursoService,
     private _professorService: ProfessorService,
-
-
     private _associacaoService: AssociacaoService,
     private _router: Router
   ) { }
@@ -79,6 +78,10 @@ export class ViewCoordenadorComponent implements OnInit {
       map(value => this._filter(value || '')),
     );
     this.verificarStatusTabela();
+
+    if (this.msg) {
+      this.msg;
+    }
   }
 
   logOut() {
@@ -166,14 +169,32 @@ export class ViewCoordenadorComponent implements OnInit {
     }
   }
 
+  verificarSeCoordenador() {
+    const usuarioId = localStorage.getItem("UID");
+    if (usuarioId) {
+      return this._professorService.obterProfessor(+usuarioId).pipe(
+        map(data => data && data.tipoUsuario === "COORDENADOR"),
+        catchError(async () => false)
+      );
+    } else {
+      return of(false);
+    }
+  }
+
   getCursoList() {
-    this._cursoService.obterCursos().subscribe({
-      next: (res) => {
-        // FILTRAR AQUI CURSOS DO COORDENADOR
-        this.CursoList = res;
-        this.getDisciplinaList(this.CursoList[0].cursoNome);
-      },
-      error: console.log,
+    this.verificarSeCoordenador().subscribe(isCoordenador => {
+      if (isCoordenador) {
+        this._cursoService.obterCursos().subscribe({
+          next: (res) => {
+            // FILTRAR AQUI CURSOS DO COORDENADOR
+            this.CursoList = res;
+            this.getDisciplinaList(this.CursoList[0].cursoNome);
+          },
+          error: console.log,
+        });
+      } else {
+        alert('Você não é um coordenador. Apenas coordenadores podem acessar esta funcionalidade.');
+      }
     });
   }
 
@@ -188,7 +209,7 @@ export class ViewCoordenadorComponent implements OnInit {
 
     this.cursoSelecionado = curso?.cursoNome ?? '';
 
-    this.disciplinaList = curso?.disciplinas.filter(disciplina => disciplina.statusAtivo == "ATIVADO") ?? [];
+    this.disciplinaList = curso?.disciplinas ?? [];
     this.options = this.disciplinaList.map(d => d.disciplinaNome)
 
     this.dataSource = new MatTableDataSource(this.disciplinaList);

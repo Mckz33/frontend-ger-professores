@@ -35,7 +35,6 @@ export class ValidacaoCadastroService {
     });
   }
 
-
   private createAuthorizationHeader() {
     const jwtToken = localStorage.getItem('JWT');
     if (jwtToken) {

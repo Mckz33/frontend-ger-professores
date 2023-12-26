@@ -58,7 +58,7 @@ export class ViewCursosComponent implements OnInit {
   cursoSelecionadoId!: number;
 
   profSelecionado: Usuario[] = [];
-  
+
   respostaAtualizaProfessor!: string;
   dataSource!: MatTableDataSource<any>;
 
@@ -69,16 +69,16 @@ export class ViewCursosComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  
+
   constructor(
     private _discService: DisciplinaService,
     private _cursoService: CursoService,
     private _professorService: ProfessorService,
     private _associacaoService: AssociacaoService,
     private dialog: MatDialog
-    ) {}
-    
-    ngOnInit(): void {
+  ) { }
+
+  ngOnInit(): void {
     this.getCursoList();
     this.getProfessoresList();
     this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -90,7 +90,7 @@ export class ViewCursosComponent implements OnInit {
 
   editarCurso(cursoId: number): void {
     const dialogRef = this.dialog.open(ModalEditarCursoComponent, {
-      data: {id: cursoId}// Pass cursoId to the modal
+      data: { id: cursoId }// Pass cursoId to the modal
     });
 
     // Subscribe to the afterClosed() method to get data back from the modal if needed
@@ -98,9 +98,9 @@ export class ViewCursosComponent implements OnInit {
       console.log('The dialog was closed', result);
     });
   }
-  editarDisciplina(row: any){
+  editarDisciplina(row: any) {
     const dialogRef = this.dialog.open(ModalEditarDisciplinaComponent, {
-      data: {id: row.disciplinaId}// Pass cursoId to the modal
+      data: { id: row.disciplinaId }// Pass cursoId to the modal
     });
 
     // Subscribe to the afterClosed() method to get data back from the modal if needed
@@ -110,7 +110,7 @@ export class ViewCursosComponent implements OnInit {
   }
   excluir(tipo: string, id: number) {
     const dialogRef = this.dialog.open(ModalDeleteComponent, {
-      data: { tipo: tipo, id: id}// Pass cursoId to the modal
+      data: { tipo: tipo, id: id }// Pass cursoId to the modal
     });
 
     // Subscribe to the afterClosed() method to get data back from the modal if needed
@@ -120,7 +120,7 @@ export class ViewCursosComponent implements OnInit {
   }
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    
+
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
   criarDisciplina(): void {
@@ -140,7 +140,7 @@ export class ViewCursosComponent implements OnInit {
       width: '400px', // Set the width as per your requirement
       // You can add other MatDialogConfig options here
     });
-  
+
     // Subscribe to the afterClosed event to get the result when the modal is closed
     dialogRef.afterClosed().subscribe(result => {
       // Handle the result if needed
@@ -158,8 +158,8 @@ export class ViewCursosComponent implements OnInit {
   }
 
 
-  getIconSource(status: string){
-    
+  getIconSource(status: string) {
+
     switch (status) {
       case 'Professor associado à disciplina.':
         return this.icones.ok;
@@ -200,14 +200,14 @@ export class ViewCursosComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource(this.disciplinaList);
 
-    this._associacaoService.obterAssociacoesPendentes().subscribe( data => {
+    this._associacaoService.obterAssociacoesPendentes().subscribe(data => {
 
       this.dataSource.data.map(row => {
         const usuario = data.find(associacao => associacao.disciplina.disciplinaId === row.disciplinaId)?.usuario
         if (row.usuario) {
           row.status = "Professor associado à disciplina."
         }
-        else if (usuario){
+        else if (usuario) {
           row.usuario = usuario
           row.status = 'Aguardando aprovação'
         }
@@ -217,7 +217,7 @@ export class ViewCursosComponent implements OnInit {
 
     this.dataSource.sort = this.sort;
     this.dataSource._renderChangesSubscription;
-    
+
   }
 
   getProfessoresList() {

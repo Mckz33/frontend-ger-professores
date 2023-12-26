@@ -128,13 +128,13 @@ export class ViewGestorComponent implements OnInit {
   aprovarAssociacao(associacao: any, callback: () => void) {
     this._associassaoService.aprovarAssociacao(associacao.associacaoId).subscribe(
       () => {
-        this._discService.atualizarProfessorDisciplina(associacao.disciplina.disciplinaId, associacao.usuario.usuarioId).subscribe({error: console.log} );
-        
+        this._discService.atualizarProfessorDisciplina(associacao.disciplina.disciplinaId, associacao.usuario.usuarioId).subscribe({ error: console.log });
+
         callback(); // Chama o callback quando a operação estiver concluída
       },
       error => {
 
-        this._discService.atualizarProfessorDisciplina(associacao.disciplina.disciplinaId, associacao.usuario.usuarioId).subscribe({error: console.log} );
+        this._discService.atualizarProfessorDisciplina(associacao.disciplina.disciplinaId, associacao.usuario.usuarioId).subscribe({ error: console.log });
 
         callback(); // Chama o callback mesmo em caso de erro
       }
@@ -184,13 +184,13 @@ export class ViewGestorComponent implements OnInit {
       this.associassoesList = associassoes
       this.associassoesList.forEach((associassoes) => {
         const { usuario } = associassoes;
-      
+
         // Check if the user name is not already in the set
         if (!this.isUsuarioNomeInSet(usuario.usuarioNome)) {
           this.professoresSet.add(usuario);
         }
       });
-      
+
 
     })
   }
@@ -232,7 +232,7 @@ export class ViewGestorComponent implements OnInit {
       const curso = this.CursoList.find(curso => curso.disciplinas.find(d => d.disciplinaId === associacao.disciplina.disciplinaId));
       return { cursoNome: curso?.cursoNome, associacao };
     });
-  
+
     // infoDataSource.sort((a, b) => {
     //   const dataRegistroA = a.associacao.dataRegistro.getTime();
     //   const dataRegistroB = b.associacao.dataRegistro.getTime();
