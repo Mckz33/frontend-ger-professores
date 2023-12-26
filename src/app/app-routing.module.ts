@@ -28,13 +28,13 @@ const routes: Routes = [
   { path: 'dados-perfil', component: DadosPerfilComponent },
 
 
-  { path: 'home', component: HomeComponent},
+  { path: 'home', component: HomeComponent, canActivate: [authGuard]},
 
 
   { path: 'coordenador', component: ViewCoordenadorComponent, canActivate: [authGuard] },
   { path: 'gestor', component: ViewGestorComponent, canActivate: [authGuard] },
 
-  { path: 'cursos', component: ViewCursosComponent},
+  { path: 'cursos', component: ViewCursosComponent, canActivate: [authGuard]},
 
 
   // Retorna para a tela de Login caso não ache outra página OU url diferente.
