@@ -1,3 +1,5 @@
+@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+
 .main-container {
   background-image: url("../../../assets/fundo_registroProf.jpg");
   background-size: cover;
@@ -147,3 +149,4 @@ mat-toolbar .example-spacer-button {
 h1 {
   color: white;
 }
+

@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Observable, startWith, map } from 'rxjs';
+import { Observable, startWith, map, of } from 'rxjs';
 import { associacao } from 'src/app/models/associacao';
 import { Curso } from 'src/app/models/curso';
 import { Disciplina } from 'src/app/models/disciplina';
@@ -22,6 +22,14 @@ import { Subject } from 'rxjs';
   styleUrls: ['./view-gestor.component.css']
 })
 export class ViewGestorComponent implements OnInit {
+  displayedColumnsCurso: string[] = [
+    'disciplinaNome',
+    'disciplinaCarga',
+    'trimestre',
+    'usuario',
+    'status'
+  ];
+
   displayedColumns: string[] = [
     'disciplinaNome',
     'cargaHoraria',
@@ -43,12 +51,14 @@ export class ViewGestorComponent implements OnInit {
   myControl = new FormControl('');
   filteredOptions!: Observable<string[]>;
 
+  cursoSelecionado = '';
   cargaHorariaDisponivel!: number;
   respostaAtualizaProfessor!: string;
   trimestreSelecionado: any;
   profSelecionado = '';
   filtroCurso: FormControl = new FormControl('');
   dataSource!: MatTableDataSource<any>;
+  dataSourceProfessor!: MatTableDataSource<any>;
   getCurso!: Curso[];
   novoCurso!: Curso[];
 
@@ -61,6 +71,8 @@ export class ViewGestorComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  opcoesCursos: Observable<string[]> | undefined;
+  objetoProfessorSelecionado!: Usuario;
 
   constructor(
     private _discService: DisciplinaService,
@@ -71,19 +83,47 @@ export class ViewGestorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getCursoList();
-    this.getAssociacoePendentes();
+    // this.getAssociacoePendentes();
+    // this.getCursoList();
 
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
-    );
+    this._associassaoService.obterAssociacoesPendentes().subscribe(associassoes => {
+      this.associassoesList = associassoes
+      this.associassoesList.forEach((associassoes) => {
+        const { usuario } = associassoes;
 
+        // Check if the user name is not already in the set
+        if (!this.isUsuarioNomeInSet(usuario.usuarioNome)) {
+          this.professoresSet.add(usuario);
+        }
+      });
+      this._cursoService.obterCursos().subscribe((cursoLista) => { 
+        const associacoesDisciplinaIdList = this.associassoesList.map(assoc => assoc.disciplina?.disciplinaId).filter(id => id !== undefined);
+        // const associacoesDisciplinaIdList = this.associassoesList.map(assoc => assoc.disciplina.disciplinaId);
+        this.CursoList = cursoLista
+        this.CursoList = cursoLista.filter((curso) => 
+          curso.disciplinas.some(d => associacoesDisciplinaIdList.includes(d.disciplinaId))
+        );
+      });
+
+    })
+  
     this.operacoesConcluidas.subscribe(() => {
       alert("Alterações Salvas com sucesso")
       location.reload();
     });
   }
+
+  verificaSobrecarga(professor: Usuario  | string) {
+    if (professor){
+      if (typeof professor === "string") {
+        return this._professorService.verificarCargaHorariaExcedida(this.objetoProfessorSelecionado, this.associassoesList)
+      }else
+      return this._professorService.verificarCargaHorariaExcedida(professor, this.associassoesList)
+    }
+    return false
+  }
+  
+
 
   logOut() {
     const confirmacao = confirm('Deseja sair do sistema?');
@@ -91,6 +131,31 @@ export class ViewGestorComponent implements OnInit {
       localStorage.removeItem('token');
       this._router.navigate(['login']);
     }
+  }
+
+  aplicarFiltroCurso(cursoNome: string) {
+    this.getAssociasoesPorCurso(cursoNome);
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  getAssociasoesPorCurso(cursoNome: string) {
+    const curso: Curso | undefined = this.CursoList.find(
+      (c) => c.cursoNome === cursoNome
+    );
+
+    this.cursoSelecionado = curso?.cursoNome ?? '';
+
+    this.disciplinaList = curso?.disciplinas ?? [];
+    this.options = this.disciplinaList.map(d => d.disciplinaNome)
+    const associacoesFiltradas = this.associassoesList.filter(assoc => this.options.includes(assoc.disciplina.disciplinaNome))
+
+    this.dataSource = new MatTableDataSource(associacoesFiltradas);
+
+    this.dataSource.sort = this.sort;
+    this.dataSource._renderChangesSubscription;
   }
 
   atualizarCargaHoraria(carga: number, status: boolean) {
@@ -123,6 +188,32 @@ export class ViewGestorComponent implements OnInit {
       });
     }
   }
+  salvarAssociacoesProf() {
+    if (this.cargaHorariaDisponivel < 0) {
+      alert(`O professor ${this.profSelecionado} está sobrecarregado.`)
+    } else {
+
+      const operacoesPendentes = this.dataSourceProfessor.data.length;
+      let operacoesConcluidas = 0;
+
+      const operacaoConcluida = () => {
+        operacoesConcluidas++;
+        if (operacoesConcluidas === operacoesPendentes) {
+          // Todas as operações foram concluídas
+          this.operacoesConcluidas.next();
+        }
+      };
+
+      this.dataSourceProfessor.data.forEach(row => {
+        if (row.status) {
+          this.aprovarAssociacao(row.associacao, operacaoConcluida);
+        } else {
+          this.reprovarAssociacao(row.associacao, operacaoConcluida);
+        }
+      });
+    }
+  }
+
 
 
   aprovarAssociacao(associacao: any, callback: () => void) {
@@ -155,9 +246,16 @@ export class ViewGestorComponent implements OnInit {
 
 
 
-  getCursoList() {
-    this._cursoService.obterCursos().subscribe((cursoList) => { this.CursoList = cursoList })
-  }
+  // getCursoList() {
+  //   this._cursoService.obterCursos().subscribe((cursoLista) => { 
+  //     const associacoesDisciplinaIdList = this.associassoesList.map(assoc => assoc.disciplina?.disciplinaId).filter(id => id !== undefined);
+  //     // const associacoesDisciplinaIdList = this.associassoesList.map(assoc => assoc.disciplina.disciplinaId);
+  //     this.CursoList = cursoLista
+  //     this.CursoList = cursoLista.filter((curso) => 
+  //       curso.disciplinas.some(d => associacoesDisciplinaIdList.includes(d.disciplinaId))
+  //     );
+  //   });
+  // }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
@@ -179,21 +277,21 @@ export class ViewGestorComponent implements OnInit {
     return usuario1 && usuario2 ? usuario1.usuarioId === usuario2.usuarioId : usuario1 === usuario2;
   }
 
-  getAssociacoePendentes() {
-    this._associassaoService.obterAssociacoesPendentes().subscribe(associassoes => {
-      this.associassoesList = associassoes
-      this.associassoesList.forEach((associassoes) => {
-        const { usuario } = associassoes;
+  // getAssociacoePendentes() {
+  //   this._associassaoService.obterAssociacoesPendentes().subscribe(associassoes => {
+  //     this.associassoesList = associassoes
+  //     this.associassoesList.forEach((associassoes) => {
+  //       const { usuario } = associassoes;
 
-        // Check if the user name is not already in the set
-        if (!this.isUsuarioNomeInSet(usuario.usuarioNome)) {
-          this.professoresSet.add(usuario);
-        }
-      });
+  //       // Check if the user name is not already in the set
+  //       if (!this.isUsuarioNomeInSet(usuario.usuarioNome)) {
+  //         this.professoresSet.add(usuario);
+  //       }
+  //     });
 
 
-    })
-  }
+  //   })
+  // }
 
   private isUsuarioNomeInSet(usuarioNome: string): boolean {
     for (const professor of this.professoresSet) {
@@ -213,24 +311,25 @@ export class ViewGestorComponent implements OnInit {
     }
   }
 
+  aplicarFiltroProf(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceProfessor.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSourceProfessor.paginator) {
+      this.dataSourceProfessor.paginator.firstPage();
+    }
+  }
+
   aplicarFiltroProfessor(usuarioNome: string) {
 
     this.profSelecionado = usuarioNome;
     // Filtra a lista original de associações
     const associacoesFiltradas = this.associassoesList.filter(associacao => associacao.usuario.usuarioNome === usuarioNome);
 
-    // Obtém uma cópia completa da lista original de cursos
-    const cursosOriginais = [...this.CursoList];
-
-    // Filtra a lista de cursos com base nas associações filtradas
-    this.CursoList = cursosOriginais.filter(curso =>
-      curso.disciplinas.some(d => associacoesFiltradas.some(a => a.disciplina.disciplinaId === d.disciplinaId))
-    );
-
     // Cria a fonte de dados com base nas associações filtradas e nos cursos filtrados
     const infoDataSource = associacoesFiltradas.map((associacao: associacao) => {
       const curso = this.CursoList.find(curso => curso.disciplinas.find(d => d.disciplinaId === associacao.disciplina.disciplinaId));
-      return { cursoNome: curso?.cursoNome, associacao };
+      return { cursoNome: curso?.cursoNome, ...associacao };
     });
 
     // infoDataSource.sort((a, b) => {
@@ -241,18 +340,19 @@ export class ViewGestorComponent implements OnInit {
     // });
 
     // Atualiza a fonte de dados da tabela
-    this.dataSource = new MatTableDataSource(infoDataSource);
+    this.dataSourceProfessor = new MatTableDataSource(infoDataSource);
 
     // Se não houver associações, redefina a fonte de dados
     if (associacoesFiltradas.length === 0) {
-      this.dataSource.data = [];
+      this.dataSourceProfessor.data = [];
     }
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.dataSourceProfessor.paginator) {
+      this.dataSourceProfessor.paginator.firstPage();
     }
 
     this.cargaHorariaDisponivel = associacoesFiltradas[0].usuario.professorCarga
-    this.dataSource._renderChangesSubscription;
+    this.objetoProfessorSelecionado = associacoesFiltradas[0].usuario
+    this.dataSourceProfessor._renderChangesSubscription;
   }
 
   aplicarFiltroTrimestre(trimeste: string) {
@@ -262,6 +362,13 @@ export class ViewGestorComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  aplicarFiltroTrimestreProfessor(trimeste: string) {
+    this.dataSourceProfessor.filter = trimeste.trim().toLowerCase();
 
+    if (this.dataSourceProfessor.paginator) {
+      this.dataSourceProfessor.paginator.firstPage();
+    }
+  }
+  
 }
 

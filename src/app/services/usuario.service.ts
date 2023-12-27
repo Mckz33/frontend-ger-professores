@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, lastValueFrom, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Usuario } from '../models/usuario';
+import { AssociacaoService } from './associacao.service';
+import { associacao } from '../models/associacao';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,7 @@ import { Usuario } from '../models/usuario';
 export class ProfessorService {
   private apiUrl = 'http://localhost:8080/api/usuario';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private associacaoService: AssociacaoService) { }
 
   adicionarProfessor(professor: any): Observable<Usuario> {
     return this.http.post<Usuario>(this.apiUrl, professor);
@@ -48,4 +50,27 @@ export class ProfessorService {
     return this.http.get(this.apiUrl+"/por-email/"+email)
   }
 
+  async verificarCargaHorariaExcedida(usuario: Usuario, associassoesList: associacao[]): Promise<boolean> {
+    try {
+      // Obter todas as associações pendentes para o professor
+      const associacoes = associassoesList
+
+      // Filtrar associações para o professor específico
+      const associacoesDoProfessor = associacoes.filter(associacao => associacao.usuario.usuarioId === usuario.usuarioId);
+
+      // Calcular a carga horária total das associações pendentes
+      const cargaHorariaPendente = associacoesDoProfessor.reduce((total, associacao) => {
+        return total + associacao.disciplina.disciplinaCarga;
+      }, 0);
+
+      // Verificar se a carga horária total excede o limite
+      const cargaHorariaLimite = usuario.professorCarga;
+      const cargaHorariaExcedida = cargaHorariaPendente > cargaHorariaLimite;
+
+      return cargaHorariaExcedida;
+    } catch (error) {
+      console.error('Erro ao verificar carga horária:', error);
+      return false;
+    }
+  }
 }
