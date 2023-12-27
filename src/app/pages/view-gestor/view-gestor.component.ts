@@ -23,6 +23,7 @@ import { Subject } from 'rxjs';
 })
 export class ViewGestorComponent implements OnInit {
   displayedColumnsCurso: string[] = [
+    'position',
     'disciplinaNome',
     'disciplinaCarga',
     'trimestre',
@@ -31,6 +32,7 @@ export class ViewGestorComponent implements OnInit {
   ];
 
   displayedColumns: string[] = [
+    'position',
     'disciplinaNome',
     'cargaHoraria',
     'cursoNome',
@@ -113,15 +115,15 @@ export class ViewGestorComponent implements OnInit {
     });
   }
 
-  verificaSobrecarga(professor: Usuario  | string) {
-    if (professor){
-      if (typeof professor === "string") {
-        return this._professorService.verificarCargaHorariaExcedida(this.objetoProfessorSelecionado, this.associassoesList)
-      }else
-      return this._professorService.verificarCargaHorariaExcedida(professor, this.associassoesList)
-    }
-    return false
-  }
+  // verificaSobrecarga(professor: Usuario  | string) {
+  //   if (professor){
+  //     if (typeof professor === "string") {
+  //       return this._professorService.verificarCargaHorariaExcedida(this.objetoProfessorSelecionado, this.associassoesList)
+  //     }else
+  //     return this._professorService.verificarCargaHorariaExcedida(professor, this.associassoesList)
+  //   }
+  //   return false
+  // }
   
 
 
@@ -151,8 +153,20 @@ export class ViewGestorComponent implements OnInit {
     this.disciplinaList = curso?.disciplinas ?? [];
     this.options = this.disciplinaList.map(d => d.disciplinaNome)
     const associacoesFiltradas = this.associassoesList.filter(assoc => this.options.includes(assoc.disciplina.disciplinaNome))
+    
+    associacoesFiltradas.sort((a, b) => {
+      const dataRegistroA = new Date(a.dataRegistro).getTime();
+      const dataRegistroB = new Date(b.dataRegistro).getTime();
 
-    this.dataSource = new MatTableDataSource(associacoesFiltradas);
+      return dataRegistroA - dataRegistroB;
+    });
+
+    
+    const dataSourceData = associacoesFiltradas.map((data, index) => ({
+      ...data,
+      position: index + 1
+    }));
+    this.dataSource = new MatTableDataSource(dataSourceData);
 
     this.dataSource.sort = this.sort;
     this.dataSource._renderChangesSubscription;
@@ -163,10 +177,30 @@ export class ViewGestorComponent implements OnInit {
 
   }
 
+  calcularCargaHorariaTotal(professorNome: string, flag: boolean = false): number {
+    // Filtra as associações do professor
+    const associacoesProfessor = this.dataSource.data.filter(row => row.usuario.usuarioNome === professorNome);
+    
+    if (flag) {
+      return associacoesProfessor.reduce((total, row) => total + (row.status ? row.disciplina.disciplinaCarga : 0), 0);
+    }
+    return associacoesProfessor.reduce((total, row) => total + row.disciplina.disciplinaCarga , 0);
+
+  }
+
   salvarAssociacoes() {
-    if (this.cargaHorariaDisponivel < 0) {
-      alert(`O professor ${this.profSelecionado} está sobrecarregado.`)
-    } else {
+    // Itera sobre professores únicos
+    const professoresUnicos = [...new Set(this.dataSource.data.map(row => row.usuario))];
+  
+    for (const professor of professoresUnicos) {
+      const cargaHorariaTotal = this.calcularCargaHorariaTotal(professor.usuarioNome, true);
+  
+      // Verifica se a carga horária total excede a carga horária disponível
+      if (cargaHorariaTotal > professor.professorCarga) {
+        alert(`O professor ${professor.usuarioNome} está sobrecarregado.`);
+        return; // Aborta a função salvarAssociações
+      }
+    }
 
       const operacoesPendentes = this.dataSource.data.length;
       let operacoesConcluidas = 0;
@@ -180,13 +214,18 @@ export class ViewGestorComponent implements OnInit {
       };
 
       this.dataSource.data.forEach(row => {
+        const associacao = {
+          associacaoId: row.associacaoId,
+          disciplina: row.disciplina,
+          usuario: row.usuario
+        }
         if (row.status) {
-          this.aprovarAssociacao(row.associacao, operacaoConcluida);
+          this.aprovarAssociacao(associacao, operacaoConcluida);
         } else {
-          this.reprovarAssociacao(row.associacao, operacaoConcluida);
+          this.reprovarAssociacao(associacao, operacaoConcluida);
         }
       });
-    }
+    
   }
   salvarAssociacoesProf() {
     if (this.cargaHorariaDisponivel < 0) {
@@ -205,10 +244,15 @@ export class ViewGestorComponent implements OnInit {
       };
 
       this.dataSourceProfessor.data.forEach(row => {
+        const associacao = {
+          associacaoId: row.associacaoId,
+          disciplina: row.disciplina,
+          usuario: row.usuario
+        }
         if (row.status) {
-          this.aprovarAssociacao(row.associacao, operacaoConcluida);
+          this.aprovarAssociacao(associacao, operacaoConcluida);
         } else {
-          this.reprovarAssociacao(row.associacao, operacaoConcluida);
+          this.reprovarAssociacao(associacao, operacaoConcluida);
         }
       });
     }
@@ -332,15 +376,19 @@ export class ViewGestorComponent implements OnInit {
       return { cursoNome: curso?.cursoNome, ...associacao };
     });
 
-    // infoDataSource.sort((a, b) => {
-    //   const dataRegistroA = a.associacao.dataRegistro.getTime();
-    //   const dataRegistroB = b.associacao.dataRegistro.getTime();
+    infoDataSource.sort((a, b) => {
+      const dataRegistroA = new Date(a.dataRegistro).getTime();
+      const dataRegistroB = new Date(b.dataRegistro).getTime();
 
-    //   return dataRegistroA - dataRegistroB;
-    // });
+      return dataRegistroA - dataRegistroB;
+    });
 
     // Atualiza a fonte de dados da tabela
     this.dataSourceProfessor = new MatTableDataSource(infoDataSource);
+
+    this.dataSourceProfessor.data.forEach((data: { position: any; }, index: number) => {
+      data.position = index + 1;
+    });
 
     // Se não houver associações, redefina a fonte de dados
     if (associacoesFiltradas.length === 0) {
