@@ -179,12 +179,13 @@ export class ViewGestorComponent implements OnInit {
 
   calcularCargaHorariaTotal(professorNome: string, flag: boolean = false): number {
     // Filtra as associações do professor
-    const associacoesProfessor = this.dataSource.data.filter(row => row.usuario.usuarioNome === professorNome);
     
     if (flag) {
+      const associacoesProfessor = this.dataSource.data.filter(row => row.usuario.usuarioNome === professorNome);
       return associacoesProfessor.reduce((total, row) => total + (row.status ? row.disciplina.disciplinaCarga : 0), 0);
     }
-    return associacoesProfessor.reduce((total, row) => total + row.disciplina.disciplinaCarga , 0);
+    const associacoesProfessor = this.associassoesList.filter(assoc => assoc.usuario.usuarioNome === professorNome);
+    return associacoesProfessor.reduce((total, assoc) => total + assoc.disciplina.disciplinaCarga , 0);
 
   }
 
@@ -258,6 +259,12 @@ export class ViewGestorComponent implements OnInit {
     }
   }
 
+  verificaSobrecarga(professor: Usuario) :boolean {
+    if (!professor)
+    return false
+  
+    return professor.professorCarga - this.calcularCargaHorariaTotal(professor.usuarioNome) < 0
+  }
 
 
   aprovarAssociacao(associacao: any, callback: () => void) {

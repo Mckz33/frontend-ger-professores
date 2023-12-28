@@ -182,7 +182,7 @@
                 [value]="professor.usuarioNome"
               >
                 <!-- ajustar logica de professor sobrecarregado -->
-                <div *ngIf="false;else templateName">
+                <div *ngIf="verificaSobrecarga(professor);else templateName">
                   {{ professor.usuarioNome }} (sobrecarregado)
                 </div>
                 <ng-template #templateName>
@@ -209,7 +209,7 @@
           </mat-form-field>
         </div>
 
-        <h1>Professor selecionado: {{ profSelecionado }}</h1> 
+        <h1>Professor selecionado: {{ profSelecionado }} <span *ngIf="verificaSobrecarga(objetoProfessorSelecionado)" > (Sobrecarregado)</span> </h1> 
         <h1>Carga horaria disponível: {{ cargaHorariaDisponivel }}</h1>
 
         <div class="table-container">
