@@ -1,17 +1,21 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Curso } from 'src/app/models/curso';
+import { Disciplina } from 'src/app/models/disciplina';
 import { CursoService } from 'src/app/services/curso.service';
+import { DisciplinaService } from 'src/app/services/disciplina.service';
 import { CoreService } from '../core/core.service';
+import { ModalCadastroDisciplinaComponent } from '../modal-cadastro-disciplina/modal-cadastro-disciplina.component';
 import { filter, debounceTime, switchMap } from 'rxjs';
+import { Curso } from 'src/app/models/curso';
+import { ModalCadastroCursoComponent } from '../modal-cadastro-curso/modal-cadastro-curso.component';
 
 @Component({
-  selector: 'app-modal-cadastro-curso',
-  templateUrl: './modal-cadastro-curso.component.html',
-  styleUrls: ['./modal-cadastro-curso.component.css']
+  selector: 'app-modal-editar-curso',
+  templateUrl: './modal-editar-curso.component.html',
+  styleUrls: ['./modal-editar-curso.component.css']
 })
-export class ModalCadastroCursoComponent implements OnInit {
+export class ModalEditarCursoComponent implements OnInit {
   cursoForm: FormGroup;
   cursosAutocomplete: Curso[] = []; // Array for autocomplete options
   filteredOptions: any;
@@ -32,6 +36,12 @@ export class ModalCadastroCursoComponent implements OnInit {
     this.cursoService.obterCursos().subscribe((c) => {
       this.cursosAutocomplete = c;
     });
+    this.filteredOptions = this.cursoForm.valueChanges.pipe(
+      filter((value) => value?.length > 3),
+      debounceTime(500),
+      switchMap(value => this.filterCursos(value))
+    );
+    this.cursoService.obterCurso(this.data.id).subscribe(data => this.cursoForm.value.cursoNome = data.cursoNome)
   }
   
   onNoClick() {
@@ -51,20 +61,21 @@ export class ModalCadastroCursoComponent implements OnInit {
       );
     }
     return []
+
   }
 
   onFormSubmit() {
     if (this.cursoForm.valid) {
       const novoCurso: Curso = {
-        cursoId: 0,
+        cursoId: this.data.id,
         cursoNome: this.cursoForm.value.cursoNome,
         disciplinas: [],
         statusAtivo: "ATIVADO"
       };
 
-      this.cursoService.adicionarCurso(novoCurso).subscribe({
+      this.cursoService.atualizarCurso(novoCurso).subscribe({
         next: (val: any) => {
-          this._coreService.openSnackBar('Curso adicionado com sucesso!');
+          this._coreService.openSnackBar('Curso atualizado com sucesso!');
           this._dialogRef.close(true);
           location.reload();
         },

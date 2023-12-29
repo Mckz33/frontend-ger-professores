@@ -1,0 +1,14 @@
+<div class="main-container p-4 justify-content-center">
+  <h2 mat-dialog-title>Confirmação</h2>
+  <div mat-dialog-content>
+    <h2>
+      Tem certeza de que deseja deletar o {{ data.tipo }}: <b>{{ data.nome }}</b>?
+    </h2>
+  </div>
+  <div mat-dialog-actions class="button-container">
+    <button mat-raised-button color="warn" (click)="onConfirm()">
+      Confirmar
+    </button>
+    <button mat-raised-button (click)="onCancel()">Cancelar</button>
+  </div>
+</div>

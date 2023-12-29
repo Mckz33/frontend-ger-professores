@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ProfessorService } from './usuario.service';
 
 const BASE_URL = ['http://localhost:8080/']
 
@@ -11,7 +12,8 @@ const BASE_URL = ['http://localhost:8080/']
 export class ValidacaoCadastroService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private professorService: ProfessorService
   ) { }
 
   signup(signupRequest: any): Observable<any> {
@@ -19,6 +21,9 @@ export class ValidacaoCadastroService {
   }
 
   login(loginRequest: any): Observable<any> {
+    this.professorService.obterUsuarioPorEmail(loginRequest.email).subscribe(data => {
+      localStorage.setItem("UID", data.usuarioId)
+    })
     return this.http.post(BASE_URL + "authenticate", loginRequest)
   }
 
@@ -29,7 +34,6 @@ export class ValidacaoCadastroService {
       headers: headers || undefined
     });
   }
-
 
   private createAuthorizationHeader() {
     const jwtToken = localStorage.getItem('JWT');

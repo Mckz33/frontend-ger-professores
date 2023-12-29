@@ -1,3 +1,5 @@
+@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+
 .main-container {
   background-image: url("../../../assets/fundo_registroProf.jpg");
   background-size: cover;
@@ -63,7 +65,7 @@ mat-toolbar .example-spacer {
 /* BOTÃO CSV */
 .buttonSalvar {
   background-color: #fff;
-  color: #000000;
+  color: #000000 !important;
   margin-left: auto;
   border: none;
   border-radius: 5px;
@@ -74,7 +76,7 @@ mat-toolbar .example-spacer {
 
 .buttonSalvar:hover {
   background-color: #62002a;
-  color: #dddddd;
+  color: #dddddd !important;
 }
 
 /* MENU */
@@ -147,3 +149,4 @@ mat-toolbar .example-spacer-button {
 h1 {
   color: white;
 }
+

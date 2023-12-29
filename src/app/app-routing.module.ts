@@ -12,6 +12,8 @@ import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-suce
 import { ViewGestorComponent } from './pages/view-gestor/view-gestor.component';
 import { DadosPerfilComponent } from './pages/dados-perfil/dados-perfil.component';
 import { ViewCursosComponent } from './pages/view-cursos/view-cursos.component';
+import { ModalCadastroCursoComponent } from './components/modal-cadastro-curso/modal-cadastro-curso.component';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,18 +22,19 @@ const routes: Routes = [
 
   { path: 'registro/coordenador', component: RegistroCoordenadorComponent, canActivate: [authGuard] },
 
-  { path: 'registro/professor', component: ProfessorCadastroComponent },
+  { path: 'registro/professor', component: ProfessorCadastroComponent},
+
   { path: 'cadastro-sucesso', component: CadastroSucessoComponent },
   { path: 'dados-perfil', component: DadosPerfilComponent },
 
 
-  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [authGuard]},
 
 
   { path: 'coordenador', component: ViewCoordenadorComponent, canActivate: [authGuard] },
   { path: 'gestor', component: ViewGestorComponent, canActivate: [authGuard] },
 
-  { path: 'cursos', component: ViewCursosComponent},
+  { path: 'cursos', component: ViewCursosComponent, canActivate: [authGuard]},
 
 
   // Retorna para a tela de Login caso não ache outra página OU url diferente.

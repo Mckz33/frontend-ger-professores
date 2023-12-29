@@ -21,6 +21,7 @@ export class RegistroComponent implements OnInit {
   idUsuario!: number;
   usId!: number;
   usEmail!: string;
+  usuarioCpf: string = "231231";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +34,7 @@ export class RegistroComponent implements OnInit {
     this.registroForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', Validators.required],
+      cpf: [''],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
     }, { validator: this.passwordMatchValidator });
@@ -98,10 +100,10 @@ export class RegistroComponent implements OnInit {
       usuarioNome: this.registroForm.get('name')?.value,
       usuarioEmail: this.registroForm.get('email')?.value,
       statusAtivo: "ATIVADO",
-      usuarioCpf: null as unknown as string,
+      usuarioCpf: this.registroForm.get('cpf')?.value,
       professorCarga: null as unknown as number,
       tipoContratacao: null as unknown as string,
-      tipoUsuario: null as unknown as string,
+      tipoUsuario: "COORDENADOR",
       curEscolhidos: null as unknown as string,
       discEscolhidos: [],
     };
@@ -117,11 +119,8 @@ export class RegistroComponent implements OnInit {
         }
       );
     this.service.signup(this.registroForm.value).subscribe((res) => {
-      console.log("teste", res);
       const id = res.id;
       this.usId = id;
-      const email = res.email
-      this.usEmail = email
       alert('Registro criado com Sucesso!');
       this.registroForm.reset();
       this.router.navigate(['login']);

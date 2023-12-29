@@ -1,12 +1,15 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, startWith, map } from 'rxjs';
 import { ModalCadastroCursoComponent } from 'src/app/components/modal-cadastro-curso/modal-cadastro-curso.component';
 import { ModalCadastroDisciplinaComponent } from 'src/app/components/modal-cadastro-disciplina/modal-cadastro-disciplina.component';
+import { ModalDeleteComponent } from 'src/app/components/modal-delete/modal-delete.component';
+import { ModalEditarCursoComponent } from 'src/app/components/modal-editar-curso/modal-editar-curso.component';
+import { ModalEditarDisciplinaComponent } from 'src/app/components/modal-editar-disciplina/modal-editar-disciplina.component';
 import { associacao } from 'src/app/models/associacao';
 import { Curso } from 'src/app/models/curso';
 import { Disciplina } from 'src/app/models/disciplina';
@@ -15,6 +18,8 @@ import { AssociacaoService } from 'src/app/services/associacao.service';
 import { CursoService } from 'src/app/services/curso.service';
 import { DisciplinaService } from 'src/app/services/disciplina.service';
 import { ProfessorService } from 'src/app/services/usuario.service';
+
+
 
 @Component({
   selector: 'app-view-cursos',
@@ -53,7 +58,7 @@ export class ViewCursosComponent implements OnInit {
   cursoSelecionadoId!: number;
 
   profSelecionado: Usuario[] = [];
-  
+
   respostaAtualizaProfessor!: string;
   dataSource!: MatTableDataSource<any>;
 
@@ -64,16 +69,16 @@ export class ViewCursosComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  
+
   constructor(
     private _discService: DisciplinaService,
     private _cursoService: CursoService,
     private _professorService: ProfessorService,
     private _associacaoService: AssociacaoService,
     private dialog: MatDialog
-    ) {}
-    
-    ngOnInit(): void {
+  ) { }
+
+  ngOnInit(): void {
     this.getCursoList();
     this.getProfessoresList();
     this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -82,19 +87,46 @@ export class ViewCursosComponent implements OnInit {
     );
     this.verificarStatusTabela();
   }
-  
-  editar(){
+
+  editarCurso(cursoId: number): void {
+    const dialogRef = this.dialog.open(ModalEditarCursoComponent, {
+      data: { id: cursoId }// Pass cursoId to the modal
+    });
+
+    // Subscribe to the afterClosed() method to get data back from the modal if needed
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
-  excluir() {
+  editarDisciplina(row: any) {
+    const dialogRef = this.dialog.open(ModalEditarDisciplinaComponent, {
+      data: { id: row.disciplinaId }// Pass cursoId to the modal
+    });
+
+    // Subscribe to the afterClosed() method to get data back from the modal if needed
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
+  }
+  excluir(tipo: string, id: number) {
+    const dialogRef = this.dialog.open(ModalDeleteComponent, {
+      data: { tipo: tipo, id: id }// Pass cursoId to the modal
+    });
+
+    // Subscribe to the afterClosed() method to get data back from the modal if needed
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
   }
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    
+
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
   criarDisciplina(): void {
     const dialogRef = this.dialog.open(ModalCadastroDisciplinaComponent, {
-      data: { cursoId: this.cursoSelecionadoId } // Pass cursoId to the modal
+      width: '400px',
+      data: { cursoId: this.cursoSelecionadoId }// Pass cursoId to the modal
     });
 
     // Subscribe to the afterClosed() method to get data back from the modal if needed
@@ -103,12 +135,18 @@ export class ViewCursosComponent implements OnInit {
     });
   }
 
-  criarCurso(): void {
+  criarCurso() {
     const dialogRef = this.dialog.open(ModalCadastroCursoComponent, {
+      width: '400px', // Set the width as per your requirement
+      // You can add other MatDialogConfig options here
     });
-  
+
+    // Subscribe to the afterClosed event to get the result when the modal is closed
     dialogRef.afterClosed().subscribe(result => {
+      // Handle the result if needed
+      console.log('The modal was closed with result:', result);
     });
+
   }
 
   verificarStatusTabela() {
@@ -118,58 +156,10 @@ export class ViewCursosComponent implements OnInit {
       });
     }
   }
-    
-  atualizaProfessor(row: any) {
-    let disciplina: Disciplina;
-    let usuario: Usuario;
-    let associacao: associacao;
-  
-    this._discService.getDisciplina(row.disciplinaId).subscribe((data) => {
-      disciplina = data;
-  
-      this._professorService.obterProfessor(row.usuario.usuarioId).subscribe((data) => {
-        usuario = data;
-  
-        associacao = {
-          dataRegistro: new Date(),
-          associacaoId: 0,
-          disciplina: disciplina,
-          usuario: usuario,
-          statusAprovacao: 'PENDENTE',
-          statusAtivo: 'ATIVADO',
-        };
-  
-        this._associacaoService.obterAssociacoesPendentes().subscribe({
-          next: (res) => {
-            let associacaoExistente = res.find(
-              (assoc) =>
-                assoc.disciplina.disciplinaId === disciplina.disciplinaId &&
-                assoc.usuario.usuarioId !== usuario.usuarioId
-            );
-  
-            if (associacaoExistente) {
-              this._associacaoService.negarAssociacao(associacaoExistente.associacaoId).subscribe({
-                error: console.log,
-              });
-            }
-  
-            this._associacaoService.criarAssociacao(associacao).subscribe({
-              error: console.log,
-              complete: () => {
-                row.status = "Aguardando aprovação"
-                this.verificarStatusTabela();
-              }
-            });
-          },
-          error: console.log,
-        });
-      });
-    });
-  }
 
 
-  getIconSource(status: string){
-    
+  getIconSource(status: string) {
+
     switch (status) {
       case 'Professor associado à disciplina.':
         return this.icones.ok;
@@ -205,19 +195,19 @@ export class ViewCursosComponent implements OnInit {
     this.cursoSelecionado = curso?.cursoNome ?? '';
     this.cursoSelecionadoId = curso?.cursoId ?? -1;
 
-    this.disciplinaList = curso?.disciplinas ?? [];
+    this.disciplinaList = curso?.disciplinas.filter(disciplina => disciplina.statusAtivo == "ATIVADO") ?? [];
     this.options = this.disciplinaList.map(d => d.disciplinaNome)
 
     this.dataSource = new MatTableDataSource(this.disciplinaList);
 
-    this._associacaoService.obterAssociacoesPendentes().subscribe( data => {
+    this._associacaoService.obterAssociacoesPendentes().subscribe(data => {
 
       this.dataSource.data.map(row => {
         const usuario = data.find(associacao => associacao.disciplina.disciplinaId === row.disciplinaId)?.usuario
         if (row.usuario) {
           row.status = "Professor associado à disciplina."
         }
-        else if (usuario){
+        else if (usuario) {
           row.usuario = usuario
           row.status = 'Aguardando aprovação'
         }
@@ -227,7 +217,7 @@ export class ViewCursosComponent implements OnInit {
 
     this.dataSource.sort = this.sort;
     this.dataSource._renderChangesSubscription;
-    
+
   }
 
   getProfessoresList() {

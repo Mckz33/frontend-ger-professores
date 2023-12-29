@@ -43,7 +43,11 @@ import { DadosPerfilComponent } from './pages/dados-perfil/dados-perfil.componen
 import { ViewCursosComponent } from './pages/view-cursos/view-cursos.component';
 import { ModalCadastroCursoComponent } from './components/modal-cadastro-curso/modal-cadastro-curso.component';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
-import { ModalCadastroDisciplinaComponent } from './components/modal-cadastro-disciplina/modal-cadastro-disciplina.component'; 
+import { ModalCadastroDisciplinaComponent } from './components/modal-cadastro-disciplina/modal-cadastro-disciplina.component';
+import { ModalDeleteComponent } from './components/modal-delete/modal-delete.component';
+import { ModalEditarCursoComponent } from './components/modal-editar-curso/modal-editar-curso.component';
+import { ModalEditarDisciplinaComponent } from './components/modal-editar-disciplina/modal-editar-disciplina.component'; 
+
 
 @NgModule({
   declarations: [
@@ -59,6 +63,9 @@ import { ModalCadastroDisciplinaComponent } from './components/modal-cadastro-di
     ViewCursosComponent,
     ModalCadastroCursoComponent,
     ModalCadastroDisciplinaComponent,
+    ModalDeleteComponent,
+    ModalEditarCursoComponent,
+    ModalEditarDisciplinaComponent,
   ],
   imports: [
     ProfessorCadastroComponent,
