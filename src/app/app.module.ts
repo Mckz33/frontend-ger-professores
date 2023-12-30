@@ -31,7 +31,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
-import { RegistroCoordenadorComponent } from './pages/registro-coordenador/registro-coordenador.component';
 import { ViewCoordenadorComponent } from './pages/view-coordenador/view-coordenador.component';
 import { ProfessorCadastroComponent } from './pages/registro-professor/professor-cadastro.component';
 import { CadastroSucessoComponent } from './pages/cadastro-sucesso/cadastro-sucesso.component';
@@ -46,7 +45,8 @@ import {CdkAccordionModule} from '@angular/cdk/accordion';
 import { ModalCadastroDisciplinaComponent } from './components/modal-cadastro-disciplina/modal-cadastro-disciplina.component';
 import { ModalDeleteComponent } from './components/modal-delete/modal-delete.component';
 import { ModalEditarCursoComponent } from './components/modal-editar-curso/modal-editar-curso.component';
-import { ModalEditarDisciplinaComponent } from './components/modal-editar-disciplina/modal-editar-disciplina.component'; 
+import { ModalEditarDisciplinaComponent } from './components/modal-editar-disciplina/modal-editar-disciplina.component';
+import { RegistroGestorComponent } from './pages/registro-gestor/registro-gestor.component'; 
 
 
 @NgModule({
@@ -56,7 +56,6 @@ import { ModalEditarDisciplinaComponent } from './components/modal-editar-discip
     LoginComponent,
     RegistroComponent,
     ViewCoordenadorComponent,
-    RegistroCoordenadorComponent,
     CadastroSucessoComponent,
     ViewGestorComponent,
     DadosPerfilComponent,
@@ -66,6 +65,7 @@ import { ModalEditarDisciplinaComponent } from './components/modal-editar-discip
     ModalDeleteComponent,
     ModalEditarCursoComponent,
     ModalEditarDisciplinaComponent,
+    RegistroGestorComponent,
   ],
   imports: [
     ProfessorCadastroComponent,
